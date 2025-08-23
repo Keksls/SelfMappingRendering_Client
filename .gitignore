@@ -45,13 +45,10 @@ yarn-error.log*
 # Build / Generated files
 # =========================
 /dist/
-/build/
 /out/
 /bin/
 /obj/
 /coverage/
-/*.wasm
-/*.data
 
 # =========================
 # Environment / Config
