@@ -1,0 +1,32 @@
+<IfModule mod_mime.c>
+  AddEncoding br .br
+  AddType application/javascript .js.br
+  AddType application/wasm .wasm.br
+  AddType application/octet-stream .data.br
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.js\.br$">
+    Header set Content-Encoding br
+    Header set Content-Type application/javascript
+  </FilesMatch>
+
+  <FilesMatch "\.wasm\.br$">
+    Header set Content-Encoding br
+    Header set Content-Type application/wasm
+  </FilesMatch>
+
+  <FilesMatch "\.data\.br$">
+    Header set Content-Encoding br
+    Header set Content-Type application/octet-stream
+  </FilesMatch>
+
+  # Required for SharedArrayBuffer (Unity multithreading)
+  Header set Cross-Origin-Opener-Policy "same-origin"
+  Header set Cross-Origin-Embedder-Policy "require-corp"
+  Header set Cross-Origin-Resource-Policy "same-origin"
+</IfModule>
+
+<FilesMatch "\.(js|wasm|data)\.br$">
+  Header set Cache-Control "no-store, must-revalidate"
+</FilesMatch>

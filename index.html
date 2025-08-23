@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SMR • WebGL (Prod Ready)</title>
+  <link rel="stylesheet" href="TemplateData/style.css" />
+  <link rel="stylesheet" href="css/ui.css" />
+</head>
+<body>
+  <div id="root">
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas" tabindex="-1"></canvas>
+      <div id="unity-loading-bar">
+        <div id="unity-logo"></div>
+        <div id="unity-progress-bar-empty"><div id="unity-progress-bar-full"></div></div>
+      </div>
+      <div id="unity-warning"></div>
+      <div id="unity-footer">
+        <div id="unity-logo-title-footer"></div>
+        <div id="unity-fullscreen-button" title="Plein écran"></div>
+        <div id="unity-build-title">SMR</div>
+      </div>
+    </div>
+
+    <aside id="side">
+      <div class="card">
+        <div class="toolbar">
+          <h3>Importer un modèle</h3>
+          <span class="pill" id="fps">FPS: …</span>
+        </div>
+
+        <div class="grid">
+          <div class="row">
+            <label for="typeSelect">Type</label>
+            <div class="inline"><select id="typeSelect" disabled></select><span id="typeSpin" class="spinner"></span></div>
+          </div>
+          <div class="row">
+            <label for="familySelect">Famille</label>
+            <div class="inline"><select id="familySelect" disabled></select><span id="familySpin" class="spinner"></span></div>
+          </div>
+          <div class="row">
+            <label for="aircraftSelect">Aircraft</label>
+            <div class="inline"><select id="aircraftSelect" disabled></select><span id="aircraftSpin" class="spinner"></span></div>
+          </div>
+          <div class="row">
+            <label for="liverySelect">Livrée</label>
+            <div class="inline"><select id="liverySelect" disabled></select><span id="liverySpin" class="spinner"></span></div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button id="importBtn" class="btn">Importer</button>
+          <button id="clearBtn" class="btn secondary">Clear</button>
+        </div>
+        <div class="muted">
+          <div class="kv"><b>GO cible:</b> <span id="goNameLabel">Engine</span></div>
+          <div class="kv"><b>Méthode:</b> ImportFromJson(string)</div>
+        </div>
+      </div>
+
+      <div class="card" id="console-card">
+        <div class="toolbar">
+          <h3>Console</h3>
+          <div class="inline">
+            <button id="copyLogs" class="btn secondary sm">Copier</button>
+            <button id="clearLogs" class="btn secondary sm">Vider</button>
+          </div>
+        </div>
+        <div class="console" id="console" role="log" aria-live="polite"></div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Unity loader (will dynamically load SMR.loader.js) -->
+  <script src="js/unity-loader.js"></script>
+  <!-- API wrapper must load before UI -->
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+</body>
+</html>

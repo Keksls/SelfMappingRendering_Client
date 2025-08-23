@@ -1,0 +1,61 @@
+# =========================
+# PHP / Composer
+# =========================
+vendor/
+composer.lock
+
+# Logs & temp
+*.log
+*.cache
+*.tmp
+.cache/
+.tmp/
+logs/
+tmp/
+
+# =========================
+# IDE / Editors
+# =========================
+# Visual Studio / Visual Studio Code
+.vscode/
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# PHPStorm / JetBrains
+.idea/
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Node (si tu as du front JS/CSS avec npm)
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =========================
+# Build / Generated files
+# =========================
+/dist/
+/build/
+/out/
+/bin/
+/obj/
+/coverage/
+/*.wasm
+/*.data
+
+# =========================
+# Environment / Config
+# =========================
+.env
+.env.local
+.env.*.local
