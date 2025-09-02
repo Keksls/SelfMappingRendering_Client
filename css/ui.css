@@ -30,3 +30,68 @@ select:disabled{opacity:.6;cursor:not-allowed}
 .spinner{width:14px;height:14px;border:2px solid #334155;border-top-color:#94a3b8;border-radius:50%;display:inline-block;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media (max-width:1100px){#root{grid-template-columns:1fr}#side{order:-1}}
+
+/* Inputs (match select/.btn look & feel) */
+.input, #ss-width, #ss-height, #ss-compression {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #1f2937;
+    background: #0e1421;
+    color: var(--text);
+    outline: none;
+    box-sizing: border-box;
+}
+
+#ss-width, #ss-height {
+    max-width: 120px;
+}
+
+/* Console: un peu moins haute + redimensionnable */
+#console {
+    max-height: 32vh; /* au lieu de 40vh */
+    min-height: 80px; /* un peu plus compact */
+    resize: vertical; /* l’utilisateur peut l’agrandir */
+}
+
+/* Blocking modal */
+.modal {
+    display: none; /* toggled by JS */
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0,0,0,.6);
+    align-items: center;
+    justify-content: center;
+}
+
+    .modal[aria-hidden="false"] {
+        display: flex;
+    }
+
+.modal-content {
+    background: #0f1522;
+    border: 1px solid #1f2937;
+    border-radius: 12px;
+    width: min(420px, 92vw);
+    padding: 18px;
+    box-shadow: 0 12px 36px rgba(0,0,0,.35);
+    text-align: center;
+}
+
+.progress-container {
+    width: 100%;
+    height: 22px;
+    background: #0e1421;
+    border: 1px solid #1f2937;
+    border-radius: 999px;
+    overflow: hidden;
+    margin: 12px 0;
+}
+
+#progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent), #66b3ff);
+    transition: width .25s ease;
+}

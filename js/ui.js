@@ -1,6 +1,6 @@
 // UI binding + Unity bridge (prod-ready)
 (function () {
-    const GAMEOBJECT_NAME = 'Engine';
+    const GAMEOBJECT_NAME = 'API';
     document.getElementById('goNameLabel') && (document.getElementById('goNameLabel').textContent = GAMEOBJECT_NAME);
 
     const $console = document.getElementById('console');
@@ -104,7 +104,7 @@
         };
         const json = JSON.stringify(data);
         try {
-            window.unityInstance.SendMessage('API', 'Load', json);
+            window.unityInstance.SendMessage(GAMEOBJECT_NAME, 'Load', json);
             console.log('SendMessage Import:', json);
         } catch (e) {
             console.error('SendMessage error:', e.message);
@@ -119,13 +119,119 @@
         renderScaleVal.textContent = val.toFixed(1);
         if (window.unityInstance) {
             try {
-                window.unityInstance.SendMessage('API', 'SetRenderScale', val);
+                window.unityInstance.SendMessage(GAMEOBJECT_NAME, 'SetRenderScale', val);
                 console.log('SetRenderScale:', val);
             } catch (e) {
                 console.error('SetRenderScale error:', e.message);
             }
         }
     });
+
+    // --- Screenshot form wiring ---
+    const $ss = {
+        width: document.getElementById('ss-width'),
+        height: document.getElementById('ss-height'),
+        supersample: document.getElementById('ss-supersample'),
+        transparent: document.getElementById('ss-transparent'),
+        environement: document.getElementById('ss-environement'),
+        compression: document.getElementById('ss-compression'),
+        compressionVal: document.getElementById('ss-compression-val'),
+        captureBtn: document.getElementById('ss-capture'),
+        ssao: document.getElementById('ss-ssao')
+    };
+
+    if ($ss.compression && $ss.compressionVal) {
+        $ss.compression.addEventListener('input', () => {
+            $ss.compressionVal.textContent = $ss.compression.value;
+        });
+    }
+
+    if ($ss.captureBtn) {
+        $ss.captureBtn.addEventListener('click', () => {
+            if (!window.unityInstance) { console.warn('Unity pas prêt'); return; }
+
+            const width = Math.max(256, parseInt($ss.width.value || '0', 10) || 0);
+            const height = Math.max(256, parseInt($ss.height.value || '0', 10) || 0);
+            const supersample = false;
+            const transparentBg = !!$ss.transparent.checked;
+            const environment = $ss.environement.checked;
+            const ambiantOclusion = $ss.ssao.checked;
+            const pngCompression = Math.min(9, Math.max(0, parseInt($ss.compression.value || '6', 10)));
+
+            // Ouvre la modal (UI bloquée)
+            showProgressModal('Rendu en cours…', 'Préparation…');
+
+            // ⚠️ Unity SendMessage n’accepte qu’un seul paramètre ⇒ on envoie du JSON.
+            // Côté C#, expose une méthode CaptureScreenJSON(string json) qui appelle ton CaptureScreen(...)
+            const payload = JSON.stringify({
+                width, height,
+                supersample, transparentBg,
+                environment, pngCompression,
+                ambiantOclusion
+            });
+
+            try {
+                window.unityInstance.SendMessage(GAMEOBJECT_NAME, 'CaptureScreenJSON', payload);
+                console.log('CaptureScreenJSON →', payload);
+            } catch (e) {
+                console.error('CaptureScreenJSON error:', e.message);
+                hideProgressModal();
+            }
+        });
+    }
+
+    // --- Global render progress modal ---
+    const $modal = document.getElementById('progress-modal');
+    const $title = document.getElementById('progress-title');
+    const $bar = document.getElementById('progress-bar');
+    const $msg = document.getElementById('progress-message');
+
+    function showProgressModal(title, message) {
+        if ($title) $title.textContent = title || 'En cours…';
+        if ($msg) $msg.textContent = message || '';
+        if ($bar) $bar.style.width = '0%';
+        if ($modal) $modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function updateProgressModal(percent, message) {
+        if ($bar) $bar.style.width = `${Math.max(0, Math.min(100, percent))}%`;
+        if ($msg && typeof message === 'string') $msg.textContent = message;
+    }
+
+    function hideProgressModal() {
+        if ($modal) $modal.setAttribute('aria-hidden', 'true');
+    }
+
+    // --- Unity → JS callbacks (branchés par .jslib) ---
+    window.OnScreenshotProgress = function (phase, progress) {
+        // phase: 0 = Rendering, 1 = Merging (selon ton implémentation C#)
+        const pct = Math.round(progress * 100);
+        const label = phase === 0 ? 'Rendering…' : 'Merging…';
+        updateProgressModal(pct, `${label} ${pct}%`);
+    };
+
+    window.OnScreenshotReady = function (base64, w, h) {
+        try {
+            // Télécharger automatiquement
+            const bin = atob(base64);
+            const bytes = new Uint8Array(bin.length);
+            for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+            const blob = new Blob([bytes], { type: 'image/png' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `screenshot_${w}x${h}.png`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+            hideProgressModal();
+            console.log(`Screenshot prêt (${w}×${h})`);
+        } catch (e) {
+            console.error('OnScreenshotReady error:', e.message);
+            hideProgressModal();
+        }
+    };
 
     document.getElementById('importBtn').addEventListener('click', sendImport);
     document.getElementById('clearBtn').addEventListener('click', () => { $console.innerHTML = ''; });
