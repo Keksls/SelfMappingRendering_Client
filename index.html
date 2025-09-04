@@ -24,10 +24,51 @@
         </div>
 
         <aside id="side">
+            <!-- Loading Moodel -->
             <div class="card">
                 <div class="toolbar">
                     <h3>Importer un modèle</h3>
                     <span class="pill" id="fps">FPS: …</span>
+                </div>
+
+                <div class="grid">
+                    <div class="row">
+                        <label for="typeSelect">Type</label>
+                        <div class="inline"><select id="typeSelect" disabled></select><span id="typeSpin" class="spinner"></span></div>
+                    </div>
+                    <div class="row">
+                        <label for="liverySelect">Livrée</label>
+                        <div class="inline"><select id="liverySelect" disabled></select><span id="liverySpin" class="spinner"></span></div>
+                    </div>
+                    <div class="row">
+                        <label for="aircraftSelect">Aircraft</label>
+                        <div class="inline"><select id="aircraftSelect" disabled></select><span id="aircraftSpin" class="spinner"></span></div>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button id="importBtn" class="btn">Importer</button>
+                </div>
+            </div>
+
+            <!-- Views -->
+            <div class="card">
+                <div class="toolbar">
+                    <h3>Vues Camera</h3>
+                </div>
+
+                <div class="grid">
+                    <div class="row">
+                        <div class="inline"><select id="viewSelect" disabled></select><span id="viewSpin" class="spinner"></span></div>
+                        <button id="applyViewBtn" class="btn">Appliquer</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Environment -->
+            <div class="card">
+                <div class="toolbar">
+                    <h3>Environement</h3>
                 </div>
 
                 <div class="grid">
@@ -38,28 +79,29 @@
                             <span id="renderScaleVal">1.0</span>
                         </div>
                     </div>
+                    <div class="row">
+                        <label for="glossiness">Glossiness</label>
+                        <div class="inline" style="width:100%">
+                            <input type="range" id="glossiness" min="0" max="5" step="0.1" value="1" />
+                            <span id="glossinessVal">1.0</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="metallic">Metallic</label>
+                        <div class="inline" style="width:100%">
+                            <input type="range" id="metallic" min="0" max="20" step="0.1" value="1" />
+                            <span id="metallicVal">1.0</span>
+                        </div>
+                    </div>
 
                     <div class="row">
-                        <label for="typeSelect">Type</label>
-                        <div class="inline"><select id="typeSelect" disabled></select><span id="typeSpin" class="spinner"></span></div>
-                    </div>
-                    <div class="row">
-                        <label for="familySelect">Famille</label>
-                        <div class="inline"><select id="familySelect" disabled></select><span id="familySpin" class="spinner"></span></div>
-                    </div>
-                    <div class="row">
-                        <label for="aircraftSelect">Aircraft</label>
-                        <div class="inline"><select id="aircraftSelect" disabled></select><span id="aircraftSpin" class="spinner"></span></div>
-                    </div>
-                    <div class="row">
-                        <label for="liverySelect">Livrée</label>
-                        <div class="inline"><select id="liverySelect" disabled></select><span id="liverySpin" class="spinner"></span></div>
+                        <label for="envSelect">Environement</label>
+                        <div class="inline"><select id="envSelect" disabled></select><span id="envSpin" class="spinner"></span></div>
                     </div>
                 </div>
 
                 <div class="actions">
-                    <button id="importBtn" class="btn">Importer</button>
-                    <button id="clearBtn" class="btn secondary">Clear</button>
+                    <button id="envImportBtn" class="btn">Importer</button>
                 </div>
             </div>
 
@@ -76,34 +118,23 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <label for="ss-transparent">Fond</label>
-                        <div class="inline">
-                            <label class="pill">
-                                <input type="checkbox" id="ss-transparent" />
-                                Transparent
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <label for="ss-environement">Environement</label>
-                        <div class="inline">
-                            <label class="pill">
-                                <input type="checkbox" checked id="ss-environement" />
-                                Visible
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <label for="ss-ssao">Ambiante Oclusion</label>
-                        <div class="inline">
-                            <label class="pill">
-                                <input type="checkbox" checked id="ss-ssao" />
-                                Active
-                            </label>
-                        </div>
+                    <div class="row check-group">
+                        <label class="pill">
+                            <input type="checkbox" id="ss-background" />
+                            Fond
+                        </label>
+                        <label class="pill">
+                            <input type="checkbox" checked id="ss-environement" />
+                            Environnement
+                        </label>
+                        <label class="pill">
+                            <input type="checkbox" checked id="ss-ssao" />
+                            AO
+                        </label>
+                        <label class="pill">
+                            <input type="checkbox" checked id="ss-pfx" />
+                            PostFX
+                        </label>
                     </div>
 
                     <div class="row">
@@ -120,6 +151,7 @@
                 </div>
             </div>
 
+            <!-- Console -->
             <div class="card" id="console-card">
                 <div class="toolbar">
                     <h3>Console</h3>

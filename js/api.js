@@ -1,21 +1,23 @@
-(function(global){
+(function (global) {
     const API_BASE = 'http://api.smr.local';
 
-  async function fetchJSON(url){
-    const r = await fetch(url, { headers: { 'Accept': 'application/json' } });
-    if(!r.ok){
-      const text = await r.text().catch(()=>'');
-      throw new Error(url + ' -> ' + r.status + ' ' + r.statusText + (text ? (' | ' + text) : ''));
+    async function fetchJSON(url) {
+        const r = await fetch(url, { headers: { 'Accept': 'application/json' } });
+        if (!r.ok) {
+            const text = await r.text().catch(() => '');
+            throw new Error(url + ' -> ' + r.status + ' ' + r.statusText + (text ? (' | ' + text) : ''));
+        }
+        return r.json();
     }
-    return r.json();
-  }
 
-  const Api = {
-    listTypes: () => fetchJSON(`${API_BASE}/types`),
-    listFamiliesByType: (typeId) => fetchJSON(`${API_BASE}/types/${typeId}/families`),
-    listAircraftsByFamily: (familyId) => fetchJSON(`${API_BASE}/aircrafts/family/${familyId}`),
-    listLiveriesByAircraft: (aircraftId) => fetchJSON(`${API_BASE}/aircrafts/${aircraftId}/liveries`),
-  };
+    const Api = {
+        listTypes: () => fetchJSON(`${API_BASE}/types`),
+        listAircraftsByLiveries: (liveryId) => fetchJSON(`${API_BASE}/liveries/code/${liveryId}/aircrafts`),
+        listLiveries: (typeId) => fetchJSON(`${API_BASE}/liveries/type/${typeId}`),
+        listEnvironments: () => fetchJSON(`${API_BASE}/environments`),
+        getAircraft: (aircraftId) => fetchJSON(`${API_BASE}/aircrafts/${aircraftId}`),
+        listViews: () => fetchJSON(`${API_BASE}/views`),
+    };
 
-  global.Api = Api;
+    global.Api = Api;
 })(window);

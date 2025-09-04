@@ -95,3 +95,13 @@ select:disabled{opacity:.6;cursor:not-allowed}
     background: linear-gradient(90deg, var(--accent), #66b3ff);
     transition: width .25s ease;
 }
+.row.check-group {
+    display: flex;
+    flex-wrap: nowrap; /* empêche de passer à la ligne */
+    gap: 20px; /* espace entre les cases */
+    align-items: center;
+}
+
+    .row.check-group .pill {
+        white-space: nowrap; /* évite que le texte coupe */
+    }
