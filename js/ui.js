@@ -129,6 +129,21 @@
         }
     }
 
+    function sendAPIURL() {
+        try {
+            window.unityInstance.SendMessage(GAMEOBJECT_NAME, 'SetAPIURL', window.API_BASE);
+            console.log('SendMessage SetAPIURL:', window.API_BASE);
+        } catch (e) {
+            console.error('SendMessage error:', e.message);
+        }
+    }
+
+    if (window.unityInstance) {
+        sendAPIURL(); // already ready
+    } else {
+        window.addEventListener('unity-ready', sendAPIURL); // wait for it
+    }
+
     // Load Environment
     function sendLoadEnvironment() {
         if (!window.unityInstance) { console.warn('Unity pas prêt'); return; }
@@ -322,4 +337,4 @@
         const text = Array.from($console.querySelectorAll('.log')).map(n => n.textContent).join('\n');
         try { await navigator.clipboard.writeText(text); console.log('Logs copiés'); } catch { console.warn('Copie impossible'); }
     });
-})();
+})(window);

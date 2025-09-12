@@ -1,5 +1,5 @@
 (function (global) {
-    const API_BASE = 'http://api.smr.local';
+    const API_BASE = 'http://13.37.131.83/api';
 
     async function fetchJSON(url) {
         const r = await fetch(url, { headers: { 'Accept': 'application/json' } });
@@ -20,4 +20,5 @@
     };
 
     global.Api = Api;
+    window.API_BASE = API_BASE;
 })(window);
