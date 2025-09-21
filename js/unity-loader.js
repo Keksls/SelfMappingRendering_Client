@@ -55,6 +55,16 @@
                     loadingBar.style.display = 'none';
                     if (fullscreenButton) fullscreenButton.onclick = () => instance.SetFullscreen(1);
                     console.log('Unity prêt ✔️');
+
+                    // Dispatch a custom event when Unity is ready after 1 second
+                    var t = 0;
+                    const check = setInterval(() => {
+                        if (t > 0) {
+                            clearInterval(check); // stop polling
+                            window.dispatchEvent(new Event('unity-ready'));
+                        }
+                        t++;
+                    }, 2000);
                 })
                 .catch((message) => {
                     console.error('Unity error:', message);
