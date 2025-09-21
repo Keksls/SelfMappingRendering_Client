@@ -106,11 +106,6 @@
         });
     });
 
-    // Initial load
-    loadTypes();
-    loadEnvironments();
-    loadViews();
-
     // Unity bridge
     function sendImport() {
         if (!window.unityInstance) { console.warn('Unity pas prêt'); return; }
@@ -161,18 +156,25 @@
         }
     });
 
-    // Render scale
+    // Quality settings
     const renderScaleSlider = document.getElementById('renderScale');
     const renderScaleVal = document.getElementById('renderScaleVal');
     renderScaleSlider.addEventListener('input', () => {
         const val = parseFloat(renderScaleSlider.value);
-        renderScaleVal.textContent = val.toFixed(1);
+        switch (val) {
+            case 1: renderScaleVal.textContent = 'High';
+                break;
+            case 2: renderScaleVal.textContent = 'Medium';
+                break;
+            case 3: renderScaleVal.textContent = 'Low';
+                break;
+        }
         if (window.unityInstance) {
             try {
-                window.unityInstance.SendMessage(GAMEOBJECT_NAME, 'SetRenderScale', val);
-                console.log('SetRenderScale:', val);
+                window.unityInstance.SendMessage(GAMEOBJECT_NAME, 'SetQualityLevel', val);
+                console.log('SetQualityLevel:', val);
             } catch (e) {
-                console.error('SetRenderScale error:', e.message);
+                console.error('SetQualityLevel error:', e.message);
             }
         }
     });
@@ -236,6 +238,7 @@
             const width = Math.max(256, parseInt($ss.width.value || '0', 10) || 0);
             const height = Math.max(256, parseInt($ss.height.value || '0', 10) || 0);
             const background = $ss.background.checked;
+            const supersample = Math.min(4, Math.max(1, parseInt($ss.supersample.value || '1', 10)));
             const environment = $ss.environement.checked;
             const ambiantOclusion = $ss.ssao.checked;
             const includePostFX = $ss.pfx.checked;
@@ -248,7 +251,8 @@
             const payload = JSON.stringify({
                 width, height, background,
                 environment, pngCompression,
-                ambiantOclusion, includePostFX
+                ambiantOclusion, includePostFX,
+                supersample
             });
 
             try {
@@ -316,10 +320,19 @@
 
     document.getElementById('importBtn').addEventListener('click', sendImport);
     document.getElementById('envImportBtn').addEventListener('click', sendLoadEnvironment);
-    document.getElementById('clearBtn').addEventListener('click', () => { $console.innerHTML = ''; });
-    document.getElementById('clearLogs') && document.getElementById('clearLogs').addEventListener('click', () => { $console.innerHTML = ''; });
+    document.getElementById('clearLogs').addEventListener('click', () => { $console.innerHTML = ''; });
     document.getElementById('copyLogs') && document.getElementById('copyLogs').addEventListener('click', async () => {
         const text = Array.from($console.querySelectorAll('.log')).map(n => n.textContent).join('\n');
         try { await navigator.clipboard.writeText(text); console.log('Logs copiés'); } catch { console.warn('Copie impossible'); }
     });
+
+    // wait until window.Api.API_BASE != '' to load types
+    const waitForApiBase = setInterval(() => {
+        if (window.Api && window.Api.API_BASE !== '') {
+            clearInterval(waitForApiBase);
+            loadTypes();
+            loadEnvironments();
+            loadViews();
+        }
+    }, 50);
 })();
