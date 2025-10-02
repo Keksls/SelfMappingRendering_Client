@@ -215,7 +215,6 @@
     const $ss = {
         width: document.getElementById('ss-width'),
         height: document.getElementById('ss-height'),
-        supersample: document.getElementById('ss-supersample'),
         background: document.getElementById('ss-background'),
         environement: document.getElementById('ss-environement'),
         compression: document.getElementById('ss-compression'),
@@ -238,7 +237,7 @@
             const width = Math.max(256, parseInt($ss.width.value || '0', 10) || 0);
             const height = Math.max(256, parseInt($ss.height.value || '0', 10) || 0);
             const background = $ss.background.checked;
-            const supersample = Math.min(4, Math.max(1, parseInt($ss.supersample.value || '1', 10)));
+            const supersample = true;
             const environment = $ss.environement.checked;
             const ambiantOclusion = $ss.ssao.checked;
             const includePostFX = $ss.pfx.checked;
