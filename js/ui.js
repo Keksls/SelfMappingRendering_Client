@@ -161,16 +161,12 @@
     const renderScaleVal = document.getElementById('renderScaleVal');
     renderScaleSlider.addEventListener('input', () => {
         const val = parseFloat(renderScaleSlider.value);
-        if (val == 1)
-            val = 3;
-        else if (val == 3)
-            val = 1;
         switch (val) {
-            case 1: renderScaleVal.textContent = 'High';
+            case 1: renderScaleVal.textContent = 'Low';
                 break;
             case 2: renderScaleVal.textContent = 'Medium';
                 break;
-            case 3: renderScaleVal.textContent = 'Low';
+            case 3: renderScaleVal.textContent = 'High';
                 break;
         }
         if (window.unityInstance) {
