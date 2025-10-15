@@ -195,18 +195,18 @@
         }
     });
 
-    // Metallic
-    const metallicSlider = document.getElementById('metallic');
-    const metallicVal = document.getElementById('metallicVal');
-    metallicSlider.addEventListener('input', () => {
-        const val = parseFloat(metallicSlider.value);
-        metallicVal.textContent = val.toFixed(1);
+    // Rotation
+    const rotationSlider = document.getElementById('rotation');
+    const rotationVal = document.getElementById('rotationVal');
+    rotationSlider.addEventListener('input', () => {
+        const val = parseFloat(rotationSlider.value);
+        rotationVal.textContent = val.toFixed(1);
         if (window.unityInstance) {
             try {
-                window.unityInstance.SendMessage(GAMEOBJECT_NAME, 'SetMetallicFactor', val);
-                console.log('SetMetallicFactor:', val);
+                window.unityInstance.SendMessage(GAMEOBJECT_NAME, 'SetEnvironmentRotation', val);
+                console.log('SetEnvironmentRotation:', val);
             } catch (e) {
-                console.error('SetMetallicFactor error:', e.message);
+                console.error('SetEnvironmentRotation error:', e.message);
             }
         }
     });
