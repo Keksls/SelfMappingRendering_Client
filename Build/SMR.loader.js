@@ -54,7 +54,7 @@ function createUnityInstance(canvas, config, onProgress) {
       preserveDrawingBuffer: false,
       powerPreference: 2,
     },
-    wasmFileSize: 144637906,
+    wasmFileSize: 145047115,
     cacheControl: function (url) {
       return (url == Module.dataUrl || url.match(/\.bundle/)) ? "must-revalidate" : "no-store";
     },
