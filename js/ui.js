@@ -379,11 +379,14 @@
     }
 
     function showWarning() {
-        document.getElementById("antiScreenOverlay").style.opacity = 1;
+        alert("Screenshot attempt detected! For security reasons, screen capture is disabled.");
+        //document.getElementById("antiScreenOverlay").style.opacity = 1;
     }
 
     function hideWarning() {
-        document.getElementById("antiScreenOverlay").style.opacity = 0;
+        //alert("Window focused again.");
+
+        // document.getElementById("antiScreenOverlay").style.opacity = 0;
     }
 
     window.addEventListener("load", () => {
