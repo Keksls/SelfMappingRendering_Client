@@ -105,3 +105,18 @@ select:disabled{opacity:.6;cursor:not-allowed}
     .row.check-group .pill {
         white-space: nowrap; /* évite que le texte coupe */
     }
+
+#antiScreenOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    color: white;
+    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 999999;
+}
