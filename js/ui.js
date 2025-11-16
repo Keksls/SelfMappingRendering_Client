@@ -40,43 +40,47 @@
     const viewsGrid = document.getElementById("viewsGrid");
     let currentViewId = null;
 
-    async function loadViews(apiBase) {
+    const viewsGrid = document.getElementById("viewsGrid");
+    let currentViewId = null;
+
+    async function loadViews() {
         viewsGrid.innerHTML = `<span class="spinner"></span>`;
 
         try {
             const rows = await window.Api.listViews();
 
-            viewsGrid.innerHTML = ""; // clear loader
+            viewsGrid.innerHTML = ""; // remove spinner
 
-            rows.forEach(v => {
+            rows.forEach(view => {
                 const card = document.createElement("div");
                 card.className = "view-card";
-                card.dataset.id = v.id;
+                card.dataset.id = view.id;
 
-                // Image preview
+                // preview PNG (transparente)
                 const img = document.createElement("img");
-                img.src = `${apiBase}/views/${v.id}/prev`;
+                img.src = window.Api.getViewPrevURI(view.id);
                 img.loading = "lazy";
 
-                // Name
+                // name
                 const name = document.createElement("div");
                 name.className = "view-card-name";
-                name.textContent = v.name;
+                name.textContent = view.name;
 
                 card.appendChild(img);
                 card.appendChild(name);
 
-                // CLICK = SELECT + APPLY VIEW
+                // CLICK = SELECT + APPLY VIEW TO UNITY
                 card.addEventListener("click", () => {
 
-                    // Visuellement indiqué
-                    document.querySelectorAll(".view-card")
+                    // update selected appearance
+                    document
+                        .querySelectorAll(".view-card")
                         .forEach(c => c.classList.remove("selected"));
 
                     card.classList.add("selected");
-                    currentViewId = v.id;
+                    currentViewId = view.id;
 
-                    // Envoi direct à Unity
+                    // must have unity
                     if (!window.unityInstance) {
                         console.warn("Unity pas prêt");
                         return;
@@ -88,11 +92,10 @@
                             "SetCameraView",
                             currentViewId
                         );
-                        console.log("Applied view:", currentViewId);
+                        console.log("SendMessage ApplyView:", currentViewId);
                     } catch (e) {
                         console.error("SendMessage error:", e.message);
                     }
-
                 });
 
                 viewsGrid.appendChild(card);
