@@ -23,14 +23,64 @@
     function option(v, label) { const o = document.createElement('option'); o.value = String(v); o.textContent = label; return o; }
 
 
-    async function loadEnvironments() {
+    // --- Environment grid loading (preview only) ---
+    const envGrid = document.getElementById("envGrid");
+    let currentEnvId = null;
+
+    async function loadEnvironmentPreviews() {
+        envGrid.innerHTML = `<span class="spinner"></span>`;
+
         try {
-            enable(selects.env, false); setLoading('env', true); resetSelect(selects.env, '— Sélectionner un Environement —');
             const rows = await window.Api.listEnvironments();
-            rows.forEach(t => selects.env.appendChild(option(t.id, t.name)));
-            enable(selects.env, true);
-        } catch (e) { console.error('Environments load failed:', e.message); }
-        finally { setLoading('env', false); }
+
+            envGrid.innerHTML = ""; // remove spinner
+
+            rows.forEach(env => {
+                const card = document.createElement("div");
+                card.className = "env-card";
+                card.dataset.id = env.id;
+
+                // Preview PNG
+                const img = document.createElement("img");
+                img.src = window.Api.getEnvPrevURI(env.id);
+                img.loading = "lazy";
+
+                card.appendChild(img);
+
+                // CLICK = APPLY ENVIRONMENT
+                card.addEventListener("click", () => {
+
+                    document
+                        .querySelectorAll(".env-card")
+                        .forEach(c => c.classList.remove("selected"));
+
+                    card.classList.add("selected");
+                    currentEnvId = env.id;
+
+                    if (!window.unityInstance) {
+                        console.warn("Unity pas prêt");
+                        return;
+                    }
+
+                    try {
+                        window.unityInstance.SendMessage(
+                            GAMEOBJECT_NAME,
+                            "LoadEnvironment",
+                            currentEnvId
+                        );
+                        console.log("SendMessage LoadEnvironment:", currentEnvId);
+                    } catch (e) {
+                        console.error("SendMessage error:", e.message);
+                    }
+                });
+
+                envGrid.appendChild(card);
+            });
+
+        } catch (e) {
+            console.error("Environment previews load failed:", e.message);
+            envGrid.innerHTML = `<p class="muted">Impossible de charger les environnements.</p>`;
+        }
     }
 
     const viewsGrid = document.getElementById("viewsGrid");
@@ -344,42 +394,44 @@
         if (window.Api && window.Api.API_BASE !== '') {
             clearInterval(waitForApiBase);
             loadTypes();
-            loadEnvironments();
-            alert(window.Api.API_BASE);
-            loadViews(window.Api.API_BASE);
+            loadEnvironmentPreviews();
+            loadViews();
         }
     }, 50);
 
     // --- Dynamic height adjustment ---
     function adjustDynamicHeights() {
-        // 1) Désactiver la logique sur mobile/tablette
+        const side = document.getElementById("side");
+
+        // Disable dynamic logic on mobile/tablet
         if (isMobileLayout()) {
             document.getElementById("viewsGrid").style.maxHeight = "";
-            const envCard = document.querySelector("#envSelect").closest(".card");
-            envCard.querySelector(".grid").style.maxHeight = "";
+            document.getElementById("envGrid").style.maxHeight = "";
             return;
         }
 
-        // 2) PC : hauteur dynamique
-        const side = document.getElementById("side");
         const viewsCard = document.querySelector("#viewsGrid").closest(".card");
-        const envCard = document.querySelector("#envSelect").closest(".card");
+        const envCard = document.querySelector("#envGrid").closest(".card");
 
-        if (!side || !viewsCard || !envCard) return;
+        if (!side || !viewsCard || !envCard)
+            return;
 
         const sideHeight = side.clientHeight;
 
-        // Hauteur fixe au-dessus et en-dessous
-        const fixedHeight =
-            Array.from(side.children)
-                .filter(c => c !== viewsCard && c !== envCard)
-                .reduce((sum, c) => sum + c.offsetHeight + 12, 0);
+        // total height of everything except viewsCard and envCard
+        const fixedHeight = Array.from(side.children)
+            .filter(c => c !== viewsCard && c !== envCard)
+            .reduce((sum, c) => sum + c.offsetHeight + 12, 0); // 12px gap
 
         const remaining = sideHeight - fixedHeight;
+
+        // safety
+        if (remaining < 100) return;
+
         const half = remaining / 2;
 
         document.getElementById("viewsGrid").style.maxHeight = half + "px";
-        envCard.querySelector(".grid").style.maxHeight = half + "px";
+        document.getElementById("envGrid").style.maxHeight = half + "px";
     }
 
     window.addEventListener("resize", adjustDynamicHeights);

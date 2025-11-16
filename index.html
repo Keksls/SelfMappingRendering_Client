@@ -54,11 +54,12 @@
             </div>
 
             <!-- Environment -->
-            <div class="card">
+            <div class="card" id="environment-card">
                 <div class="toolbar">
-                    <h3>Environement</h3>
+                    <h3>Environnement</h3>
                 </div>
 
+                <!-- Quality + Rotation -->
                 <div class="grid">
                     <div class="row">
                         <label for="renderScale">Quality</label>
@@ -71,18 +72,14 @@
                         <label for="rotation">Rotation</label>
                         <div class="inline" style="width:100%">
                             <input type="range" id="rotation" min="0" max="360" step="1" value="0" />
-                            <span id="rotationVal">1.0</span>
+                            <span id="rotationVal">0</span>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <label for="envSelect">Environement</label>
-                        <div class="inline"><select id="envSelect" disabled></select><span id="envSpin" class="spinner"></span></div>
                     </div>
                 </div>
 
-                <div class="actions">
-                    <button id="envImportBtn" class="btn">Importer</button>
+                <!-- Grid de previews d'environnements -->
+                <div id="envGrid" class="env-grid">
+                    <span id="envSpin" class="spinner"></span>
                 </div>
             </div>
 

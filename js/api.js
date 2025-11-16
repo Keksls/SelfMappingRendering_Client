@@ -26,6 +26,7 @@
         getAircraft: (aircraftId) => fetchJSON(`${API_BASE}/aircrafts/${aircraftId}`),
         listViews: () => fetchJSON(`${API_BASE}/views`),
         getViewPrevURI: (viewID) => `${API_BASE}/views/${viewID}/prev`,
+        getEnvPrevURI: (viewID) => `${API_BASE}/environments/${viewID}/prev`,
     };
 
     global.Api = Api;
