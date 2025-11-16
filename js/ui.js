@@ -387,8 +387,6 @@
         }
     };
 
-    document.getElementById('envImportBtn').addEventListener('click', sendLoadEnvironment);
-
     // wait until window.Api.API_BASE != '' to load types
     const waitForApiBase = setInterval(() => {
         if (window.Api && window.Api.API_BASE !== '') {
