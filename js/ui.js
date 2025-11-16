@@ -2,10 +2,6 @@
     const GAMEOBJECT_NAME = 'API';
     document.getElementById('goNameLabel') && (document.getElementById('goNameLabel').textContent = GAMEOBJECT_NAME);
 
-    const $console = document.getElementById('console');
-    function appendLog(text, cls = '') { const p = document.createElement('div'); p.className = 'log ' + cls; p.textContent = String(text); $console.appendChild(p); $console.scrollTop = $console.scrollHeight; }
-    (function hookConsole() { const _l = console.log, _w = console.warn, _e = console.error; console.log = (...a) => { _l(...a); appendLog(a.join(' '), 'ok'); }; console.warn = (...a) => { _w(...a); appendLog(a.join(' '), 'warn'); }; console.error = (...a) => { _e(...a); appendLog(a.join(' '), 'err'); }; })();
-
     const selects = {
         type: document.getElementById('typeSelect'),
         aircraft: document.getElementById('aircraftSelect'),
@@ -342,11 +338,6 @@
     };
 
     document.getElementById('envImportBtn').addEventListener('click', sendLoadEnvironment);
-    document.getElementById('clearLogs').addEventListener('click', () => { $console.innerHTML = ''; });
-    document.getElementById('copyLogs') && document.getElementById('copyLogs').addEventListener('click', async () => {
-        const text = Array.from($console.querySelectorAll('.log')).map(n => n.textContent).join('\n');
-        try { await navigator.clipboard.writeText(text); console.log('Logs copiés'); } catch { console.warn('Copie impossible'); }
-    });
 
     // wait until window.Api.API_BASE != '' to load types
     const waitForApiBase = setInterval(() => {
