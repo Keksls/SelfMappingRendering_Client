@@ -174,107 +174,114 @@
     //  LOAD TYPES
     // ============================================================
     async function loadTypes() {
-        setLoading("type", true);
-        enable(selects.type, false);
-        resetSelect(selects.type, "— Sélectionner un type —");
-
         try {
-            const rows = await Api.listTypes();
+            enable(selects.type, false);
+            resetSelect(selects.type, '— Sélectionner un type —');
+
+            const rows = await window.Api.listTypes();
             rows.forEach(t => selects.type.appendChild(option(t.id, t.name)));
+
             enable(selects.type, true);
-
         } catch (e) {
-            console.error("Types load error:", e.message);
-
-        } finally {
-            setLoading("type", false);
+            console.error('Types load failed:', e.message);
         }
     }
-
 
     // ============================================================
     //  LOAD LIVERIES
     // ============================================================
     async function loadLiveries(typeId) {
-        setLoading("livery", true);
-        enable(selects.livery, false);
-        resetSelect(selects.livery, "— Sélectionner une livrée —");
-
-        if (!typeId) return setLoading("livery", false);
-
         try {
-            const rows = await Api.listLiveries(typeId);
+            enable(selects.livery, false);
+            resetSelect(selects.livery, '— Sélectionner une livrée —');
+
+            if (!typeId) return;
+
+            const rows = await window.Api.listLiveries(typeId);
             rows.forEach(l => selects.livery.appendChild(option(l, l)));
+
             enable(selects.livery, true);
-
         } catch (e) {
-            console.error("Liveries load error:", e.message);
-
-        } finally {
-            setLoading("livery", false);
+            console.error('Liveries load failed:', e.message);
         }
     }
-
 
     // ============================================================
     //  LOAD AIRCRAFTS
     // ============================================================
     async function loadAircrafts(liveryCode) {
-        setLoading("aircraft", true);
-        enable(selects.aircraft, false);
-        resetSelect(selects.aircraft, "— Sélectionner un aircraft —");
-
-        if (!liveryCode) return setLoading("aircraft", false);
-
         try {
-            const rows = await Api.listAircraftsByLiveries(liveryCode);
+            enable(selects.aircraft, false);
+            resetSelect(selects.aircraft, '— Sélectionner un aircraft —');
+
+            if (!liveryCode) return;
+
+            const rows = await window.Api.listAircraftsByLiveries(liveryCode);
             rows.forEach(a => selects.aircraft.appendChild(option(a.id, a.name)));
+
             enable(selects.aircraft, true);
-
         } catch (e) {
-            console.error("Aircrafts load error:", e.message);
-
-        } finally {
-            setLoading("aircraft", false);
+            console.error('Aircrafts load failed:', e.message);
         }
     }
-
 
     // ============================================================
     //  SELECT EVENTS
     // ============================================================
-    selects.type.addEventListener("change", async () => {
-        const id = selects.type.value || null;
-        resetSelect(selects.livery, "— Sélectionner une livrée —");
-        resetSelect(selects.aircraft, "— Sélectionner un aircraft —");
+    selects.type.addEventListener('change', async () => {
+        const typeId = selects.type.value || null;
+
+        resetSelect(selects.livery, '— Sélectionner une livrée —');
+        enable(selects.livery, false);
+
+        resetSelect(selects.aircraft, '— Sélectionner un aircraft —');
         enable(selects.aircraft, false);
-        if (id) await loadLiveries(id);
+
+        if (typeId) await loadLiveries(typeId);
     });
 
-    selects.livery.addEventListener("change", async () => {
-        const code = selects.livery.value || null;
-        resetSelect(selects.aircraft, "— Sélectionner un aircraft —");
+    selects.livery.addEventListener('change', async () => {
+        const livery = selects.livery.value || null;
+
+        resetSelect(selects.aircraft, '— Sélectionner un aircraft —');
         enable(selects.aircraft, false);
-        if (code) await loadAircrafts(code);
+
+        if (livery) await loadAircrafts(livery);
     });
 
-    selects.aircraft.addEventListener("change", async () => {
-        const id = selects.aircraft.value;
-        if (!id) return;
+    selects.aircraft.addEventListener('change', async () => {
+        const aircraftId = selects.aircraft.value || null;
+        if (!aircraftId) return;
+
+        const data = await window.Api.getAircraft(aircraftId);
+        selectedAircraft = data;
+
+        console.log("Aircraft selected:", data);
+        sendImport();
+    });
+
+    function sendImport() {
+        if (!window.unityInstance) {
+            console.warn("Unity pas prêt");
+            return;
+        }
+
+        const payload = {
+            TypeId: selectedAircraft.type_id,
+            FamilyId: selectedAircraft.family_id,
+            AircraftId: selectedAircraft.id,
+            LiveryCode: selects.livery.value,
+        };
+
+        const json = JSON.stringify(payload);
 
         try {
-            selectedAircraft = await Api.getAircraft(id);
-            sendMessage("Load", JSON.stringify({
-                TypeId: selectedAircraft.type_id,
-                FamilyId: selectedAircraft.family_id,
-                AircraftId: id,
-                LiveryCode: selects.livery.value
-            }));
+            window.unityInstance.SendMessage(GAMEOBJECT_NAME, 'Load', json);
+            console.log("SendMessage Load:", json);
         } catch (e) {
-            console.error("Aircraft load error:", e.message);
+            console.error("SendMessage error:", e.message);
         }
-    });
-
+    }
 
     // ============================================================
     //  QUALITY / ROTATION
