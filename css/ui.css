@@ -209,11 +209,12 @@ select,
    ============================================ */
 .card-grid {
     display: grid;
-    gap: 12px;
     padding: 8px; /* évite clipping outline */
     overflow-y: auto;
     border-radius: 10px;
-    grid-template-columns: repeat(3, 1fr); /* 3 cards desktop */
+    box-sizing: border-box;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow-x: hidden;
 }
 
 /* MOBILE – 2 cards */
@@ -229,7 +230,6 @@ select,
 .card-item {
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1;
     background: var(--card);
     border-radius: 10px;
     cursor: pointer;
@@ -238,6 +238,7 @@ select,
     align-items: center;
     justify-content: center;
     transition: transform .15s ease;
+    aspect-ratio: 1;
 }
 
     .card-item img {

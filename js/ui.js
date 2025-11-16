@@ -119,7 +119,7 @@
             rows.forEach(env => {
                 const card = createCard({
                     id: env.id,
-                    img: Api.getViewPrevURI(env.id),
+                    img: Api.getEnvPrevURI(env.id),
                     label: null,
                     cls: "env-card",
                     onClick: (id) => {
