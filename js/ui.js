@@ -40,9 +40,6 @@
     const viewsGrid = document.getElementById("viewsGrid");
     let currentViewId = null;
 
-    const viewsGrid = document.getElementById("viewsGrid");
-    let currentViewId = null;
-
     async function loadViews() {
         viewsGrid.innerHTML = `<span class="spinner"></span>`;
 
