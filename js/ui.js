@@ -349,4 +349,44 @@
             loadViews(window.Api.API_BASE);
         }
     }, 50);
+
+    // --- Dynamic height adjustment ---
+    function adjustDynamicHeights() {
+        // 1) Désactiver la logique sur mobile/tablette
+        if (isMobileLayout()) {
+            document.getElementById("viewsGrid").style.maxHeight = "";
+            const envCard = document.querySelector("#envSelect").closest(".card");
+            envCard.querySelector(".grid").style.maxHeight = "";
+            return;
+        }
+
+        // 2) PC : hauteur dynamique
+        const side = document.getElementById("side");
+        const viewsCard = document.querySelector("#viewsGrid").closest(".card");
+        const envCard = document.querySelector("#envSelect").closest(".card");
+
+        if (!side || !viewsCard || !envCard) return;
+
+        const sideHeight = side.clientHeight;
+
+        // Hauteur fixe au-dessus et en-dessous
+        const fixedHeight =
+            Array.from(side.children)
+                .filter(c => c !== viewsCard && c !== envCard)
+                .reduce((sum, c) => sum + c.offsetHeight + 12, 0);
+
+        const remaining = sideHeight - fixedHeight;
+        const half = remaining / 2;
+
+        document.getElementById("viewsGrid").style.maxHeight = half + "px";
+        envCard.querySelector(".grid").style.maxHeight = half + "px";
+    }
+
+    window.addEventListener("resize", adjustDynamicHeights);
+    window.addEventListener("load", adjustDynamicHeights);
+    setTimeout(adjustDynamicHeights, 300);
+
+    function isMobileLayout() {
+        return window.innerWidth <= 1100;
+    }
 })();

@@ -312,11 +312,9 @@ select, .btn {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: 12px;
-    position: relative;
-    min-height: 80px;
-    max-height: 260px;
     overflow-y: auto;
     padding-right: 4px;
+    min-height: 80px;
 }
 
 /* Card */
@@ -380,4 +378,22 @@ html, body {
 #side {
     overflow-y: auto;
     padding-right: 6px; /* petit inset pour le scroll bar */
+}
+
+@media (max-width:1100px) {
+
+    /* Une seule colonne */
+    #root {
+        grid-template-columns: 1fr;
+    }
+
+    /* Canvas en premier */
+    #unity-container {
+        order: -1;
+    }
+
+    /* Panneau à la suite, qui défile */
+    #side {
+        order: 0;
+    }
 }
