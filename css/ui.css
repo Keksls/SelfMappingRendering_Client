@@ -434,3 +434,43 @@ html, body {
         object-fit: cover;
         display: block;
     }
+
+.view-card,
+.env-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* carré parfait */
+    border-radius: 10px;
+    overflow: hidden;
+    background: #1b1b1b;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform .15s ease;
+}
+
+.views-grid,
+.env-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    /* IMPORTANT : marges internes pour ne JAMAIS couper la bordure */
+    padding: 8px;
+    overflow-y: auto;
+    border-radius: 10px;
+}
+
+.view-card.selected,
+.env-card.selected {
+    outline: 3px solid #5aaaff;
+    outline-offset: 0; /* grâce au padding du container, ça ne clip plus */
+    transform: scale(0.98);
+}
+
+.view-card img,
+.env-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
