@@ -37,14 +37,71 @@
         finally { setLoading('env', false); }
     }
 
+    const viewsGrid = document.getElementById("viewsGrid");
+    let currentViewId = null;
+
     async function loadViews() {
+        viewsGrid.innerHTML = `<span class="spinner"></span>`;
+
         try {
-            enable(selects.view, false); setLoading('view', true); resetSelect(selects.view, '— Sélectionner une vue —');
             const rows = await window.Api.listViews();
-            rows.forEach(t => selects.view.appendChild(option(t.id, t.name)));
-            enable(selects.view, true);
-        } catch (e) { console.error('Views load failed:', e.message); }
-        finally { setLoading('view', false); }
+
+            viewsGrid.innerHTML = ""; // clear loader
+
+            rows.forEach(v => {
+                const card = document.createElement("div");
+                card.className = "view-card";
+                card.dataset.id = v.id;
+
+                // Image preview
+                const img = document.createElement("img");
+                img.src = `${window.Api.API_BASE}/views/${v.id}/prev`;
+                img.loading = "lazy";
+
+                // Name
+                const name = document.createElement("div");
+                name.className = "view-card-name";
+                name.textContent = v.name;
+
+                card.appendChild(img);
+                card.appendChild(name);
+
+                // CLICK = SELECT + APPLY VIEW
+                card.addEventListener("click", () => {
+
+                    // Visuellement indiqué
+                    document.querySelectorAll(".view-card")
+                        .forEach(c => c.classList.remove("selected"));
+
+                    card.classList.add("selected");
+                    currentViewId = v.id;
+
+                    // Envoi direct à Unity
+                    if (!window.unityInstance) {
+                        console.warn("Unity pas prêt");
+                        return;
+                    }
+
+                    try {
+                        window.unityInstance.SendMessage(
+                            GAMEOBJECT_NAME,
+                            "SetCameraView",
+                            currentViewId
+                        );
+                        console.log("Applied view:", currentViewId);
+                    } catch (e) {
+                        console.error("SendMessage error:", e.message);
+                    }
+
+                });
+
+                viewsGrid.appendChild(card);
+            });
+
+        } catch (e) {
+            console.error("Views load failed:", e.message);
+            viewsGrid.innerHTML = `<p class="muted">Impossible de charger les vues.</p>`;
+        }
     }
 
     async function loadTypes() {
@@ -95,14 +152,13 @@
 
     var selectedAircraft;
     selects.aircraft.addEventListener('change', async () => {
-        document.getElementById('importBtn').disabled = true;
         const aircraftId = selects.aircraft.value || null;
         if (!aircraftId) return;
         await window.Api.getAircraft(aircraftId).then(data => {
             selectedAircraft = data;
-            document.getElementById('importBtn').disabled = false;
             var jsonData = JSON.stringify(data, null, 2);
             console.log(`Aircraft selected : ${jsonData}`);
+            sendImport();
         });
     });
 
@@ -317,7 +373,6 @@
         }
     };
 
-    document.getElementById('importBtn').addEventListener('click', sendImport);
     document.getElementById('envImportBtn').addEventListener('click', sendLoadEnvironment);
     document.getElementById('clearLogs').addEventListener('click', () => { $console.innerHTML = ''; });
     document.getElementById('copyLogs') && document.getElementById('copyLogs').addEventListener('click', async () => {
