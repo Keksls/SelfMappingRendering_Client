@@ -196,22 +196,6 @@
         }
     }
 
-    // Apply View
-    document.getElementById('applyViewBtn').addEventListener('click', () => {
-        if (!window.unityInstance) { console.warn('Unity pas prêt'); return; }
-        const viewId = selects.view.value ? parseInt(selects.view.value, 10) : 0;
-        if (!viewId) {
-            console.warn('Aucune vue sélectionnée');
-            return;
-        }
-        try {
-            window.unityInstance.SendMessage(GAMEOBJECT_NAME, 'SetCameraView', viewId);
-            console.log('SendMessage ApplyView:', viewId);
-        } catch (e) {
-            console.error('SendMessage error:', e.message);
-        }
-    });
-
     // Quality settings
     const renderScaleSlider = document.getElementById('renderScale');
     const renderScaleVal = document.getElementById('renderScaleVal');
@@ -231,22 +215,6 @@
                 console.log('SetQualityLevel:', val);
             } catch (e) {
                 console.error('SetQualityLevel error:', e.message);
-            }
-        }
-    });
-
-    // Glossiness
-    const glossinessSlider = document.getElementById('glossiness');
-    const glossinessVal = document.getElementById('glossinessVal');
-    glossinessSlider.addEventListener('input', () => {
-        const val = parseFloat(glossinessSlider.value);
-        glossinessVal.textContent = val.toFixed(1);
-        if (window.unityInstance) {
-            try {
-                window.unityInstance.SendMessage(GAMEOBJECT_NAME, 'SetGlossinessFactor', val);
-                console.log('SetGlossinessFactor:', val);
-            } catch (e) {
-                console.error('SetGlossinessFactor error:', e.message);
             }
         }
     });
