@@ -40,7 +40,7 @@
     const viewsGrid = document.getElementById("viewsGrid");
     let currentViewId = null;
 
-    async function loadViews() {
+    async function loadViews(apiBase) {
         viewsGrid.innerHTML = `<span class="spinner"></span>`;
 
         try {
@@ -55,8 +55,7 @@
 
                 // Image preview
                 const img = document.createElement("img");
-                img.src = `${window.Api.API_BASE}/views/${v.id}/prev`;
-                alert(window.Api.API_BASE);
+                img.src = `${apiBase}/views/${v.id}/prev`;
                 img.loading = "lazy";
 
                 // Name
@@ -355,7 +354,8 @@
             clearInterval(waitForApiBase);
             loadTypes();
             loadEnvironments();
-            loadViews();
+            alert(window.Api.API_BASE);
+            loadViews(window.Api.API_BASE);
         }
     }, 50);
 })();
