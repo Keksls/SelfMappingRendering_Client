@@ -1,3 +1,6 @@
+/* ============================================
+   VARIABLES & BASE
+   ============================================ */
 :root {
     --bg: #0b0f14;
     --panel: #111621;
@@ -8,7 +11,7 @@
     --ok: #10b981;
     --warn: #f59e0b;
     --err: #ef4444;
-    --br: 12px
+    --br: 12px;
 }
 
 html, body {
@@ -16,16 +19,20 @@ html, body {
     margin: 0;
     background: var(--bg);
     color: var(--text);
-    font: 14px/1.4 system-ui,Segoe UI,Roboto,Arial,sans-serif
+    font: 14px/1.4 system-ui,Segoe UI,Roboto,Arial,sans-serif;
+    overflow: hidden !important;
 }
 
+/* ============================================
+   LAYOUT GLOBAL
+   ============================================ */
 #root {
     display: grid;
     grid-template-columns: 1fr 520px;
     gap: 16px;
     height: 100vh;
     padding: 16px;
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 #unity-container {
@@ -46,178 +53,74 @@ html, body {
     aspect-ratio: 16/9;
     max-height: 100%;
     background: #000;
-    display: block
-}
-
-#unity-footer {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(180deg,transparent,rgba(0,0,0,.6));
-    padding: 6px 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px
-}
-
-#unity-build-title {
-    margin-left: auto;
-    font-weight: 600;
-    color: #cbd5e1
+    display: block;
 }
 
 #side {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    min-height: 0
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 6px;
 }
 
+/* MOBILE – canvas en haut */
+@media (max-width:1100px) {
+    #root {
+        grid-template-columns: 1fr;
+    }
+
+    #unity-container {
+        order: -1;
+    }
+
+    #side {
+        order: 0;
+    }
+}
+
+/* ============================================
+   CARDS / UI
+   ============================================ */
 .card {
     background: var(--panel);
     border-radius: var(--br);
     padding: 14px;
-    box-shadow: 0 6px 24px rgba(0,0,0,.25)
+    box-shadow: 0 6px 24px rgba(0,0,0,.25);
 }
 
     .card h3 {
         margin: 0 0 10px;
         font-size: 14px;
         color: #cbd5e1;
-        letter-spacing: .3px
+        letter-spacing: .3px;
     }
 
 .grid {
     display: flex;
     flex-direction: column;
-    gap: 12px
+    gap: 12px;
 }
 
 .row {
     display: grid;
     grid-template-columns: 120px 1fr;
     align-items: center;
-    gap: 8px
+    gap: 8px;
 }
 
 label {
     font-size: 12px;
-    color: var(--muted)
-}
-
-select, .btn {
-    width: 100%;
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid #1f2937;
-    background: #0e1421;
-    color: var(--text);
-    outline: none
-}
-
-    select:disabled {
-        opacity: .6;
-        cursor: not-allowed
-    }
-
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: var(--accent);
-    color: white;
-    border: none;
-    font-weight: 600
-}
-
-    .btn.secondary {
-        background: #1f2937
-    }
-
-    .btn.sm {
-        padding: 6px 10px;
-        font-size: 12px;
-        border-radius: 8px
-    }
-
-    .btn:active {
-        transform: translateY(1px)
-    }
-
-.actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 8px
-}
-
-.toolbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 8px
-}
-
-.pill {
-    padding: 4px 8px;
-    border-radius: 999px;
-    background: #0e1421;
-    border: 1px solid #1f2937;
-    font-size: 12px
-}
-
-.kv {
-    display: flex;
-    gap: 6px;
-    align-items: center
-}
-
-    .kv b {
-        font-weight: 600;
-        color: #cbd5e1
-    }
-
-.muted {
     color: var(--muted);
-    margin-top: 6px
 }
 
-.inline {
-    display: flex;
-    gap: 8px;
-    align-items: center
-}
-
-.spinner {
-    width: 14px;
-    height: 14px;
-    border: 2px solid #334155;
-    border-top-color: #94a3b8;
-    border-radius: 50%;
-    display: inline-block;
-    animation: spin .8s linear infinite
-}
-
-@keyframes spin {
-    to {
-        transform: rotate(360deg)
-    }
-}
-
-@media (max-width:1100px) {
-    #root {
-        grid-template-columns: 1fr
-    }
-
-    #side {
-        order: -1
-    }
-}
-
-/* Inputs (match select/.btn look & feel) */
-.input, #ss-width, #ss-height, #ss-compression {
+select,
+.btn,
+.input,
+#ss-width,
+#ss-height,
+#ss-compression {
     width: 100%;
     padding: 10px;
     border-radius: 10px;
@@ -228,20 +131,148 @@ select, .btn {
     box-sizing: border-box;
 }
 
-#ss-width, #ss-height {
-    max-width: 120px;
+    select:disabled {
+        opacity: .6;
+        cursor: not-allowed;
+    }
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    font-weight: 600;
 }
 
-/* Console: un peu moins haute + redimensionnable */
-#console {
-    max-height: 32vh; /* au lieu de 40vh */
-    min-height: 80px; /* un peu plus compact */
-    resize: vertical; /* l’utilisateur peut l’agrandir */
+    .btn.secondary {
+        background: #1f2937;
+    }
+
+    .btn.sm {
+        padding: 6px 10px;
+        font-size: 12px;
+        border-radius: 8px;
+    }
+
+    .btn:active {
+        transform: translateY(1px);
+    }
+
+.actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
 }
 
-/* Blocking modal */
+.toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.pill {
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #0e1421;
+    border: 1px solid #1f2937;
+    font-size: 12px;
+}
+
+.inline {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.spinner {
+    width: 14px;
+    height: 14px;
+    border: 2px solid #334155;
+    border-top-color: #94a3b8;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+   SHARED GRID (views + env)
+   ============================================ */
+.card-grid {
+    display: grid;
+    gap: 12px;
+    padding: 8px; /* évite clipping outline */
+    overflow-y: auto;
+    border-radius: 10px;
+    grid-template-columns: repeat(3, 1fr); /* 3 cards desktop */
+}
+
+/* MOBILE – 2 cards */
+@media (max-width:1100px) {
+    .card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ============================================
+   SHARED CARD ITEM
+   ============================================ */
+.card-item {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: var(--card);
+    border-radius: 10px;
+    cursor: pointer;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .15s ease;
+}
+
+    .card-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+    }
+
+    .card-item:hover {
+        transform: scale(1.02);
+    }
+
+    .card-item.selected {
+        outline: 3px solid var(--accent);
+        outline-offset: 0;
+        transform: scale(0.98);
+    }
+
+    /* VIEW NAME */
+    .card-item .item-name {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        padding: 6px 0;
+        text-align: center;
+        background: rgba(0,0,0,0.35);
+        font-size: 13px;
+    }
+
+/* ============================================
+   MODALE
+   ============================================ */
 .modal {
-    display: none; /* toggled by JS */
+    display: none;
     position: fixed;
     inset: 0;
     z-index: 9999;
@@ -281,196 +312,15 @@ select, .btn {
     transition: width .25s ease;
 }
 
+/* ============================================
+   CHECKBOX GROUP
+   ============================================ */
 .row.check-group {
     display: flex;
-    flex-wrap: nowrap; /* empêche de passer à la ligne */
-    gap: 20px; /* espace entre les cases */
+    gap: 20px;
     align-items: center;
 }
 
     .row.check-group .pill {
-        white-space: nowrap; /* évite que le texte coupe */
+        white-space: nowrap;
     }
-
-#antiScreenOverlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.9);
-    color: white;
-    font-size: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    z-index: 999999;
-}
-
-/* Grid for view cards */
-.views-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
-    overflow-y: auto;
-    padding-right: 4px;
-    min-height: 80px;
-}
-
-/* Card */
-.view-card {
-    position: relative;
-    background: var(--card);
-    border: 1px solid #1f2937;
-    border-radius: 10px;
-    cursor: pointer;
-    overflow: hidden;
-    transition: transform .1s, border-color .2s;
-}
-
-    .view-card::before {
-        content: "";
-        display: block;
-        width: 100%;
-        padding-bottom: 100%; /* carré */
-    }
-
-
-    .view-card:hover {
-        transform: translateY(-2px);
-    }
-
-    /* Selected state */
-    .view-card.selected {
-        border-color: var(--accent);
-        box-shadow: 0 0 0 2px var(--accent);
-    }
-
-    /* Preview image */
-    .view-card img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        pointer-events: none;
-    }
-
-/* Name below */
-.view-card-name {
-    text-align: center;
-    padding: 8px;
-    font-size: 13px;
-    color: var(--text);
-}
-
-.views-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 12px;
-}
-
-html, body {
-    overflow: hidden !important;
-}
-
-#side {
-    overflow-y: auto;
-    padding-right: 6px; /* petit inset pour le scroll bar */
-}
-
-@media (max-width:1100px) {
-
-    /* Une seule colonne */
-    #root {
-        grid-template-columns: 1fr;
-    }
-
-    /* Canvas en premier */
-    #unity-container {
-        order: -1;
-    }
-
-    /* Panneau à la suite, qui défile */
-    #side {
-        order: 0;
-    }
-}
-
-.env-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
-    position: relative;
-    min-height: 80px;
-    max-height: 260px;
-    overflow-y: auto;
-    padding-right: 4px;
-}
-
-.env-card {
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform .1s, border-color .1s;
-    background: #111;
-}
-
-    .env-card:hover {
-        transform: scale(1.02);
-        border-color: var(--accent);
-    }
-
-    .env-card.selected {
-        border-color: var(--accent);
-        box-shadow: 0 0 0 2px var(--accent);
-    }
-
-    .env-card img {
-        width: 100%;
-        height: 100px;
-        object-fit: cover;
-        display: block;
-    }
-
-.view-card,
-.env-card {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1; /* carré parfait */
-    border-radius: 10px;
-    overflow: hidden;
-    background: #1b1b1b;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform .15s ease;
-}
-
-.views-grid,
-.env-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
-    /* IMPORTANT : marges internes pour ne JAMAIS couper la bordure */
-    padding: 8px;
-    overflow-y: auto;
-    border-radius: 10px;
-}
-
-.view-card.selected,
-.env-card.selected {
-    outline: 3px solid #5aaaff;
-    outline-offset: 0; /* grâce au padding du container, ça ne clip plus */
-    transform: scale(0.98);
-}
-
-.view-card img,
-.env-card img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}

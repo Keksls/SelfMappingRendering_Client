@@ -9,57 +9,54 @@
 </head>
 <body>
     <div id="root">
-        <div id="unity-container" class="unity-desktop">
-            <canvas id="unity-canvas" tabindex="-1"></canvas>
-            <div id="unity-loading-bar">
-                <div id="unity-logo"></div>
-                <div id="unity-progress-bar-empty"><div id="unity-progress-bar-full"></div></div>
-            </div>
-            <div id="unity-warning"></div>
+
+        <!-- Unity -->
+        <div id="unity-container">
+            <canvas id="unity-canvas"></canvas>
         </div>
 
-        <aside id="side">
-            <!-- Loading Moodel -->
+        <!-- Side Panel -->
+        <div id="side">
+
+            <!-- AIRCRAFT -->
             <div class="card">
-                <div class="toolbar">
-                    <h3>Importer un modèle</h3>
-                    <span class="pill" id="fps">FPS: …</span>
+                <h3>Aircraft</h3>
+
+                <div class="row">
+                    <label for="typeSelect">Family</label>
+                    <select id="typeSelect">
+                        <option value="">Loading…</option>
+                    </select>
                 </div>
 
-                <div class="grid">
-                    <div class="row">
-                        <label for="typeSelect">Type</label>
-                        <div class="inline"><select id="typeSelect" disabled></select><span id="typeSpin" class="spinner"></span></div>
-                    </div>
-                    <div class="row">
-                        <label for="liverySelect">Livrée</label>
-                        <div class="inline"><select id="liverySelect" disabled></select><span id="liverySpin" class="spinner"></span></div>
-                    </div>
-                    <div class="row">
-                        <label for="aircraftSelect">Aircraft</label>
-                        <div class="inline"><select id="aircraftSelect" disabled></select><span id="aircraftSpin" class="spinner"></span></div>
-                    </div>
+                <div class="row">
+                    <label for="aircraftSelect">Aircraft</label>
+                    <select id="aircraftSelect" disabled></select>
                 </div>
             </div>
 
-            <!-- Views -->
+            <!-- LIVERY -->
             <div class="card">
-                <div class="toolbar">
-                    <h3>Vues Camera</h3>
-                </div>
+                <h3>Livery</h3>
 
-                <div id="viewsGrid" class="views-grid">
+                <div id="liveriesGrid" class="card-grid">
+                    <span id="liverySpin" class="spinner"></span>
+                </div>
+            </div>
+
+            <!-- VIEWS -->
+            <div class="card">
+                <h3>Views</h3>
+
+                <div id="viewsGrid" class="card-grid">
                     <span id="viewsSpin" class="spinner"></span>
                 </div>
             </div>
 
-            <!-- Environment -->
-            <div class="card" id="environment-card">
-                <div class="toolbar">
-                    <h3>Environnement</h3>
-                </div>
+            <!-- ENVIRONMENT -->
+            <div class="card">
+                <h3>Environment</h3>
 
-                <!-- Quality + Rotation -->
                 <div class="grid">
                     <div class="row">
                         <label for="renderScale">Quality</label>
@@ -68,67 +65,22 @@
                             <span id="renderScaleVal">Medium</span>
                         </div>
                     </div>
+
                     <div class="row">
                         <label for="rotation">Rotation</label>
                         <div class="inline" style="width:100%">
                             <input type="range" id="rotation" min="0" max="360" step="1" value="0" />
-                            <span id="rotationVal">0</span>
+                            <span id="rotationVal">0°</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Grid de previews d'environnements -->
-                <div id="envGrid" class="env-grid">
+                <div id="envGrid" class="card-grid">
                     <span id="envSpin" class="spinner"></span>
                 </div>
             </div>
 
-            <!-- Screenshot -->
-            <div class="card" id="screenshot-card">
-                <h3>Screenshot</h3>
-                <div class="grid">
-                    <div class="row">
-                        <label for="ss-width">Résolution</label>
-                        <div class="inline">
-                            <input type="number" id="ss-width" min="256" step="1" value="3840" class="input" />
-                            <span class="muted">×</span>
-                            <input type="number" id="ss-height" min="256" step="1" value="2160" class="input" />
-                        </div>
-                    </div>
-
-                    <div class="row check-group">
-                        <label class="pill">
-                            <input type="checkbox" id="ss-background" />
-                            Fond
-                        </label>
-                        <label class="pill">
-                            <input type="checkbox" checked id="ss-environement" />
-                            Environnement
-                        </label>
-                        <label class="pill">
-                            <input type="checkbox" checked id="ss-ssao" />
-                            AO
-                        </label>
-                        <label class="pill">
-                            <input type="checkbox" checked id="ss-pfx" />
-                            PostFX
-                        </label>
-                    </div>
-
-                    <div class="row">
-                        <label for="ss-compression">Compression PNG</label>
-                        <div class="inline" style="gap:10px;">
-                            <input type="range" id="ss-compression" min="0" max="9" value="6" />
-                            <span class="muted" id="ss-compression-val">6</span>
-                        </div>
-                    </div>
-
-                    <div class="actions">
-                        <button class="btn" id="ss-capture">Prendre le screenshot</button>
-                    </div>
-                </div>
-            </div>
-        </aside>
+        </div>
     </div>
 
     <!-- Global render progress (blocking modal) -->
