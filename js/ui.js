@@ -56,6 +56,7 @@
                 // Image preview
                 const img = document.createElement("img");
                 img.src = `${window.Api.API_BASE}/views/${v.id}/prev`;
+                alert(window.Api.API_BASE);
                 img.loading = "lazy";
 
                 // Name

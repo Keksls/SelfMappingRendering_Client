@@ -18,6 +18,15 @@
         return r.json();
     }
 
+    async function fetchImage(url) {
+        const r = await fetch(url);
+        if (!r.ok) {
+            throw new Error(url + ' -> ' + r.status + ' ' + r.statusText);
+        }
+        const blob = await r.blob();
+        return URL.createObjectURL(blob);
+    }
+
     const Api = {
         listTypes: () => fetchJSON(`${API_BASE}/types`),
         listAircraftsByLiveries: (liveryId) => fetchJSON(`${API_BASE}/liveries/code/${liveryId}/aircrafts`),
@@ -25,6 +34,7 @@
         listEnvironments: () => fetchJSON(`${API_BASE}/environments`),
         getAircraft: (aircraftId) => fetchJSON(`${API_BASE}/aircrafts/${aircraftId}`),
         listViews: () => fetchJSON(`${API_BASE}/views`),
+        getViewPrev: (viewID) => fetchImage(`${API_BASE}/views/${viewID}/prev`),
     };
 
     global.Api = Api;
