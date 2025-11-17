@@ -249,7 +249,7 @@
     // ============================================================
     //  SELECT EVENTS
     // ============================================================
-    selects.type.addEventListener("change", async () => {
+    selects.type.root.addEventListener("change", async () => {
         const type = selects.type.value || null;
 
         resetSelect(selects.livery, "— Sélectionner une livrée —");
@@ -261,7 +261,7 @@
         if (type) loadLiveries(type);
     });
 
-    selects.livery.addEventListener("change", async () => {
+    selects.livery.root.addEventListener("change", async () => {
         const code = selects.livery.value || null;
 
         resetSelect(selects.aircraft, "— Sélectionner un aircraft —");
@@ -270,7 +270,7 @@
         if (code) loadAircrafts(code);
     });
 
-    selects.aircraft.addEventListener("change", async () => {
+    selects.aircraft.root.addEventListener("change", async () => {
         const id = selects.aircraft.value || null;
         if (!id) return;
 
