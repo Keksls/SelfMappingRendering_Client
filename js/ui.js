@@ -205,9 +205,9 @@
             const rows = await Api.listLiveries(typeId);
 
             // sort alphabetically by name
-            rows.sort((a, b) => a.code.localeCompare(b.code));
+            rows.sort((a, b) => a.localeCompare(b));
 
-            rows.forEach(l => selects.livery.appendChild(option(l.code, l.code)));
+            rows.forEach(l => selects.livery.appendChild(option(l, l)));
 
             enable(selects.livery, true);
 
