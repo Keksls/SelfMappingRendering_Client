@@ -13,6 +13,8 @@
     --warn: #F1C40F;
     --err: #E74C3C;
     --br: 12px;
+    --hover: rgba(58, 134, 255, 0.16); /* bleu Airbus doux */
+    --hover-strong: rgba(58, 134, 255, 0.28); /* version intense */
 }
 
 html, body {
@@ -315,8 +317,12 @@ select,
     }
 
     .card-item:hover {
-        transform: scale(0.95);
+        background: var(--hover);
+        border-color: var(--accent-hover);
     }
+        .card-item:hover img {
+            filter: brightness(1.15);
+        }
 
     /* VIEW NAME */
     .item-name {
@@ -551,7 +557,7 @@ select {
     }
 
         .aselect-options .opt:hover {
-            background: rgba(0, 174, 239, 0.25);
+            background: var(--hover-strong);
         }
 
     /* Scrollbar Airbus */
