@@ -112,6 +112,7 @@ html, body {
     overflow-x: hidden; /* empêche la scrollbar horizontale */
     overflow-y: auto; /* seulement verticale */
     padding-right: 6px;
+    scrollbar-gutter: stable both-edges;
 }
 
 .row {
