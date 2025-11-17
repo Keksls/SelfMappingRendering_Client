@@ -229,7 +229,7 @@ select,
    ============================================ */
 .card-item {
     position: relative;
-    width: 100%;
+    width: 33%;
     background: var(--card);
     border-radius: 10px;
     cursor: pointer;
