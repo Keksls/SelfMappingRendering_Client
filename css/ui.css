@@ -95,6 +95,7 @@ html, body {
     display: flex;
     flex-direction: column;
     min-height: 0;
+    overflow: hidden;
 }
 
     .card h3 {
@@ -220,8 +221,8 @@ select,
     gap: 16px;
     grid-auto-rows: minmax(160px, auto);
     height: auto;
-    flex: none;
-    min-height: auto;
+    flex: 1;
+    min-height: 0;
     padding: 8px 0 0;
     overflow-y: auto;
 }
