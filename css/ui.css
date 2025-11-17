@@ -109,6 +109,9 @@ html, body {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    overflow-x: hidden; /* empêche la scrollbar horizontale */
+    overflow-y: auto; /* seulement verticale */
+    padding-right: 6px;
 }
 
 .row {
@@ -248,6 +251,7 @@ select,
     align-items: center;
     overflow: hidden;
     cursor: pointer;
+    transform-origin: center;
 }
 
     .card-item img {
