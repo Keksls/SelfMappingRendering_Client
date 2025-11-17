@@ -218,7 +218,7 @@ select,
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
-    grid-auto-rows: auto;
+    grid-auto-rows: minmax(160px, auto);
     height: auto;
     flex: none;
     min-height: auto;
