@@ -9,23 +9,23 @@
 </head>
 <body>
     <div id="root">
-
-        <div id="top-controls">
-            <div class="ctrl">
-                <label for="renderScale">Quality</label>
-                <input type="range" id="renderScale" min="1" max="3" step="1" value="2" />
-                <span id="renderScaleVal">Medium</span>
-            </div>
-
-            <div class="ctrl">
-                <label for="rotation">Rotation</label>
-                <input type="range" id="rotation" min="0" max="360" step="1" value="0" />
-                <span id="rotationVal">0°</span>
-            </div>
-        </div>
-
         <!-- Unity -->
         <div id="unity-container" class="unity-desktop">
+
+            <div id="top-controls">
+                <div class="ctrl">
+                    <label for="renderScale">Quality</label>
+                    <input type="range" id="renderScale" min="1" max="3" step="1" value="2" />
+                    <span id="renderScaleVal">Medium</span>
+                </div>
+
+                <div class="ctrl">
+                    <label for="rotation">Rotation</label>
+                    <input type="range" id="rotation" min="0" max="360" step="1" value="0" />
+                    <span id="rotationVal">0°</span>
+                </div>
+            </div>
+
             <canvas id="unity-canvas" tabindex="-1"></canvas>
             <div id="unity-loading-bar">
                 <div id="unity-logo"></div>
@@ -78,25 +78,6 @@
             <!-- ENVIRONMENT -->
             <div class="card">
                 <h3>Environment</h3>
-
-                <!--<div class="grid">
-                    <div class="row">
-                        <label for="renderScale">Quality</label>
-                        <div class="inline" style="width:100%">
-                            <input type="range" id="renderScale" min="1" max="3" step="1" value="2" />
-                            <span id="renderScaleVal">Medium</span>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <label for="rotation">Rotation</label>
-                        <div class="inline" style="width:100%">
-                            <input type="range" id="rotation" min="0" max="360" step="1" value="0" />
-                            <span id="rotationVal">0°</span>
-                        </div>
-                    </div>
-                </div>-->
-
                 <div id="envGrid" class="card-grid">
                     <span id="envSpin" class="spinner"></span>
                 </div>
