@@ -425,32 +425,32 @@
     // ============================================================
     //  DYNAMIC HEIGHTS (DESKTOP ONLY)
     // ============================================================
-    const isMobile = () => window.innerWidth <= 1100;
+    //const isMobile = () => window.innerWidth <= 1100;
 
-    function adjustDynamicHeights() {
-        if (isMobile()) return;
+    //function adjustDynamicHeights() {
+    //    if (isMobile()) return;
 
-        const side = document.getElementById("side");
-        const cards = side.querySelectorAll(".card");
+    //    const side = document.getElementById("side");
+    //    const cards = side.querySelectorAll(".card");
 
-        const aircraftCard = cards[0];
-        const viewCard = cards[1];
-        const envCard = cards[2];
+    //    const aircraftCard = cards[0];
+    //    const viewCard = cards[1];
+    //    const envCard = cards[2];
 
-        const sideH = side.clientHeight;
-        const fixedHeight = aircraftCard.offsetHeight + 16;
+    //    const sideH = side.clientHeight;
+    //    const fixedHeight = aircraftCard.offsetHeight + 16;
 
-        const remaining = sideH - fixedHeight;
-        if (remaining < 100) return;
+    //    const remaining = sideH - fixedHeight;
+    //    if (remaining < 100) return;
 
-        const half = remaining / 2;
+    //    const half = remaining / 2;
 
-        viewCard.style.flex = `0 0 ${half}px`;
-        envCard.style.flex = `0 0 ${half}px`;
-    }
+    //    viewCard.style.flex = `0 0 ${half}px`;
+    //    envCard.style.flex = `0 0 ${half}px`;
+    //}
 
-    window.addEventListener("resize", adjustDynamicHeights);
-    window.addEventListener("load", adjustDynamicHeights);
-    setTimeout(adjustDynamicHeights, 300);
+    //window.addEventListener("resize", adjustDynamicHeights);
+    //window.addEventListener("load", adjustDynamicHeights);
+    //setTimeout(adjustDynamicHeights, 300);
 
 })();
