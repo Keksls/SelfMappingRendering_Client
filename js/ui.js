@@ -445,8 +445,8 @@
 
         const half = remaining / 2;
 
-        //viewCard.style.height = half + "px";
-        //envCard.style.height = half + "px";
+        viewCard.style.flex = `0 0 ${half}px`;
+        envCard.style.flex = `0 0 ${half}px`;
     }
 
     window.addEventListener("resize", adjustDynamicHeights);
