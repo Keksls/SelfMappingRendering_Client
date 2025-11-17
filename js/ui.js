@@ -207,7 +207,7 @@
             // sort alphabetically by name
             rows.sort((a, b) => a.name.localeCompare(b.name));
 
-            rows.forEach(l => selects.livery.appendChild(option(l.code, l.name)));
+            rows.forEach(l => selects.livery.appendChild(option(l.code, l.name + " - " + l.code)));
 
             enable(selects.livery, true);
 
