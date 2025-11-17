@@ -393,3 +393,58 @@ select,
     .card > .row:last-child {
         margin-bottom: 0;
     }
+
+/* Base select */
+select {
+    background-color: var(--card);
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--br);
+    padding: 10px 14px;
+    font-size: 15px;
+    appearance: none; /* Remove native arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    width: 100%;
+    outline: none;
+    transition: 0.15s ease;
+}
+
+    /* Hover */
+    select:hover {
+        border-color: var(--accent);
+    }
+
+    /* Focus */
+    select:focus {
+        box-shadow: 0 0 0 2px rgba(0, 174, 239, 0.35);
+        border-color: var(--accent);
+    }
+
+    /* Disabled */
+    select:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+/* Custom arrow */
+select {
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23E6E9F0' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'><path d='M5.25 7.5L10 12.25L14.75 7.5' stroke='%23E6E9F0' stroke-width='2' stroke-linecap='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 14px;
+}
+
+    /* Dropdown list */
+    select option {
+        background-color: var(--panel);
+        color: var(--text);
+        padding: 10px;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+        /* Option hover (Chrome only but works for 95% users) */
+        select option:hover {
+            background-color: rgba(0, 174, 239, 0.25);
+        }
