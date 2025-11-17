@@ -578,7 +578,7 @@ select {
     display: flex;
     align-items: center;
     gap: 28px;
-    padding: 0px 16px;
+    padding: 10px 22px;
     background: rgba(15, 21, 34, 0.66); /* plus subtil */
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 14px;
@@ -599,5 +599,5 @@ select {
     }
 
     #top-controls input[type=range] {
-        width: 130px;
+        width: 156px;
     }
