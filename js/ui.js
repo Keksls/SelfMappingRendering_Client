@@ -472,7 +472,7 @@
             reset(placeholder) {
                 optionsBox.innerHTML = "";
                 display.textContent = placeholder;
-                this.value = "";
+                this._value = "";
             }
         };
 
