@@ -203,7 +203,11 @@
             if (!typeId) return;
 
             const rows = await Api.listLiveries(typeId);
-            rows.forEach(l => selects.livery.appendChild(option(l.code, l.name)));
+
+            // sort alphabetically by name
+            rows.sort((a, b) => a.code.localeCompare(b.code));
+
+            rows.forEach(l => selects.livery.appendChild(option(l.code, l.code)));
 
             enable(selects.livery, true);
 
@@ -420,37 +424,4 @@
             loadViews();
         }
     }, 50);
-
-
-    // ============================================================
-    //  DYNAMIC HEIGHTS (DESKTOP ONLY)
-    // ============================================================
-    //const isMobile = () => window.innerWidth <= 1100;
-
-    //function adjustDynamicHeights() {
-    //    if (isMobile()) return;
-
-    //    const side = document.getElementById("side");
-    //    const cards = side.querySelectorAll(".card");
-
-    //    const aircraftCard = cards[0];
-    //    const viewCard = cards[1];
-    //    const envCard = cards[2];
-
-    //    const sideH = side.clientHeight;
-    //    const fixedHeight = aircraftCard.offsetHeight + 16;
-
-    //    const remaining = sideH - fixedHeight;
-    //    if (remaining < 100) return;
-
-    //    const half = remaining / 2;
-
-    //    viewCard.style.flex = `0 0 ${half}px`;
-    //    envCard.style.flex = `0 0 ${half}px`;
-    //}
-
-    //window.addEventListener("resize", adjustDynamicHeights);
-    //window.addEventListener("load", adjustDynamicHeights);
-    //setTimeout(adjustDynamicHeights, 300);
-
 })();
