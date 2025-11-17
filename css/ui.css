@@ -63,6 +63,7 @@ html, body {
     min-height: 0;
     overflow-y: auto;
     padding-right: 6px;
+    overflow: visible;
 }
 
 /* MOBILE – canvas en haut */
@@ -77,6 +78,7 @@ html, body {
 
     #side {
         order: 0;
+        overflow-y: auto;
     }
 }
 
@@ -88,6 +90,9 @@ html, body {
     border-radius: var(--br);
     padding: 14px;
     box-shadow: 0 6px 24px rgba(0,0,0,.25);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 }
 
     .card h3 {
@@ -208,13 +213,14 @@ select,
    SHARED GRID (views + env)
    ============================================ */
 .card-grid {
+    flex: 1; /* IMPORTANT */
     display: grid;
-    padding: 8px; /* évite clipping outline */
+    grid-template-columns: repeat(3, 1fr); /* GRID PROPRE */
+    gap: 8px;
+    padding: 8px;
     overflow-y: auto;
     border-radius: 10px;
     box-sizing: border-box;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    overflow-x: hidden;
 }
 
 /* MOBILE – 2 cards */
@@ -229,7 +235,6 @@ select,
    ============================================ */
 .card-item {
     position: relative;
-    width: 33%;
     background: var(--card);
     border-radius: 10px;
     cursor: pointer;
