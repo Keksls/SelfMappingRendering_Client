@@ -448,3 +448,118 @@ select {
         select option:hover {
             background-color: rgba(0, 174, 239, 0.25);
         }
+
+.select-wrapper {
+    position: relative;
+    width: 100%;
+    font-size: 15px;
+}
+
+.select-display {
+    background: var(--card);
+    padding: 12px 14px;
+    border-radius: var(--br);
+    border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+    .select-display:hover {
+        border-color: var(--accent);
+    }
+
+.select-options {
+    position: absolute;
+    top: 105%;
+    left: 0;
+    width: 100%;
+    background: var(--panel);
+    border-radius: var(--br);
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 8px 24px rgba(0,0,0,.45);
+    padding: 6px 0;
+    display: none;
+    max-height: 320px;
+    overflow-y: auto;
+    z-index: 20;
+}
+
+    /* Option style Airbus */
+    .select-options .option {
+        padding: 10px 14px;
+        cursor: pointer;
+        color: var(--text);
+    }
+
+        .select-options .option:hover {
+            background: rgba(0, 174, 239, 0.25);
+        }
+
+    /* Scrollbar Airbus */
+    .select-options::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .select-options::-webkit-scrollbar-thumb {
+        background: #1f2937;
+        border-radius: 6px;
+    }
+
+.aselect {
+    position: relative;
+    width: 100%;
+    font-size: 14px;
+    color: var(--text);
+}
+
+.aselect-display {
+    background: var(--card);
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .aselect-display:hover {
+        border-color: var(--accent);
+    }
+
+.aselect-options {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    width: 100%;
+    max-height: 260px;
+    overflow-y: auto;
+    background: var(--panel);
+    z-index: 20;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 8px 28px rgba(0,0,0,.4);
+}
+
+    .aselect-options .opt {
+        padding: 10px 14px;
+        cursor: pointer;
+    }
+
+        .aselect-options .opt:hover {
+            background: rgba(0, 174, 239, 0.25);
+        }
+
+    /* Scrollbar Airbus */
+    .aselect-options::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .aselect-options::-webkit-scrollbar-thumb {
+        background: #1f2937;
+        border-radius: 8px;
+    }

@@ -14,6 +14,11 @@
         livery: document.getElementById("liverySelect"),
     };
 
+    // replace native selects
+    selects.type = makeASelect("typeSelect");
+    selects.livery = makeASelect("liverySelect");
+    selects.aircraft = makeASelect("aircraftSelect");
+
     const spinners = {
         type: document.getElementById("typeSpin"),
         aircraft: document.getElementById("aircraftSpin"),
@@ -412,6 +417,73 @@
         }
     };
 
+    // =========================================
+    // CUSTOM SELECT ADAPTER
+    // =========================================
+    function makeASelect(id) {
+        const root = document.querySelector(`.aselect[data-id="${id}"]`);
+        if (!root) return null;
+
+        const display = root.querySelector(".aselect-display");
+        const optionsBox = root.querySelector(".aselect-options");
+
+        const api = {
+            root,
+            disabled: false,
+            value: "",
+
+            set disabled(v) {
+                this._disabled = v;
+                display.style.opacity = v ? .5 : 1;
+                display.style.pointerEvents = v ? "none" : "auto";
+            },
+
+            get disabled() {
+                return this._disabled;
+            },
+
+            set value(v) {
+                this._value = v;
+                const opt = optionsBox.querySelector(`.opt[data-value="${v}"]`);
+                display.textContent = opt ? opt.textContent : display.textContent;
+            },
+
+            get value() {
+                return this._value;
+            },
+
+            appendChild(optEl) {
+                const o = document.createElement("div");
+                o.className = "opt";
+                o.dataset.value = optEl.value;
+                o.textContent = optEl.textContent;
+
+                o.addEventListener("click", () => {
+                    this.value = optEl.value;
+                    optionsBox.style.display = "none";
+                    root.dispatchEvent(new Event("change"));
+                });
+
+                optionsBox.appendChild(o);
+            },
+
+            reset(placeholder) {
+                optionsBox.innerHTML = "";
+                display.textContent = placeholder;
+                this.value = "";
+            }
+        };
+
+        // toggle
+        display.addEventListener("click", () => {
+            if (api.disabled) return;
+            const shown = optionsBox.style.display === "block";
+            document.querySelectorAll(".aselect-options").forEach(o => o.style.display = "none");
+            optionsBox.style.display = shown ? "none" : "block";
+        });
+
+        return api;
+    }
 
     // ============================================================
     //  WAIT FOR API READY
