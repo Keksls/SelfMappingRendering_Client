@@ -60,10 +60,8 @@ html, body {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    min-height: 0;
-    overflow-y: auto;
-    padding-right: 6px;
     overflow: visible;
+    min-height: 0;
 }
 
 /* MOBILE – canvas en haut */
@@ -86,9 +84,13 @@ html, body {
    CARDS / UI
    ============================================ */
 .card {
+    background: var(--panel);
+    border-radius: var(--br);
+    padding: 14px;
+    box-shadow: 0 6px 24px rgba(0,0,0,.25);
     display: flex;
     flex-direction: column;
-    min-height: 0;
+    min-height: 0
 }
 
     .card h3 {
@@ -216,8 +218,6 @@ select,
     padding: 8px;
     overflow-y: auto;
     overflow-x: hidden;
-    border-radius: 10px;
-    box-sizing: border-box;
     min-height: 0;
 }
 
@@ -232,43 +232,40 @@ select,
    SHARED CARD ITEM
    ============================================ */
 .card-item {
-    position: relative;
     background: var(--card);
     border-radius: 10px;
-    cursor: pointer;
     overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform .15s ease;
-    aspect-ratio: 1;
 }
 
     .card-item img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        pointer-events: none;
+    }
+
+    .card-item.selected {
+        outline: 3px solid var(--accent);
+        transform: scale(0.97);
     }
 
     .card-item:hover {
         transform: scale(1.02);
     }
 
-    .card-item.selected {
-        outline: 3px solid var(--accent);
-        outline-offset: 0;
-        transform: scale(0.98);
-    }
-
     /* VIEW NAME */
-    .card-item .item-name {
+    .item-name {
         position: absolute;
         bottom: 0;
         width: 100%;
         padding: 6px 0;
         text-align: center;
-        background: rgba(0,0,0,0.35);
+        background: rgba(0,0,0,.35);
         font-size: 13px;
     }
 

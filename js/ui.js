@@ -410,27 +410,28 @@
 
     function adjustDynamicHeights() {
         if (isMobile()) {
-            grids.view.style.maxHeight = "";
-            grids.env.style.maxHeight = "";
             return;
         }
 
         const side = document.getElementById("side");
-        const viewCard = grids.view.closest(".card");
-        const envCard = grids.env.closest(".card");
+        const cards = side.querySelectorAll(".card");
+
+        const aircraftCard = cards[0];
+        const viewCard = cards[1];
+        const envCard = cards[2];
 
         const sideH = side.clientHeight;
 
-        const fixed = Array.from(side.children)
-            .filter(c => c !== viewCard && c !== envCard)
-            .reduce((s, c) => s + c.offsetHeight + 12, 0);
+        // hauteur des éléments fixes (Aircraft)
+        const fixedHeight = aircraftCard.offsetHeight + 12; // 12 = spacing
 
-        const remaining = sideH - fixed;
+        const remaining = sideH - fixedHeight;
         if (remaining < 100) return;
 
         const half = remaining / 2;
-        grids.view.style.maxHeight = half + "px";
-        grids.env.style.maxHeight = half + "px";
+
+        viewCard.style.height = half + "px";
+        envCard.style.height = half + "px";
     }
 
     window.addEventListener("resize", adjustDynamicHeights);
