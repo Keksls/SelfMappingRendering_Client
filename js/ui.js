@@ -19,7 +19,7 @@
         aircraft: document.getElementById("aircraftSpin"),
         livery: document.getElementById("liverySpin"),
         env: document.getElementById("envSpin"),
-        view: document.getElementById("viewSpin"),
+        view: document.getElementById("viewsSpin")  // ✔ corrigé
     };
 
     const grids = {
@@ -73,9 +73,9 @@
 
 
     // ============================================================
-    //  CARD FACTORY (Reuse for views + env)
+    //  CARD FACTORY
     // ============================================================
-    function createCard({ id, img, label, onClick, cls }) {
+    function createCard({ id, img, label, cls, onClick }) {
 
         const card = document.createElement("div");
         card.className = cls;
@@ -94,8 +94,10 @@
         }
 
         card.addEventListener("click", () => {
-            card.parentNode.querySelectorAll("." + cls)
+            // ✔ Sélection cohérente
+            [...card.parentNode.querySelectorAll("." + cls)]
                 .forEach(c => c.classList.remove("selected"));
+
             card.classList.add("selected");
             onClick(id);
         });
@@ -105,9 +107,10 @@
 
 
     // ============================================================
-    //  LOAD ENVIRONMENTS
+    //  ENVIRONMENTS
     // ============================================================
     async function loadEnvironmentPreviews() {
+
         const grid = grids.env;
         clearGrid(grid);
         grid.innerHTML = `<span class="spinner"></span>`;
@@ -117,17 +120,17 @@
             clearGrid(grid);
 
             rows.forEach(env => {
-                const card = createCard({
+                const c = createCard({
                     id: env.id,
                     img: Api.getEnvPrevURI(env.id),
-                    label: null,
                     cls: "env-card",
-                    onClick: (id) => {
+                    label: null,
+                    onClick: id => {
                         currentEnvId = id;
                         sendMessage("LoadEnvironment", id);
                     }
                 });
-                grid.appendChild(card);
+                grid.appendChild(c);
             });
 
         } catch (e) {
@@ -138,9 +141,10 @@
 
 
     // ============================================================
-    //  LOAD VIEWS
+    //  VIEWS
     // ============================================================
     async function loadViews() {
+
         const grid = grids.view;
         clearGrid(grid);
         grid.innerHTML = `<span class="spinner"></span>`;
@@ -150,17 +154,17 @@
             clearGrid(grid);
 
             rows.forEach(view => {
-                const card = createCard({
+                const c = createCard({
                     id: view.id,
                     img: Api.getViewPrevURI(view.id),
                     label: view.name,
                     cls: "view-card",
-                    onClick: (id) => {
+                    onClick: id => {
                         currentViewId = id;
                         sendMessage("SetCameraView", id);
                     }
                 });
-                grid.appendChild(card);
+                grid.appendChild(c);
             });
 
         } catch (e) {
@@ -171,117 +175,126 @@
 
 
     // ============================================================
-    //  LOAD TYPES
+    //  TYPES
     // ============================================================
     async function loadTypes() {
         try {
             enable(selects.type, false);
-            resetSelect(selects.type, '— Sélectionner un type —');
+            resetSelect(selects.type, "— Sélectionner un type —");
 
-            const rows = await window.Api.listTypes();
+            const rows = await Api.listTypes();
             rows.forEach(t => selects.type.appendChild(option(t.id, t.name)));
 
             enable(selects.type, true);
+
         } catch (e) {
-            console.error('Types load failed:', e.message);
+            console.error("Types load failed:", e.message);
         }
     }
 
+
     // ============================================================
-    //  LOAD LIVERIES
+    //  LIVERIES
     // ============================================================
     async function loadLiveries(typeId) {
         try {
             enable(selects.livery, false);
-            resetSelect(selects.livery, '— Sélectionner une livrée —');
+            resetSelect(selects.livery, "— Sélectionner une livrée —");
 
             if (!typeId) return;
 
-            const rows = await window.Api.listLiveries(typeId);
-            rows.forEach(l => selects.livery.appendChild(option(l, l)));
+            const rows = await Api.listLiveries(typeId);
+            rows.forEach(l => selects.livery.appendChild(option(l.code, l.name)));
 
             enable(selects.livery, true);
+
         } catch (e) {
-            console.error('Liveries load failed:', e.message);
+            console.error("Liveries load failed:", e.message);
         }
     }
 
+
     // ============================================================
-    //  LOAD AIRCRAFTS
+    //  AIRCRAFTS
     // ============================================================
     async function loadAircrafts(liveryCode) {
         try {
             enable(selects.aircraft, false);
-            resetSelect(selects.aircraft, '— Sélectionner un aircraft —');
+            resetSelect(selects.aircraft, "— Sélectionner un aircraft —");
 
             if (!liveryCode) return;
 
-            const rows = await window.Api.listAircraftsByLiveries(liveryCode);
-            rows.forEach(a => selects.aircraft.appendChild(option(a.id, a.name)));
+            const rows = await Api.listAircraftsByLiveries(liveryCode);
+
+            rows.forEach(a =>
+                selects.aircraft.appendChild(option(a.id, a.name))
+            );
 
             enable(selects.aircraft, true);
+
         } catch (e) {
-            console.error('Aircrafts load failed:', e.message);
+            console.error("Aircraft load failed:", e.message);
         }
     }
+
 
     // ============================================================
     //  SELECT EVENTS
     // ============================================================
-    selects.type.addEventListener('change', async () => {
-        const typeId = selects.type.value || null;
+    selects.type.addEventListener("change", async () => {
+        const type = selects.type.value || null;
 
-        resetSelect(selects.livery, '— Sélectionner une livrée —');
+        resetSelect(selects.livery, "— Sélectionner une livrée —");
         enable(selects.livery, false);
 
-        resetSelect(selects.aircraft, '— Sélectionner un aircraft —');
+        resetSelect(selects.aircraft, "— Sélectionner un aircraft —");
         enable(selects.aircraft, false);
 
-        if (typeId) await loadLiveries(typeId);
+        if (type) loadLiveries(type);
     });
 
-    selects.livery.addEventListener('change', async () => {
-        const livery = selects.livery.value || null;
+    selects.livery.addEventListener("change", async () => {
+        const code = selects.livery.value || null;
 
-        resetSelect(selects.aircraft, '— Sélectionner un aircraft —');
+        resetSelect(selects.aircraft, "— Sélectionner un aircraft —");
         enable(selects.aircraft, false);
 
-        if (livery) await loadAircrafts(livery);
+        if (code) loadAircrafts(code);
     });
 
-    selects.aircraft.addEventListener('change', async () => {
-        const aircraftId = selects.aircraft.value || null;
-        if (!aircraftId) return;
+    selects.aircraft.addEventListener("change", async () => {
+        const id = selects.aircraft.value || null;
+        if (!id) return;
 
-        const data = await window.Api.getAircraft(aircraftId);
-        selectedAircraft = data;
+        selectedAircraft = await Api.getAircraft(id);
+        console.log("Aircraft selected:", selectedAircraft);
 
-        console.log("Aircraft selected:", data);
         sendImport();
     });
 
-    function sendImport() {
-        if (!window.unityInstance) {
-            console.warn("Unity pas prêt");
-            return;
-        }
 
-        const payload = {
+    // ============================================================
+    //  SEND IMPORT TO UNITY
+    // ============================================================
+    function sendImport() {
+
+        if (!selectedAircraft) return;
+
+        const payload = JSON.stringify({
             TypeId: selectedAircraft.type_id,
             FamilyId: selectedAircraft.family_id,
             AircraftId: selectedAircraft.id,
-            LiveryCode: selects.livery.value,
-        };
-
-        const json = JSON.stringify(payload);
+            LiveryCode: selects.livery.value
+        });
 
         try {
-            window.unityInstance.SendMessage(GAMEOBJECT_NAME, 'Load', json);
-            console.log("SendMessage Load:", json);
+            window.unityInstance.SendMessage(GO, "Load", payload);
+            console.log("SendMessage Load:", payload);
         } catch (e) {
-            console.error("SendMessage error:", e.message);
+            console.error("SendMessage Load error:", e.message);
         }
     }
+
 
     // ============================================================
     //  QUALITY / ROTATION
@@ -305,7 +318,7 @@
 
 
     // ============================================================
-    //  SCREENSHOT PIPELINE (UNCHANGED, CLEANED)
+    //  SCREENSHOT
     // ============================================================
     const $ss = {
         width: document.getElementById("ss-width"),
@@ -325,7 +338,11 @@
 
     if ($ss.capture)
         $ss.capture.addEventListener("click", () => {
-            if (!window.unityInstance) return console.warn("Unity pas prêt");
+
+            if (!window.unityInstance) {
+                console.warn("Unity pas prêt");
+                return;
+            }
 
             const payload = JSON.stringify({
                 width: Math.max(256, parseInt($ss.width.value) || 0),
@@ -343,26 +360,28 @@
         });
 
 
-    // PROGRESS MODAL
+    // ============================================================
+    //  PROGRESS MODAL
+    // ============================================================
     const $modal = document.getElementById("progress-modal");
     const $title = document.getElementById("progress-title");
-    const $bar = document.getElementById("progress-bar");
     const $msg = document.getElementById("progress-message");
+    const $bar = document.getElementById("progress-bar");
 
     function showProgressModal(title, msg) {
-        if ($title) $title.textContent = title;
-        if ($msg) $msg.textContent = msg;
-        if ($bar) $bar.style.width = "0%";
-        if ($modal) $modal.setAttribute("aria-hidden", "false");
+        $title.textContent = title;
+        $msg.textContent = msg;
+        $bar.style.width = "0%";
+        $modal.setAttribute("aria-hidden", "false");
     }
 
     function hideProgressModal() {
-        $modal && $modal.setAttribute("aria-hidden", "true");
+        $modal.setAttribute("aria-hidden", "true");
     }
 
     function updateProgressModal(pct, msg) {
-        if ($bar) $bar.style.width = pct + "%";
-        if (msg && $msg) $msg.textContent = msg;
+        $bar.style.width = pct + "%";
+        if (msg) $msg.textContent = msg;
     }
 
     window.OnScreenshotProgress = (phase, prog) => {
@@ -376,14 +395,15 @@
     window.OnScreenshotReady = (base64, w, h) => {
         try {
             const bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
-            const url = URL.createObjectURL(new Blob([bytes], { type: "image/png" }));
-            const a = Object.assign(document.createElement("a"), {
-                href: url, download: `screenshot_${w}x${h}.png`
-            });
+            const url = URL.createObjectURL(
+                new Blob([bytes], { type: "image/png" })
+            );
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `screenshot_${w}x${h}.png`;
             document.body.appendChild(a);
             a.click();
             a.remove();
-
         } finally {
             hideProgressModal();
         }
@@ -391,7 +411,7 @@
 
 
     // ============================================================
-    //  WAIT FOR API READY, THEN LOAD EVERYTHING
+    //  WAIT FOR API READY
     // ============================================================
     const wait = setInterval(() => {
         if (window.Api && Api.API_BASE !== "nourl") {
@@ -409,9 +429,7 @@
     const isMobile = () => window.innerWidth <= 1100;
 
     function adjustDynamicHeights() {
-        if (isMobile()) {
-            return;
-        }
+        if (isMobile()) return;
 
         const side = document.getElementById("side");
         const cards = side.querySelectorAll(".card");
@@ -421,9 +439,7 @@
         const envCard = cards[2];
 
         const sideH = side.clientHeight;
-
-        // hauteur des éléments fixes (Aircraft)
-        const fixedHeight = aircraftCard.offsetHeight + 12; // 12 = spacing
+        const fixedHeight = aircraftCard.offsetHeight + 12;
 
         const remaining = sideH - fixedHeight;
         if (remaining < 100) return;
