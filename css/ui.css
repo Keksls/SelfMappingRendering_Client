@@ -63,7 +63,7 @@ html, body {
     gap: 12px;
     height: 100%; /* prend toute la colonne de droite */
     min-height: 0;
-    overflow: hidden;
+    overflow: visible;
 }
 
 /* MOBILE – canvas en haut */
@@ -96,7 +96,7 @@ html, body {
     display: flex;
     flex-direction: column;
     min-height: 0;
-    overflow: hidden;
+    overflow: visible;
 }
 
     .card h3 {
