@@ -122,8 +122,8 @@
                 const c = createCard({
                     id: env.id,
                     img: Api.getEnvPrevURI(env.id),
+                    label: env.name,
                     cls: "card-item",
-                    label: null,
                     onClick: id => {
                         currentEnvId = id;
                         sendMessage("LoadEnvironment", id);
