@@ -2,16 +2,14 @@
    VARIABLES & BASE
    ============================================ */
 :root {
-    --bg: #0A1128; /* Navy profond Airbus */
-    --panel: #0F1A35; /* Panneaux légèrement éclaircis */
-    --card: #111E40; /* Items un peu plus contrastés */
-    --text: #E6E9F0; /* Blanc bleu Airbus */
-    --muted: #8A90A0; /* Airbus Grey doux */
-
-    --accent: #00AEEF; /* Sky Blue Airbus */
-    --accent-hover: #21BFFF; /* Hover lumineux */
-
-    --ok: #2ECC71; /* Couleurs status légèrement modernisées */
+    --bg: #0B132B;
+    --panel: #1C2541;
+    --card: #1F2A47;
+    --text: #EEF2F7;
+    --muted: #9BA7BA;
+    --accent: #3A86FF; /* Bleu Airbus modernisé */
+    --accent-hover: #5EA0FF;
+    --ok: #2ECC71;
     --warn: #F1C40F;
     --err: #E74C3C;
     --br: 12px;
