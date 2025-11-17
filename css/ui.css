@@ -383,3 +383,11 @@ select,
     .row.check-group .pill {
         white-space: nowrap;
     }
+
+.card > .row {
+    margin-bottom: 10px;
+}
+
+    .card > .row:last-child {
+        margin-bottom: 0;
+    }
