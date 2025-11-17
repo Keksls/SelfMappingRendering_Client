@@ -19,7 +19,7 @@
         aircraft: document.getElementById("aircraftSpin"),
         livery: document.getElementById("liverySpin"),
         env: document.getElementById("envSpin"),
-        view: document.getElementById("viewsSpin")  // ✔ corrigé
+        view: document.getElementById("viewsSpin")
     };
 
     const grids = {
@@ -94,7 +94,6 @@
         }
 
         card.addEventListener("click", () => {
-            // ✔ Sélection cohérente
             [...card.parentNode.querySelectorAll("." + cls)]
                 .forEach(c => c.classList.remove("selected"));
 
@@ -123,7 +122,7 @@
                 const c = createCard({
                     id: env.id,
                     img: Api.getEnvPrevURI(env.id),
-                    cls: "env-card",
+                    cls: "card-item",
                     label: null,
                     onClick: id => {
                         currentEnvId = id;
@@ -158,7 +157,7 @@
                     id: view.id,
                     img: Api.getViewPrevURI(view.id),
                     label: view.name,
-                    cls: "view-card",
+                    cls: "card-item",
                     onClick: id => {
                         currentViewId = id;
                         sendMessage("SetCameraView", id);
