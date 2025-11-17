@@ -572,7 +572,7 @@ select {
 
 #top-controls {
     position: absolute;
-    top: 14px;
+    top: 10px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
