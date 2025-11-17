@@ -287,7 +287,7 @@
             TypeId: selectedAircraft.type_id,
             FamilyId: selectedAircraft.family_id,
             AircraftId: selectedAircraft.id,
-            LiveryCode: selects.livery.value.id
+            LiveryCode: selects.livery.value
         });
 
         try {
