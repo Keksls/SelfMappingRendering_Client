@@ -569,3 +569,33 @@ select {
         background: #1f2937;
         border-radius: 8px;
     }
+
+#top-controls {
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    z-index: 10;
+    padding: 8px 16px;
+    background: rgba(0,0,0,0.35);
+    border-radius: 10px;
+    backdrop-filter: blur(6px);
+}
+
+    #top-controls .ctrl {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    #top-controls label {
+        font-size: 13px;
+        color: var(--muted);
+    }
+
+    #top-controls input[type=range] {
+        width: 140px;
+    }
