@@ -453,6 +453,8 @@
             },
 
             appendChild(optEl) {
+                if (optionsBox.querySelector(`.opt[data-value="${optEl.value}"]`))
+                    return;
                 const o = document.createElement("div");
                 o.className = "opt";
                 o.dataset.value = optEl.value;
