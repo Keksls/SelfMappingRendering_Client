@@ -215,14 +215,15 @@ select,
    SHARED GRID (views + env)
    ============================================ */
 .card-grid {
-    flex: 1;
-    min-height: 0;
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 colonnes fixes */
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
+    grid-auto-rows: auto;
+    height: auto;
+    flex: none;
+    min-height: auto;
     padding: 8px 0 0;
-    grid-auto-rows: minmax(0, auto);
-    overflow-y: auto; /* scroll interne */
+    overflow-y: auto;
 }
 
 /* MOBILE – 2 cards */
