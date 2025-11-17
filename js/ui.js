@@ -184,7 +184,7 @@
     async function loadTypes() {
         try {
             enable(selects.type, false);
-            resetSelect(selects.type, "— Sélectionner un type —");
+            resetSelect(selects.type, "— Select a Type —");
 
             const rows = await Api.listTypes();
             rows.forEach(t => selects.type.appendChild(option(t.id, t.name)));
@@ -203,7 +203,7 @@
     async function loadLiveries(typeId) {
         try {
             enable(selects.livery, false);
-            resetSelect(selects.livery, "— Sélectionner une livrée —");
+            resetSelect(selects.livery, "— Select an Airline —");
 
             if (!typeId) return;
 
@@ -228,7 +228,7 @@
     async function loadAircrafts(liveryCode) {
         try {
             enable(selects.aircraft, false);
-            resetSelect(selects.aircraft, "— Sélectionner un aircraft —");
+            resetSelect(selects.aircraft, "— Select an Aircraft —");
 
             if (!liveryCode) return;
 
@@ -252,10 +252,10 @@
     selects.type.root.addEventListener("change", async () => {
         const type = selects.type.value || null;
 
-        resetSelect(selects.livery, "— Sélectionner une livrée —");
+        resetSelect(selects.livery, "— Select an Airline —");
         enable(selects.livery, false);
 
-        resetSelect(selects.aircraft, "— Sélectionner un aircraft —");
+        resetSelect(selects.aircraft, "— Select an Aircraft —");
         enable(selects.aircraft, false);
 
         if (type) loadLiveries(type);
@@ -264,7 +264,7 @@
     selects.livery.root.addEventListener("change", async () => {
         const code = selects.livery.value || null;
 
-        resetSelect(selects.aircraft, "— Sélectionner un aircraft —");
+        resetSelect(selects.aircraft, "— Select an Aircraft —");
         enable(selects.aircraft, false);
 
         if (code) loadAircrafts(code);

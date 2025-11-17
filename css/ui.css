@@ -596,7 +596,10 @@ select {
     #top-controls label {
         font-size: 12px;
         color: var(--muted);
-        width: 72px;
+    }
+
+    #top-controls span {
+        width : 42px;
     }
 
     #top-controls input[type=range] {
