@@ -438,15 +438,15 @@
         const envCard = cards[2];
 
         const sideH = side.clientHeight;
-        const fixedHeight = aircraftCard.offsetHeight + 12;
+        const fixedHeight = aircraftCard.offsetHeight + 16;
 
         const remaining = sideH - fixedHeight;
         if (remaining < 100) return;
 
         const half = remaining / 2;
 
-        viewCard.style.height = half + "px";
-        envCard.style.height = half + "px";
+        //viewCard.style.height = half + "px";
+        //envCard.style.height = half + "px";
     }
 
     window.addEventListener("resize", adjustDynamicHeights);
