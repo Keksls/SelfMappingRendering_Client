@@ -1,1 +1,1 @@
-https://livery.airbus.com/api
+/studio/api
