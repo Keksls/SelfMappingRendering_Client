@@ -812,22 +812,21 @@ select {
 
 #unity-wait-screen {
     position: fixed;
-    z-index: 999999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     background: rgba(20,20,20,0.92);
+    z-index: 999999;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: opacity .4s;
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity .4s ease;
 }
 
-.wait-hidden {
-    opacity: 0;
-    pointer-events: none;
-}
+    #unity-wait-screen.wait-hidden {
+        opacity: 0;
+        pointer-events: none;
+    }
 
 .wait-visible {
     opacity: 1;

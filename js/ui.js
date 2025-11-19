@@ -498,8 +498,10 @@
 
         // cacher l'écran de chargement (si tu en as un)
         const waitScreen = document.getElementById("unity-wait-screen");
-        if (waitScreen) waitScreen.classList.add("wait-hidden");
-
+        if (waitScreen) {
+            waitScreen.classList.remove("wait-visible");
+            waitScreen.classList.add("wait-hidden");
+        }
         // lancer le JS
         loadTypes();
         loadEnvironmentPreviews();
