@@ -643,8 +643,7 @@ select {
     position: fixed;
     left: 50%;
     bottom: 0;
-    transform: translateX(-50%);
-    width: 480px; /* <-- plus petit */
+    width: 480px;
     max-width: 95%;
     padding: 20px;
     background: var(--panel);
