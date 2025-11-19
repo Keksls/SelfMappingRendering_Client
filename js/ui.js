@@ -549,8 +549,7 @@
         }
     });
 
-    // Render button
-    renderBtn.addEventListener("click", async () => {
+    renderBtn.addEventListener("click", async (e) => {
 
         // 1. Vérifier les tokens côté serveur
         const r = await fetch("/studio/consume-token.php", {
@@ -560,13 +559,17 @@
         const j = await r.json();
 
         if (!j.success) {
-            // Si pas assez de tokens → redirection
+            // Stopper le click, empêcher le reste du JS
+            e.preventDefault();
+            e.stopPropagation();
+
             if (j.redirect)
                 window.location.href = j.redirect;
-            return;
+
+            return; // NE RIEN CONTINUER
         }
 
-        // 2. OK → on continue
+        // 2. OK → on continue normalement
         let width, height;
 
         if (bsRes.value === "custom") {
