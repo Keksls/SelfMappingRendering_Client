@@ -874,13 +874,13 @@ select {
 
 /* TOKEN BADGE */
 #render-open-btn {
-    position: absolute;
+    position: relative;
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 9999;
     background: var(--accent);
-    padding: 14px 48px 14px 48px;
+    padding: 14px 48px 14px 58px;
     color: white;
     font-size: 16px;
     border-radius: 14px;
@@ -888,78 +888,64 @@ select {
     cursor: pointer;
     font-weight: 600;
     box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-    /* NEW → allow inline items */
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 18px;
 }
 
 #token-inline {
-    position: relative;
-    width: 24px; /* ↓ réduit de ~10% */
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Radial ring (thin, darker fill for contrast) */
-#token-ring {
+    width: 28px;
+    height: 28px;
     position: absolute;
-    inset: 0;
-    border-radius: 50%;
-    background: conic-gradient( var(--panel) var(--percent, 0%), /* panel = darker = visible on hover */
-    transparent var(--percent, 0%) );
-    filter: brightness(1.15); /* subtil mais rend bien */
-}
-
-/* Inner badge (slightly smaller now) */
-#token-badge {
-    position: absolute;
-    width: 18px; /* ↓ réduit de ~10% */
-    height: 18px;
-    border-radius: 50%;
-    background: var(--card); /* bleu-foncé Airbus = bon contraste */
-    color: var(--text);
-    font-size: 10px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.25);
-}
-
-/* Better inline layout for the button */
-#render-open-btn {
-    display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-    padding-right: 45px !important; /* ↑ place réservée pour le badge */
-    position: relative;
-}
-
-/* Badge position (further right, closer to border) */
-#token-inline {
-    position: absolute;
-    right: 14px; /* → éloigné du texte, rapproché du bord */
+    right: 16px;
     top: 50%;
     transform: translateY(-50%);
 }
 
-    /* Tooltip */
-    #token-inline:hover::after {
-        content: attr(title);
-        position: absolute;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: var(--panel);
-        color: var(--text);
-        padding: 6px 10px;
-        border-radius: 8px;
-        font-size: 11px;
-        border: 1px solid var(--accent);
-        opacity: 0.9;
-        pointer-events: none;
-        white-space: nowrap;
-    }
+/* Radial ring (smaller version) */
+#token-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: conic-gradient( var(--panel) var(--percent, 0%), transparent var(--percent, 0%) );
+    padding: 2px;
+    box-sizing: border-box;
+}
+
+/* Badge center */
+#token-badge {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--card);
+    color: var(--text);
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Tooltip */
+#token-inline:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--panel);
+    color: var(--text);
+    padding: 6px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--accent);
+    white-space: nowrap;
+    font-size: 12px;
+    pointer-events: none;
+    opacity: 0.9;
+}
