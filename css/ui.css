@@ -873,6 +873,27 @@ select {
 }
 
 /* TOKEN BADGE */
+#render-open-btn {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    background: var(--accent);
+    padding: 14px 48px 14px 48px;
+    color: white;
+    font-size: 16px;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    /* NEW → allow inline items */
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
 #token-inline {
     position: relative;
     width: 24px; /* ↓ réduit de ~10% */
