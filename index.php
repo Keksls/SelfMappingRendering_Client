@@ -64,14 +64,6 @@ if ($tokens <= 0) {
         </div>
 
         <div id="sheet-content">
-
-            <div class="row check-group">
-                <label class="pill">
-                    <input type="checkbox" id="bs-background" checked>
-                    Background (sky)
-                </label>
-            </div>
-
             <div class="row">
                 <label>Resolution</label>
                 <select id="bs-resolution">
@@ -85,14 +77,20 @@ if ($tokens <= 0) {
             </div>
 
             <div id="bs-custom-res" style="display:none;margin-top:6px;">
-                <div class="row">
-                    <label>Width</label>
-                    <input type="number" min="256" max="16000" value="4096" id="bs-width" class="bs-input">
+                <div class="form-row">
+                    <label for="bs-width">Width</label>
+                    <input type="number" id="bs-width" class="bs-input" min="64" max="32000" />
                 </div>
-                <div class="row">
-                    <label>Height</label>
-                    <input type="number" min="256" max="16000" value="4096"  id="bs-height" class="bs-input">
+
+                <div class="form-row">
+                    <label for="bs-height">Height</label>
+                    <input type="number" id="bs-height" class="bs-input" min="64" max="32000" />
                 </div>
+            </div>
+
+            <div class="form-row">
+                <label for="bs-background">Background (sky)</label>
+                <input type="checkbox" id="bs-background" class="bs-check" checked />
             </div>
 
             <button id="bs-render-btn" class="btn" style="margin-top:20px;">Render</button>
