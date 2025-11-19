@@ -611,26 +611,26 @@ select {
    BUTTON: Rendering (bottom center)
    ============================================ */
 #render-open-btn {
-    position: fixed;
-    bottom: 24px;
+    position: absolute;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
+    z-index: 99999;
     background: var(--accent);
+    padding: 14px 42px;
     color: white;
-    border: none;
+    font-size: 16px;
     border-radius: 14px;
-    padding: 16px 34px;
-    font-size: 18px;
-    font-weight: 600;
+    border: none;
     cursor: pointer;
-    z-index: 9998;
-    box-shadow: 0 6px 18px rgba(0,0,0,.35);
-    transition: background .15s, transform .1s;
+    font-weight: 600;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
 }
 
     #render-open-btn:hover {
         background: var(--accent-hover);
     }
+
 
     #render-open-btn:active {
         transform: translateX(-50%) translateY(2px);
@@ -643,7 +643,7 @@ select {
     position: fixed;
     left: 0;
     bottom: 0;
-    width: 100%;
+    width: 480px;
     background: #0f1522;
     border-top: 1px solid #1f2937;
     border-radius: 18px 18px 0 0;
@@ -656,6 +656,14 @@ select {
     #bottom-sheet.sheet-visible {
         transform: translateY(0);
     }
+
+.sheet-hidden {
+    transform: translateX(-50%) translateY(100%);
+}
+
+.sheet-visible {
+    transform: translateX(-50%) translateY(0);
+}
 
 #sheet-header {
     padding: 14px;

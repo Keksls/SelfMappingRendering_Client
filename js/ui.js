@@ -521,6 +521,16 @@
         bsCustom.style.display = (bsRes.value === "custom") ? "block" : "none";
     });
 
+    // Fermer si clic extérieur
+    document.addEventListener("click", (e) => {
+        const clickedInside = sheet.contains(e.target) || openBtn.contains(e.target);
+
+        if (!clickedInside) {
+            sheet.classList.add("sheet-hidden");
+            sheet.classList.remove("sheet-visible");
+        }
+    });
+
     // When clicking Render
     renderBtn.addEventListener("click", () => {
 
