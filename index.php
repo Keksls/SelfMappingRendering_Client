@@ -55,6 +55,10 @@ if ($tokens <= 0) {
                 <div id="unity-progress-bar-empty"><div id="unity-progress-bar-full"></div></div>
             </div>
             <div id="unity-warning"></div>
+
+            <div id="render-btn-wrapper">
+                <button id="render-btn">Generate Render</button>
+            </div>
         </div>
 
         <!-- Side Panel -->

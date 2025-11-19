@@ -489,4 +489,42 @@
             loadViews();
         }
     }, 50);
+
+    // ============================================================
+    //  BIG RENDER BUTTON
+    // ============================================================
+    const btn = document.getElementById("render-btn");
+    if (btn) {
+        btn.addEventListener("click", () => {
+
+            if (!window.unityInstance) {
+                console.warn("Unity pas prêt");
+                return;
+            }
+
+            const params = {
+                width: 3840,                     // tu peux changer la résolution par défaut
+                height: 2160,
+                pngCompression: 2,
+                background: true,                // mettre ce que tu veux, ou binder à un toggle
+                environment: true,               // idem
+                includePostFX: true,
+                ambiantOclusion: false,
+                supersample: true
+            };
+
+            showProgressModal("Rendu en cours…", "Préparation…");
+
+            try {
+                window.unityInstance.SendMessage(
+                    "API",
+                    "CaptureScreenJSON",
+                    JSON.stringify(params)
+                );
+                console.log("SendMessage → CaptureScreenJSON", params);
+            } catch (e) {
+                console.error("SendMessage CaptureScreenJSON error:", e);
+            }
+        });
+    }
 })();
