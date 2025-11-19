@@ -874,7 +874,7 @@ select {
 
 /* TOKEN BADGE */
 #render-open-btn {
-    position: relative;
+    position: absolute;
     height: 56px;
     line-height: 56px;
     bottom: 30px;
