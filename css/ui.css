@@ -932,13 +932,15 @@ select {
     width: 28px;
     height: 28px;
     border-radius: 50%;
+    /* Track + Progress combinés */
     background:
-    /* progress */
+    /* Progress segment */
     conic-gradient( var(--accent-hover) var(--percent, 0%), transparent var(--percent, 0%) ),
-    /* track */
+    /* Track (cercle sombre complet) */
     var(--panel);
-    padding: 2px;
-    box-sizing: border-box;
+    /* Découpe centrale */
+    mask: radial-gradient(circle 9px at center, transparent 10px, black 11px);
+    -webkit-mask: radial-gradient(circle 9px at center, transparent 10px, black 11px);
     transition: background 0.45s ease-out;
     transition: --percent 0.6s ease-out;
 }
