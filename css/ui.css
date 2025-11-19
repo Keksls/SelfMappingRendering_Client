@@ -872,78 +872,73 @@ select {
     font-size: 14px;
 }
 
-/* TOKEN BADGE — option 2 : inside the button */
-#render-open-btn {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 9999;
-    background: var(--accent);
-    padding: 14px 48px 14px 48px;
-    color: white;
-    font-size: 16px;
-    border-radius: 14px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
-    /* NEW → allow inline items */
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
+/* TOKEN BADGE */
 #token-inline {
     position: relative;
-    width: 32px;
-    height: 32px;
+    width: 24px; /* ↓ réduit de ~10% */
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Radial ring (smaller version) */
+/* Radial ring (thin, darker fill for contrast) */
 #token-ring {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 32px;
-    height: 32px;
+    inset: 0;
     border-radius: 50%;
-    background: conic-gradient( var(--accent-hover) var(--percent, 0%), var(--panel) var(--percent, 0%) );
-    padding: 3px;
-    box-sizing: border-box;
+    background: conic-gradient( var(--panel) var(--percent, 0%), /* panel = darker = visible on hover */
+    transparent var(--percent, 0%) );
+    filter: brightness(1.15); /* subtil mais rend bien */
 }
 
-/* Badge center */
+/* Inner badge (slightly smaller now) */
 #token-badge {
     position: absolute;
-    top: 4px;
-    left: 4px;
-    width: 24px;
-    height: 24px;
+    width: 18px; /* ↓ réduit de ~10% */
+    height: 18px;
     border-radius: 50%;
-    background: var(--card);
+    background: var(--card); /* bleu-foncé Airbus = bon contraste */
     color: var(--text);
-    font-size: 12px;
+    font-size: 10px;
     font-weight: 700;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.25);
 }
 
-/* Tooltip */
-#token-inline:hover::after {
-    content: attr(title);
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--panel);
-    color: var(--text);
-    padding: 6px 12px;
-    border-radius: 10px;
-    border: 1px solid var(--accent);
-    white-space: nowrap;
-    font-size: 12px;
-    pointer-events: none;
-    opacity: 0.9;
+/* Better inline layout for the button */
+#render-open-btn {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    padding-right: 45px !important; /* ↑ place réservée pour le badge */
+    position: relative;
 }
+
+/* Badge position (further right, closer to border) */
+#token-inline {
+    position: absolute;
+    right: 14px; /* → éloigné du texte, rapproché du bord */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+    /* Tooltip */
+    #token-inline:hover::after {
+        content: attr(title);
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--panel);
+        color: var(--text);
+        padding: 6px 10px;
+        border-radius: 8px;
+        font-size: 11px;
+        border: 1px solid var(--accent);
+        opacity: 0.9;
+        pointer-events: none;
+        white-space: nowrap;
+    }
