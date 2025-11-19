@@ -654,10 +654,6 @@ select {
     z-index: 99999;
 }
 
-    #bottom-sheet.sheet-visible {
-        transform: translateY(0);
-    }
-
 .sheet-hidden {
     transform: translateX(-50%) translateY(100%);
 }

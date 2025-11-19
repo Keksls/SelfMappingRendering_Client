@@ -83,7 +83,7 @@ if ($tokens <= 0) {
                     <option value="2560x1440">1440p (2560×1440)</option>
                     <option value="3840x2160" selected>4K (3840×2160)</option>
                     <option value="7680x4320">8K (7680×4320)</option>
-                    <option value="16000x9000">16K (Max)</option>
+                    <option value="16000x9000">16K (16000x9000)</option>
                     <option value="custom">Custom…</option>
                 </select>
             </div>
