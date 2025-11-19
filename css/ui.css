@@ -875,12 +875,14 @@ select {
 /* TOKEN BADGE */
 #render-open-btn {
     position: relative;
+    height: 56px;
+    line-height: 56px;
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 9999;
     background: var(--accent);
-    padding: 14px 48px 14px 58px;
+    padding: 0 48px 0 48px;
     color: white;
     font-size: 16px;
     border-radius: 14px;
@@ -891,6 +893,7 @@ select {
     display: flex;
     align-items: center;
     gap: 18px;
+    padding-right: 58px;
 }
 
 #token-inline {
