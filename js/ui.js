@@ -45,15 +45,6 @@
 
     const enable = (el, on) => el && (el.disabled = !on);
 
-    const resetSelect = (el, placeholder) => {
-        el.innerHTML = "";
-        const opt = document.createElement("option");
-        opt.value = "";
-        opt.textContent = placeholder;
-        el.appendChild(opt);
-        el.value = "";
-    };
-
     const option = (value, label) => {
         const o = document.createElement("option");
         o.value = String(value);
@@ -184,7 +175,7 @@
     async function loadTypes() {
         try {
             enable(selects.type, false);
-            resetSelect(selects.type, "— Select a Type —");
+            selects.type.reset("— Select a Type —");
 
             const rows = await Api.listTypes();
             rows.forEach(t => selects.type.appendChild(option(t.id, t.name)));
@@ -203,7 +194,7 @@
     async function loadLiveries(typeId) {
         try {
             enable(selects.livery, false);
-            resetSelect(selects.livery, "— Select an Airline —");
+            selects.livery.reset("— Select an Airline —");
 
             if (!typeId) return;
 
@@ -228,7 +219,7 @@
     async function loadAircrafts(liveryCode) {
         try {
             enable(selects.aircraft, false);
-            resetSelect(selects.aircraft, "— Select an Aircraft —");
+            selects.aircraft.reset("— Select an Aircraft —");
 
             if (!liveryCode) return;
 
@@ -252,10 +243,10 @@
     selects.type.root.addEventListener("change", async () => {
         const type = selects.type.value || null;
 
-        resetSelect(selects.livery, "— Select an Airline —");
+        selects.livery.reset("— Select an Airline —");
         enable(selects.livery, false);
 
-        resetSelect(selects.aircraft, "— Select an Aircraft —");
+        selects.aircraft.reset("— Select an Aircraft —");
         enable(selects.aircraft, false);
 
         if (type) loadLiveries(type);
@@ -264,7 +255,7 @@
     selects.livery.root.addEventListener("change", async () => {
         const code = selects.livery.value || null;
 
-        resetSelect(selects.aircraft, "— Select an Aircraft —");
+        selects.aircraft.reset("— Select an Aircraft —");
         enable(selects.aircraft, false);
 
         if (code) loadAircrafts(code);
