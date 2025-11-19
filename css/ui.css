@@ -7,7 +7,7 @@
     --card: #1F2A47;
     --text: #EEF2F7;
     --muted: #9BA7BA;
-    --accent: #3A86FF; /* Bleu Airbus modernisé */
+    --accent: #3A86FF; /* Bleu Airbus modernisÃ© */
     --accent-hover: #5EA0FF;
     --ok: #2ECC71;
     --warn: #F1C40F;
@@ -68,7 +68,7 @@ html, body {
     overflow: visible;
 }
 
-/* MOBILE – canvas en haut */
+/* MOBILE â€“ canvas en haut */
 @media (max-width:1100px) {
     #root {
         grid-template-columns: 1fr;
@@ -112,7 +112,7 @@ html, body {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    overflow-x: hidden; /* empêche la scrollbar horizontale */
+    overflow-x: hidden; /* empÃªche la scrollbar horizontale */
     overflow-y: auto; /* seulement verticale */
     padding-right: 6px;
     scrollbar-gutter: stable both-edges;
@@ -249,7 +249,7 @@ select,
     .card-grid::-webkit-scrollbar-thumb {
         background: #1f2937;
         border-radius: 10px;
-        border: 2px solid #0e1421; /* pour éviter un look 'collé' */
+        border: 2px solid #0e1421; /* pour Ã©viter un look 'collÃ©' */
     }
 
         .card-grid::-webkit-scrollbar-thumb:hover {
@@ -279,7 +279,7 @@ select,
     scrollbar-color: #1f2937 #0e1421;
 }
 
-/* MOBILE – 2 cards */
+/* MOBILE â€“ 2 cards */
 @media (max-width:1100px) {
     .card-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -698,3 +698,66 @@ select {
     max-height: 65vh;
     overflow-y: auto;
 }
+
+/* Checkbox container */
+.bs-toggle label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #0d1525;
+    padding: 8px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    width: fit-content;
+    margin-bottom: 10px;
+    transition: background .2s;
+}
+
+    .bs-toggle label:hover {
+        background: #152033;
+    }
+
+/* Hide default checkbox */
+.bs-toggle input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    border: 2px solid #3b82f6;
+    background: #0a1220;
+    cursor: pointer;
+    position: relative;
+    transition: background .2s, border-color .2s;
+}
+
+    /* Check symbol */
+    .bs-toggle input[type="checkbox"]:checked {
+        background: #3b82f6;
+        border-color: #3b82f6;
+    }
+
+        .bs-toggle input[type="checkbox"]:checked::after {
+            content: "âœ”";
+            color: white;
+            font-size: 14px;
+            position: absolute;
+            top: 0;
+            left: 4px;
+        }
+
+.bs-input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: #0d1525;
+    border: 1px solid #1e2a41;
+    color: white;
+    font-size: 15px;
+    margin-bottom: 12px;
+}
+
+    .bs-input:focus {
+        border-color: #3b82f6;
+        outline: none;
+        box-shadow: 0 0 0 1px #3b82f6;
+    }

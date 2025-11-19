@@ -67,13 +67,6 @@ if ($tokens <= 0) {
 
             <div class="row check-group">
                 <label class="pill">
-                    <input type="checkbox" id="bs-environment" checked>
-                    Environment (clouds)
-                </label>
-            </div>
-
-            <div class="row check-group">
-                <label class="pill">
                     <input type="checkbox" id="bs-background" checked>
                     Background (sky)
                 </label>
@@ -94,11 +87,11 @@ if ($tokens <= 0) {
             <div id="bs-custom-res" style="display:none;margin-top:6px;">
                 <div class="row">
                     <label>Width</label>
-                    <input id="bs-width" type="number" min="256" max="16000" value="4096">
+                    <input type="number" min="256" max="16000" value="4096" id="bs-width" class="bs-input">
                 </div>
                 <div class="row">
                     <label>Height</label>
-                    <input id="bs-height" type="number" min="256" max="16000" value="4096">
+                    <input type="number" min="256" max="16000" value="4096"  id="bs-height" class="bs-input">
                 </div>
             </div>
 

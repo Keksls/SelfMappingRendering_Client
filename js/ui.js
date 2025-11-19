@@ -550,7 +550,7 @@
             height,
             pngCompression: 2,
             background: document.getElementById("bs-background").checked,
-            environment: document.getElementById("bs-environment").checked,
+            environment: document.getElementById("bs-background").checked,
             includePostFX: true,
             ambiantOclusion: false,
             supersample: true
