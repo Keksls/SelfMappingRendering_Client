@@ -15,7 +15,7 @@ $user_id = get_current_user_id();
 $acf = function_exists('get_fields') ? get_fields("user_$user_id") : [];
 print_r($acf);
 // 4. ensure tokens
-if ($acf['Tokens'] <= 0) {
+if ($acf['tokens'] <= 0) {
     echo("user don't have active subscription");
     //wp_redirect('/paywall/');
     exit;
