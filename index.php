@@ -32,6 +32,7 @@ if ($tokens <= 0) {
 </head>
 
 <body>
+    <div id="token-badge">--</div>
     <div id="root">
         <!-- Unity -->
         <div id="unity-container" class="unity-desktop">
@@ -175,6 +176,8 @@ if ($tokens <= 0) {
             <p id="progress-message" class="muted">Initialisation…</p>
         </div>
     </div>
+
+    <div id="toast"></div>
 
     <!-- Unity loader (will dynamically load SMR.loader.js) -->
     <script src="js/unity-loader.js"></script>

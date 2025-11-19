@@ -294,7 +294,6 @@
         }
     }
 
-
     // ============================================================
     //  QUALITY / ROTATION
     // ============================================================
@@ -314,7 +313,6 @@
         rotationVal.textContent = rotation.value + "°";
         sendMessage("SetEnvironmentRotation", rotation.value);
     });
-
 
     // ============================================================
     //  SCREENSHOT
@@ -391,12 +389,13 @@
         );
     };
 
-    window.OnScreenshotReady = (base64, w, h) => {
+    window.OnScreenshotReady = async (base64, w, h) => {
         try {
             const bytes = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
             const url = URL.createObjectURL(
                 new Blob([bytes], { type: "image/png" })
             );
+
             const a = document.createElement("a");
             a.href = url;
             a.download = `screenshot_${w}x${h}.png`;
@@ -405,8 +404,34 @@
             a.remove();
         } finally {
             hideProgressModal();
+
+            // 🔍 Check tokens *sans consommer*
+            try {
+                const r = await fetch("/studio/check-tokens.php");
+                const j = await r.json();
+
+                if (j.tokens <= 0) {
+                    showToast("You have used your last rendering beta token. You will be redirected.");
+                    setTimeout(() => {
+                        window.location.href = "/pricing/";
+                    }, 1800);
+                    return;
+                }
+
+                updateTokenUI();
+
+            } catch (err) {
+                console.error("Token check failed:", err);
+            }
         }
     };
+
+    function showToast(msg) {
+        const t = document.getElementById("toast");
+        t.textContent = msg;
+        t.style.opacity = 1;
+        setTimeout(() => t.style.opacity = 0, 1500);
+    }
 
     // =========================================
     // CUSTOM SELECT ADAPTER
@@ -606,4 +631,13 @@
     // Optional: close sheet when clicking handle
     document.querySelector("#sheet-header .handle")
         .addEventListener("click", closeSheet);
+
+    async function updateTokenUI() {
+        const r = await fetch("/studio/check-tokens.php");
+        const j = await r.json();
+
+        document.getElementById("token-badge").textContent = j.tokens;
+    }
+
+    updateTokenUI();
 })();
