@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-require_once('/opt/bitnami/wordpress/wp-blog-header.php');
+require_once('/opt/bitnami/wordpress/wp-load.php');
 header('Content-Type: application/json');
 
 // User not logged
@@ -21,13 +21,13 @@ if ($tokens <= 0) {
     echo json_encode(["success" => false, "redirect" => "/pricing/"]);
     exit;
 }
-
+/*
 // IMPORTANT : mettre ici LE FIELD_KEY ACF
 $field_key = "tokens";
 
 // decrease token
 update_field($field_key, $tokens - 1, "user_$user_id");
-
+*/
 echo json_encode([
     "success" => true,
     "tokens_left" => $tokens - 1
