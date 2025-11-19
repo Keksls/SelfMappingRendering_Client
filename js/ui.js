@@ -482,13 +482,29 @@
     //  WAIT FOR API READY
     // ============================================================
     const wait = setInterval(() => {
-        if (window.Api && window.Api.API_BASE !== "nourl") {
-            console.log("API ready at", window.Api.API_BASE);
-            clearInterval(wait);
-            loadTypes();
-            loadEnvironmentPreviews();
-            loadViews();
+
+        // 1. API prête ?
+        if (!window.Api || window.Api.API_BASE === "nourl")
+            return;
+
+        // 2. Unity prêt ?
+        if (!window.unityInstance) {
+            return;
         }
+
+        // ✔️ Unity + API prêts → on lance tout
+        console.log("API & Unity ready. Initialisation…");
+        clearInterval(wait);
+
+        // cacher l'écran de chargement (si tu en as un)
+        const waitScreen = document.getElementById("unity-wait-screen");
+        if (waitScreen) waitScreen.classList.add("wait-hidden");
+
+        // lancer le JS
+        loadTypes();
+        loadEnvironmentPreviews();
+        loadViews();
+
     }, 50);
 
     // ============================================================

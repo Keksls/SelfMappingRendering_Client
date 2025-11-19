@@ -157,6 +157,14 @@ if ($tokens <= 0) {
         </div>
     </div>
 
+    <!-- FULLSCREEN UNITY LOADING OVERLAY -->
+    <div id="unity-wait-screen" class="wait-visible">
+        <div class="wait-content">
+            <div class="loader-spin"></div>
+            <p>Loading Studio…</p>
+        </div>
+    </div>
+
     <!-- Global render progress (blocking modal) -->
     <div id="progress-modal" class="modal" aria-hidden="true">
         <div class="modal-content">
