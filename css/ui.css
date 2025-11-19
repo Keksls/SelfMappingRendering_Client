@@ -965,14 +965,13 @@ select {
 #token-inline:hover::after {
     content: attr(data-tip);
     position: absolute;
-    /* plus bas (moins de bottom) */
     bottom: 32px;
     left: 50%;
     transform: translateX(-50%);
     background: var(--panel);
     color: var(--text);
-    /* padding horizontal augmenté */
     padding: 8px 14px;
+    line-height: 1;
     border-radius: 12px;
     border: 1px solid var(--accent);
     white-space: nowrap;
@@ -980,6 +979,5 @@ select {
     font-weight: 500;
     pointer-events: none;
     opacity: 0.95;
-    /* optionnel : petite ombre pour joli rendu */
     box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 }
