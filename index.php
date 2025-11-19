@@ -31,6 +31,10 @@ if ($tokens <= 0) {
     <link rel="stylesheet" href="css/ui.css" />
 </head>
 
+<!-- BOTTOM RENDER BUTTON -->
+<button id="render-open-btn">Rendering</button>
+
+<!-- BOTTOM SHEET -->
 <div id="bottom-sheet" class="sheet-hidden">
     <div id="sheet-header">
         <div class="handle"></div>
@@ -60,6 +64,7 @@ if ($tokens <= 0) {
                 <option value="2560x1440">1440p (2560×1440)</option>
                 <option value="3840x2160" selected>4K (3840×2160)</option>
                 <option value="7680x4320">8K (7680×4320)</option>
+                <option value="16000x9000">16K (Max)</option>
                 <option value="custom">Custom…</option>
             </select>
         </div>
@@ -75,7 +80,7 @@ if ($tokens <= 0) {
             </div>
         </div>
 
-        <button id="bs-start" class="btn" style="margin-top:20px;">Start Render</button>
+        <button id="bs-render-btn" class="btn" style="margin-top:20px;">Render</button>
     </div>
 </div>
 
@@ -104,10 +109,6 @@ if ($tokens <= 0) {
                 <div id="unity-progress-bar-empty"><div id="unity-progress-bar-full"></div></div>
             </div>
             <div id="unity-warning"></div>
-
-            <div id="render-btn-wrapper">
-                <button id="render-btn">Generate Render</button>
-            </div>
         </div>
 
         <!-- Side Panel -->

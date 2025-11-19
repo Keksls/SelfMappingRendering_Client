@@ -606,35 +606,36 @@ select {
         width: 156px;
     }
 
-#render-btn-wrapper {
-    position: absolute;
-    bottom: 28px;
+
+/* ============================================
+   BUTTON: Rendering (bottom center)
+   ============================================ */
+#render-open-btn {
+    position: fixed;
+    bottom: 24px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 30;
-    pointer-events: auto;
-}
-
-#render-btn {
     background: var(--accent);
     color: white;
     border: none;
     border-radius: 14px;
-    padding: 16px 32px;
+    padding: 16px 34px;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
+    z-index: 9998;
     box-shadow: 0 6px 18px rgba(0,0,0,.35);
-    transition: background .2s, transform .1s;
+    transition: background .15s, transform .1s;
 }
 
-    #render-btn:hover {
+    #render-open-btn:hover {
         background: var(--accent-hover);
     }
 
-    #render-btn:active {
-        transform: translateY(2px);
+    #render-open-btn:active {
+        transform: translateX(-50%) translateY(2px);
     }
+
 /* ============================================
    BOTTOM SHEET
    ============================================ */
@@ -659,12 +660,11 @@ select {
 #sheet-header {
     padding: 14px;
     text-align: center;
-    position: relative;
 }
 
     #sheet-header h3 {
-        margin: 6px 0 0;
-        font-size: 14px;
+        margin: 8px 0 0;
+        font-size: 15px;
         color: #cbd5e1;
     }
 

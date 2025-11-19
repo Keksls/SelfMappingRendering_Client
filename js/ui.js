@@ -491,34 +491,38 @@
     }, 50);
 
     // ============================================================
-    //  BOTTOM SHEET LOGIC
+    //  RENDER PANEL (BOTTOM SHEET)
     // ============================================================
+
     const sheet = document.getElementById("bottom-sheet");
+    const openBtn = document.getElementById("render-open-btn");
+    const renderBtn = document.getElementById("bs-render-btn");
+
     const bsRes = document.getElementById("bs-resolution");
     const bsCustom = document.getElementById("bs-custom-res");
 
+    // show panel
     function openSheet() {
         sheet.classList.remove("sheet-hidden");
         sheet.classList.add("sheet-visible");
     }
 
+    // hide panel
     function closeSheet() {
         sheet.classList.remove("sheet-visible");
         sheet.classList.add("sheet-hidden");
     }
 
-    // open on Generate Render button
-    document.getElementById("render-btn")?.addEventListener("click", () => {
-        openSheet();
-    });
+    // Open on main render button
+    openBtn.addEventListener("click", openSheet);
 
-    // resolution logic
+    // Show/hide custom resolution
     bsRes.addEventListener("change", () => {
-        bsCustom.style.display = bsRes.value === "custom" ? "block" : "none";
+        bsCustom.style.display = (bsRes.value === "custom") ? "block" : "none";
     });
 
-    // start render
-    document.getElementById("bs-start").addEventListener("click", () => {
+    // When clicking Render
+    renderBtn.addEventListener("click", () => {
 
         let width, height;
 
@@ -531,7 +535,7 @@
             height = parseInt(parts[1]);
         }
 
-        const params = {
+        const payload = {
             width,
             height,
             pngCompression: 2,
@@ -548,10 +552,11 @@
         window.unityInstance.SendMessage(
             "API",
             "CaptureScreenJSON",
-            JSON.stringify(params)
+            JSON.stringify(payload)
         );
     });
 
-    // close when dragging the handle (optional)
-    document.querySelector("#sheet-header .handle").addEventListener("click", closeSheet);
+    // Optional: close sheet when clicking handle
+    document.querySelector("#sheet-header .handle")
+        .addEventListener("click", closeSheet);
 })();
