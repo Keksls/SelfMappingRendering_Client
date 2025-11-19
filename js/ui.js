@@ -494,7 +494,6 @@
     // ============================================================
     //  RENDER PANEL (BOTTOM SHEET)
     // ============================================================
-
     const sheet = document.getElementById("bottom-sheet");
     const openBtn = document.getElementById("render-open-btn");
     const renderBtn = document.getElementById("bs-render-btn");
