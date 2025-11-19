@@ -21,13 +21,10 @@ if ($tokens <= 0) {
     echo json_encode(["success" => false, "redirect" => "/pricing/"]);
     exit;
 }
-/*
-// IMPORTANT : mettre ici LE FIELD_KEY ACF
-$field_key = "tokens";
 
 // decrease token
-update_field($field_key, $tokens - 1, "user_$user_id");
-*/
+update_field('tokens', $tokens - 1, "user_$user_id");
+
 echo json_encode([
     "success" => true,
     "tokens_left" => $tokens - 1
