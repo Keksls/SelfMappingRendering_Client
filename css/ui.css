@@ -939,8 +939,8 @@ select {
     /* Track (cercle sombre complet) */
     var(--panel);
     /* Découpe centrale */
-    mask: radial-gradient(circle 9px at center, transparent 10px, black 11px);
-    -webkit-mask: radial-gradient(circle 9px at center, transparent 10px, black 11px);
+    mask: radial-gradient(circle 11px at center, transparent 11px, black 12px);
+    -webkit-mask: radial-gradient(circle 11px at center, transparent 11px, black 12px);
     transition: background 0.45s ease-out;
     transition: --percent 0.6s ease-out;
 }
