@@ -631,6 +631,7 @@
     // Optional: close sheet when clicking handle
     document.querySelector("#sheet-header .handle")
         .addEventListener("click", closeSheet);
+    let lastTokenCount = null;
 
     async function updateTokenUI() {
         const r = await fetch("/studio/check-tokens.php");
@@ -639,16 +640,27 @@
         const max = 20;
         const val = j.tokens;
 
-        // Update numeric badge
-        document.getElementById("token-badge").textContent = val;
+        const badge = document.getElementById("token-badge");
+        const ring = document.getElementById("token-ring");
+        const wrapper = document.getElementById("token-inline");
 
-        // Radial percentage fill
+        // Detect loss of token
+        if (lastTokenCount !== null && val < lastTokenCount) {
+            wrapper.classList.add("lost");
+            setTimeout(() => wrapper.classList.remove("lost"), 450);
+        }
+        lastTokenCount = val;
+
+        // Update numeric badge
+        badge.textContent = val;
+
+        // Update radial progress
         const pct = (val / max) * 100;
-        document.getElementById("token-ring").style.setProperty("--percent", pct + "%");
+        ring.style.setProperty("--percent", pct + "%");
 
         // Tooltip
-        document.getElementById("token-inline")
-            .setAttribute("title", `${val} / ${max} tokens`);
+        wrapper.setAttribute("title", `${val} / ${max} tokens`);
     }
+
     updateTokenUI();
 })();
