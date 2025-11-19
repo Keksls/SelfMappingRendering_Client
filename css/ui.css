@@ -672,6 +672,19 @@ select {
         color: #cbd5e1;
     }
 
+    #sheet-header .hint {
+        margin: 6px 0 0;
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.4;
+        text-align: center;
+    }
+
+        #sheet-header .hint strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
 .handle {
     width: 42px;
     height: 5px;
