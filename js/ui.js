@@ -482,7 +482,7 @@
     //  WAIT FOR API READY
     // ============================================================
     const wait = setInterval(() => {
-        if (window.Api && Api.API_BASE !== "nourl") {
+        if (window.Api && Api.API_BASE != "nourl") {
             clearInterval(wait);
             loadTypes();
             loadEnvironmentPreviews();
