@@ -31,59 +31,6 @@ if ($tokens <= 0) {
     <link rel="stylesheet" href="css/ui.css" />
 </head>
 
-<!-- BOTTOM RENDER BUTTON -->
-<button id="render-open-btn">Rendering</button>
-
-<!-- BOTTOM SHEET -->
-<div id="bottom-sheet" class="sheet-hidden">
-    <div id="sheet-header">
-        <div class="handle"></div>
-        <h3>Render Settings</h3>
-    </div>
-
-    <div id="sheet-content">
-
-        <div class="row check-group">
-            <label class="pill">
-                <input type="checkbox" id="bs-environment" checked>
-                Environment (clouds)
-            </label>
-        </div>
-
-        <div class="row check-group">
-            <label class="pill">
-                <input type="checkbox" id="bs-background" checked>
-                Background (sky)
-            </label>
-        </div>
-
-        <div class="row">
-            <label>Resolution</label>
-            <select id="bs-resolution">
-                <option value="1920x1080">1080p (1920×1080)</option>
-                <option value="2560x1440">1440p (2560×1440)</option>
-                <option value="3840x2160" selected>4K (3840×2160)</option>
-                <option value="7680x4320">8K (7680×4320)</option>
-                <option value="16000x9000">16K (Max)</option>
-                <option value="custom">Custom…</option>
-            </select>
-        </div>
-
-        <div id="bs-custom-res" style="display:none;margin-top:6px;">
-            <div class="row">
-                <label>Width</label>
-                <input id="bs-width" type="number" min="256" max="16000" value="4096">
-            </div>
-            <div class="row">
-                <label>Height</label>
-                <input id="bs-height" type="number" min="256" max="16000" value="4096">
-            </div>
-        </div>
-
-        <button id="bs-render-btn" class="btn" style="margin-top:20px;">Render</button>
-    </div>
-</div>
-
 <body>
     <div id="root">
         <!-- Unity -->
@@ -160,6 +107,59 @@ if ($tokens <= 0) {
                 </div>
             </div>
 
+        </div>
+    </div>
+
+    <!-- BOTTOM RENDER BUTTON -->
+    <button id="render-open-btn">Rendering</button>
+
+    <!-- BOTTOM SHEET -->
+    <div id="bottom-sheet" class="sheet-hidden">
+        <div id="sheet-header">
+            <div class="handle"></div>
+            <h3>Render Settings</h3>
+        </div>
+
+        <div id="sheet-content">
+
+            <div class="row check-group">
+                <label class="pill">
+                    <input type="checkbox" id="bs-environment" checked>
+                    Environment (clouds)
+                </label>
+            </div>
+
+            <div class="row check-group">
+                <label class="pill">
+                    <input type="checkbox" id="bs-background" checked>
+                    Background (sky)
+                </label>
+            </div>
+
+            <div class="row">
+                <label>Resolution</label>
+                <select id="bs-resolution">
+                    <option value="1920x1080">1080p (1920×1080)</option>
+                    <option value="2560x1440">1440p (2560×1440)</option>
+                    <option value="3840x2160" selected>4K (3840×2160)</option>
+                    <option value="7680x4320">8K (7680×4320)</option>
+                    <option value="16000x9000">16K (Max)</option>
+                    <option value="custom">Custom…</option>
+                </select>
+            </div>
+
+            <div id="bs-custom-res" style="display:none;margin-top:6px;">
+                <div class="row">
+                    <label>Width</label>
+                    <input id="bs-width" type="number" min="256" max="16000" value="4096">
+                </div>
+                <div class="row">
+                    <label>Height</label>
+                    <input id="bs-height" type="number" min="256" max="16000" value="4096">
+                </div>
+            </div>
+
+            <button id="bs-render-btn" class="btn" style="margin-top:20px;">Render</button>
         </div>
     </div>
 
