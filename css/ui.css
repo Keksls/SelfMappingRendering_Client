@@ -935,8 +935,7 @@ select {
     /* Track + Progress combinés */
     background:
     /* Progress segment */
-    conic-gradient( var(--accent-hover) var(--percent, 0%), /* couleur progress plus vive */
-    transparent var(--percent, 0%) ), rgba(255, 255, 255, 0.12); /* ring background semi-transparent */
+    conic-gradient( white var(--percent, 0%), transparent var(--percent, 0%) ), rgba(28, 37, 65, 0.5); /* var(--panel) avec 50% d'opacité */
     /* Découpe centrale */
     mask: radial-gradient(circle 9px at center, transparent 9px, black 10px);
     -webkit-mask: radial-gradient(circle 9px at center, transparent 9px, black 10px);
