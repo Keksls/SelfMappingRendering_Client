@@ -636,7 +636,18 @@
         const r = await fetch("/studio/check-tokens.php");
         const j = await r.json();
 
-        document.getElementById("token-badge").textContent = j.tokens;
+        const max = 20;
+        const val = j.tokens;
+
+        // Mise à jour du badge
+        document.getElementById("token-badge").textContent = val;
+
+        // Remplissage radial
+        const pct = (val / max) * 100;
+        document.getElementById("token-ring").style.setProperty('--percent', pct + "%");
+
+        // Tooltip dynamique
+        document.getElementById("token-wrapper").setAttribute("title", `${val} / ${max} tokens`);
     }
 
     updateTokenUI();

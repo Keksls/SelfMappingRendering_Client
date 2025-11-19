@@ -32,7 +32,12 @@ if ($tokens <= 0) {
 </head>
 
 <body>
-    <div id="token-badge">--</div>
+    
+    <div id="token-wrapper" title="">
+        <div id="token-ring"></div>
+        <div id="token-badge">--</div>
+    </div>
+
     <div id="root">
         <!-- Unity -->
         <div id="unity-container" class="unity-desktop">
