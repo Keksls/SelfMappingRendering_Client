@@ -659,7 +659,7 @@
         ring.style.setProperty("--percent", pct + "%");
 
         // Tooltip
-        wrapper.setAttribute("title", `${val} / ${max} tokens`);
+        wrapper.setAttribute("data-tip", `${val} / ${max} tokens`);
     }
 
     updateTokenUI();
