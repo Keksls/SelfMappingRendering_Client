@@ -16,7 +16,8 @@ $acf = function_exists('get_fields') ? get_fields("user_$user_id") : [];
 
 // 4. Vérifier l'abonnement → change "subscription_active" selon ta clé ACF
 if (empty($acf['subscription_active'])) {
-    wp_redirect('/paywall/');
+    echo("user don't have active subscription");
+    //wp_redirect('/paywall/');
     exit;
 }
 ?>
