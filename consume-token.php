@@ -5,28 +5,36 @@ error_reporting(E_ALL);
 require_once('/opt/bitnami/wordpress/wp-load.php');
 header('Content-Type: application/json');
 
-// User not logged
 if (!is_user_logged_in()) {
-    echo json_encode(["success" => false, "redirect" => "/"]);
-    exit;
+    wp_send_json(["success" => false, "redirect" => "/"]);
 }
 
 $user_id = get_current_user_id();
 
-// load ACF fields
-$acf = get_fields("user_$user_id");
-$tokens = isset($acf['tokens']) ? intval($acf['tokens']) : 0;
+// 1. Load tokens
+$tokens = intval(get_field('tokens', "user_$user_id"));
 
+// 2. Prevent invalid usage
 if ($tokens <= 0) {
-    echo json_encode(["success" => false, "redirect" => "/pricing/"]);
-    exit;
+    wp_send_json(["success" => false, "redirect" => "/pricing/"]);
 }
 
-// decrease token
-update_field('tokens', $tokens - 1, "user_$user_id");
+// 3. Retrieve field key automatically
+$field = acf_get_field('tokens');
+if (!$field || !isset($field['key'])) {
+    wp_send_json([
+        "success" => false,
+        "error" => "ACF field key not found for 'tokens'."
+    ]);
+}
 
-echo json_encode([
+$field_key = $field['key'];
+
+// 4. Update correctly with field key
+update_field($field_key, $tokens - 1, "user_$user_id");
+
+// 5. Output
+wp_send_json([
     "success" => true,
     "tokens_left" => $tokens - 1
 ]);
-exit;
