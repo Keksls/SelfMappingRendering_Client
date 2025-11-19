@@ -639,16 +639,16 @@
         const max = 20;
         const val = j.tokens;
 
-        // Mise à jour du badge
+        // Update numeric badge
         document.getElementById("token-badge").textContent = val;
 
-        // Remplissage radial
+        // Radial percentage fill
         const pct = (val / max) * 100;
-        document.getElementById("token-ring").style.setProperty('--percent', pct + "%");
+        document.getElementById("token-ring").style.setProperty("--percent", pct + "%");
 
-        // Tooltip dynamique
-        document.getElementById("token-wrapper").setAttribute("title", `${val} / ${max} tokens`);
+        // Tooltip
+        document.getElementById("token-wrapper")
+            .setAttribute("title", `${val} / ${max} tokens`);
     }
-
     updateTokenUI();
 })();

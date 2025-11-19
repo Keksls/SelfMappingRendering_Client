@@ -872,60 +872,63 @@ select {
     font-size: 14px;
 }
 
-/* Wrapper position */
+/* TOP-LEFT placement */
 #token-wrapper {
     position: absolute;
-    top: 14px;
-    right: 18px;
-    width: 50px;
-    height: 50px;
+    top: 16px;
+    left: 20px;
+    width: 54px;
+    height: 54px;
     cursor: default;
+    z-index: 2000;
 }
 
-/* Radial progress ring */
+/* Radial progress ring - conic based */
 #token-ring {
     position: absolute;
     top: 0;
     left: 0;
-    width: 50px;
-    height: 50px;
+    width: 54px;
+    height: 54px;
     border-radius: 50%;
-    background: conic-gradient( #4caf50 var(--percent, 0%), #444 var(--percent, 0%) );
-    padding: 4px; /* creates the ring thickness */
+    background: conic-gradient( var(--accent) var(--percent, 0%), var(--panel) var(--percent, 0%) );
+    padding: 5px;
     box-sizing: border-box;
 }
 
-/* Central badge */
+/* Central Airbus badge */
 #token-badge {
     position: absolute;
-    top: 6px;
-    left: 6px;
-    width: 38px;
-    height: 38px;
+    top: 7px;
+    left: 7px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    background: #ff4444;
-    color: white;
-    font-weight: bold;
-    font-size: 14px;
+    background: var(--card);
+    color: var(--text);
+    font-weight: 700;
+    font-size: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 0 6px rgba(0,0,0,0.5);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.35);
 }
 
-/* Tooltip simple */
+/* TOOLTIP Airbus */
 #token-wrapper:hover::after {
     content: attr(title);
     position: absolute;
-    bottom: -28px;
-    right: 50%;
-    transform: translateX(50%);
-    background: rgba(20,20,20,0.9);
-    padding: 4px 10px;
-    border-radius: 6px;
-    color: #fff;
+    left: 65px; /* tooltip à droite du badge */
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--panel);
+    color: var(--text);
+    padding: 6px 12px;
+    border-radius: var(--br);
+    border: 1px solid var(--accent);
     font-size: 12px;
     white-space: nowrap;
     pointer-events: none;
-    z-index: 2000;
+    z-index: 2001;
+    opacity: 0.95;
 }
