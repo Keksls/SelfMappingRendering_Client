@@ -549,9 +549,24 @@
         }
     });
 
-    // When clicking Render
-    renderBtn.addEventListener("click", () => {
+    // Render button
+    renderBtn.addEventListener("click", async () => {
 
+        // 1. Vérifier les tokens côté serveur
+        const r = await fetch("/api/consume-token.php", {
+            method: "POST"
+        });
+
+        const j = await r.json();
+
+        if (!j.success) {
+            // Si pas assez de tokens → redirection
+            if (j.redirect)
+                window.location.href = j.redirect;
+            return;
+        }
+
+        // 2. OK → on continue
         let width, height;
 
         if (bsRes.value === "custom") {
@@ -577,6 +592,7 @@
         closeSheet();
         showProgressModal("Rendu en cours…", "Préparation…");
 
+        // 3. Lancer Unity
         window.unityInstance.SendMessage(
             "API",
             "CaptureScreenJSON",
