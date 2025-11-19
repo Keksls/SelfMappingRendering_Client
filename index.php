@@ -2,19 +2,19 @@
 // Charger WordPress depuis n'importe où sur le serveur
 require_once('/opt/bitnami/wordpress/wp-load.php');
 
-// 1. Vérifier si l'utilisateur est connecté
+// 1. user not connected, redirect to main url
 if (!is_user_logged_in()) {
-    wp_redirect('/login/');
+    wp_redirect('/');
     exit;
 }
 
-// 2. Récupérer l'utilisateur
+// 2. get connected user
 $user_id = get_current_user_id();
 
-// 3. Récupérer les champs ACF de l'utilisateur (si ACF installé)
+// 3. get ACF fields
 $acf = function_exists('get_fields') ? get_fields("user_$user_id") : [];
-
-// 4. Vérifier l'abonnement → change "subscription_active" selon ta clé ACF
+echo($acf);
+// 4. ensure tokens
 if (empty($acf['subscription_active'])) {
     echo("user don't have active subscription");
     //wp_redirect('/paywall/');
