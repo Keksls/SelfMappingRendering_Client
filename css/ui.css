@@ -635,3 +635,49 @@ select {
     #render-btn:active {
         transform: translateY(2px);
     }
+/* ============================================
+   BOTTOM SHEET
+   ============================================ */
+#bottom-sheet {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: #0f1522;
+    border-top: 1px solid #1f2937;
+    border-radius: 18px 18px 0 0;
+    transform: translateY(100%);
+    transition: transform 0.35s ease;
+    z-index: 9999;
+    box-shadow: 0 -4px 28px rgba(0,0,0,.45);
+}
+
+    #bottom-sheet.sheet-visible {
+        transform: translateY(0);
+    }
+
+#sheet-header {
+    padding: 14px;
+    text-align: center;
+    position: relative;
+}
+
+    #sheet-header h3 {
+        margin: 6px 0 0;
+        font-size: 14px;
+        color: #cbd5e1;
+    }
+
+.handle {
+    width: 42px;
+    height: 5px;
+    background: #1f2937;
+    border-radius: 4px;
+    margin: 0 auto;
+}
+
+#sheet-content {
+    padding: 14px 18px 28px;
+    max-height: 65vh;
+    overflow-y: auto;
+}

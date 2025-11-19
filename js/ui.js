@@ -491,40 +491,67 @@
     }, 50);
 
     // ============================================================
-    //  BIG RENDER BUTTON
+    //  BOTTOM SHEET LOGIC
     // ============================================================
-    const btn = document.getElementById("render-btn");
-    if (btn) {
-        btn.addEventListener("click", () => {
+    const sheet = document.getElementById("bottom-sheet");
+    const bsRes = document.getElementById("bs-resolution");
+    const bsCustom = document.getElementById("bs-custom-res");
 
-            if (!window.unityInstance) {
-                console.warn("Unity pas prêt");
-                return;
-            }
-
-            const params = {
-                width: 3840,                     // tu peux changer la résolution par défaut
-                height: 2160,
-                pngCompression: 2,
-                background: true,                // mettre ce que tu veux, ou binder à un toggle
-                environment: true,               // idem
-                includePostFX: true,
-                ambiantOclusion: false,
-                supersample: true
-            };
-
-            showProgressModal("Rendu en cours…", "Préparation…");
-
-            try {
-                window.unityInstance.SendMessage(
-                    "API",
-                    "CaptureScreenJSON",
-                    JSON.stringify(params)
-                );
-                console.log("SendMessage → CaptureScreenJSON", params);
-            } catch (e) {
-                console.error("SendMessage CaptureScreenJSON error:", e);
-            }
-        });
+    function openSheet() {
+        sheet.classList.remove("sheet-hidden");
+        sheet.classList.add("sheet-visible");
     }
+
+    function closeSheet() {
+        sheet.classList.remove("sheet-visible");
+        sheet.classList.add("sheet-hidden");
+    }
+
+    // open on Generate Render button
+    document.getElementById("render-btn")?.addEventListener("click", () => {
+        openSheet();
+    });
+
+    // resolution logic
+    bsRes.addEventListener("change", () => {
+        bsCustom.style.display = bsRes.value === "custom" ? "block" : "none";
+    });
+
+    // start render
+    document.getElementById("bs-start").addEventListener("click", () => {
+
+        let width, height;
+
+        if (bsRes.value === "custom") {
+            width = Math.min(16000, Math.max(256, parseInt(document.getElementById("bs-width").value)));
+            height = Math.min(16000, Math.max(256, parseInt(document.getElementById("bs-height").value)));
+        } else {
+            const parts = bsRes.value.split("x");
+            width = parseInt(parts[0]);
+            height = parseInt(parts[1]);
+        }
+
+        const params = {
+            width,
+            height,
+            pngCompression: 2,
+            background: document.getElementById("bs-background").checked,
+            environment: document.getElementById("bs-environment").checked,
+            includePostFX: true,
+            ambiantOclusion: false,
+            supersample: true
+        };
+
+        closeSheet();
+        showProgressModal("Rendu en cours…", "Préparation…");
+
+        window.unityInstance.SendMessage(
+            "API",
+            "CaptureScreenJSON",
+            JSON.stringify(params)
+        );
+    });
+
+    // close when dragging the handle (optional)
+    document.querySelector("#sheet-header .handle").addEventListener("click", closeSheet);
 })();
