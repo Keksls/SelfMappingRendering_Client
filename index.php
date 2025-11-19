@@ -26,7 +26,7 @@ if ($tokens <= 0) {
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Self Mapping Rendering</title>
+    <title>LiveRender Studio</title>
     <link rel="stylesheet" href="TemplateData/style.css" />
     <link rel="stylesheet" href="css/ui.css" />
 </head>
