@@ -430,7 +430,7 @@
         const api = {
             root,
             disabled: false,
-            value: "",
+            _value: "",
 
             set disabled(v) {
                 this._disabled = v;
@@ -472,7 +472,7 @@
             reset(placeholder) {
                 optionsBox.innerHTML = "";
                 display.textContent = placeholder;
-                this._value = "";
+                this.value = "";
             }
         };
 
