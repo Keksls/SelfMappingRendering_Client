@@ -647,7 +647,7 @@
         document.getElementById("token-ring").style.setProperty("--percent", pct + "%");
 
         // Tooltip
-        document.getElementById("token-wrapper")
+        document.getElementById("token-inline")
             .setAttribute("title", `${val} / ${max} tokens`);
     }
     updateTokenUI();

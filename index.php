@@ -32,12 +32,6 @@ if ($tokens <= 0) {
 </head>
 
 <body>
-    
-    <div id="token-wrapper" title="">
-        <div id="token-ring"></div>
-        <div id="token-badge">--</div>
-    </div>
-
     <div id="root">
         <!-- Unity -->
         <div id="unity-container" class="unity-desktop">
@@ -57,7 +51,13 @@ if ($tokens <= 0) {
             </div>
 
 <!-- BOTTOM RENDER BUTTON -->
-    <button id="render-open-btn">Rendering</button>
+    <button id="render-open-btn">
+        Rendering
+        <span id="token-inline">
+            <div id="token-ring"></div>
+            <div id="token-badge">--</div>
+        </span>
+    </button>
 
     <!-- BOTTOM SHEET -->
     <div id="bottom-sheet" class="sheet-hidden">

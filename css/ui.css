@@ -872,63 +872,78 @@ select {
     font-size: 14px;
 }
 
-/* TOP-LEFT placement */
-#token-wrapper {
+/* TOKEN BADGE — option 2 : inside the button */
+#render-open-btn {
     position: absolute;
-    top: 16px;
-    left: 20px;
-    width: 54px;
-    height: 54px;
-    cursor: default;
-    z-index: 2000;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    background: var(--accent);
+    padding: 14px 48px 14px 48px;
+    color: white;
+    font-size: 16px;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+    /* NEW → allow inline items */
+    display: flex;
+    align-items: center;
+    gap: 14px;
 }
 
-/* Radial progress ring - conic based */
+#token-inline {
+    position: relative;
+    width: 32px;
+    height: 32px;
+}
+
+/* Radial ring (smaller version) */
 #token-ring {
     position: absolute;
     top: 0;
     left: 0;
-    width: 54px;
-    height: 54px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    background: conic-gradient( var(--accent) var(--percent, 0%), var(--panel) var(--percent, 0%) );
-    padding: 5px;
+    background: conic-gradient( var(--accent-hover) var(--percent, 0%), var(--panel) var(--percent, 0%) );
+    padding: 3px;
     box-sizing: border-box;
 }
 
-/* Central Airbus badge */
+/* Badge center */
 #token-badge {
     position: absolute;
-    top: 7px;
-    left: 7px;
-    width: 40px;
-    height: 40px;
+    top: 4px;
+    left: 4px;
+    width: 24px;
+    height: 24px;
     border-radius: 50%;
     background: var(--card);
     color: var(--text);
+    font-size: 12px;
     font-weight: 700;
-    font-size: 15px;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.35);
 }
 
-/* TOOLTIP Airbus */
-#token-wrapper:hover::after {
+/* Tooltip */
+#token-inline:hover::after {
     content: attr(title);
     position: absolute;
-    left: 65px; /* tooltip à droite du badge */
-    top: 50%;
-    transform: translateY(-50%);
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
     background: var(--panel);
     color: var(--text);
     padding: 6px 12px;
-    border-radius: var(--br);
+    border-radius: 10px;
     border: 1px solid var(--accent);
-    font-size: 12px;
     white-space: nowrap;
+    font-size: 12px;
     pointer-events: none;
-    z-index: 2001;
-    opacity: 0.95;
+    opacity: 0.9;
 }
