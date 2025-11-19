@@ -615,7 +615,7 @@ select {
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 99999;
+    z-index: 9999;
     background: var(--accent);
     padding: 14px 42px;
     color: white;
@@ -643,14 +643,15 @@ select {
     position: fixed;
     left: 50%;
     bottom: 0;
-    width: 480px;
-    background: #0f1522;
-    border-top: 1px solid #1f2937;
-    border-radius: 18px 18px 0 0;
-    transform: translateY(100%);
-    transition: transform 0.35s ease;
-    z-index: 9999;
-    box-shadow: 0 -4px 28px rgba(0,0,0,.45);
+    transform: translateX(-50%);
+    width: 480px; /* <-- plus petit */
+    max-width: 95%;
+    padding: 20px;
+    background: var(--panel);
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -8px 20px rgba(0,0,0,.35);
+    transition: transform .25s ease;
+    z-index: 99999;
 }
 
     #bottom-sheet.sheet-visible {
