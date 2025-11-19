@@ -16,8 +16,7 @@ $acf = function_exists('get_fields') ? get_fields("user_$user_id") : [];
 // 4. ensure tokens
 $tokens = isset($acf['tokens']) ? intval($acf['tokens']) : 0;
 if ($tokens <= 0) {
-    echo "user don't have active subscription";
-    // wp_redirect('/paywall/');
+    wp_redirect('/pricing/');
     exit;
 }
 ?>
