@@ -553,7 +553,7 @@
     renderBtn.addEventListener("click", async () => {
 
         // 1. Vérifier les tokens côté serveur
-        const r = await fetch("/consume-token.php", {
+        const r = await fetch("/studio/consume-token.php", {
             method: "POST"
         });
 
