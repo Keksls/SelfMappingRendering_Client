@@ -641,7 +641,7 @@ select {
    ============================================ */
 #bottom-sheet {
     position: fixed;
-    left: 0;
+    left: 50%;
     bottom: 0;
     width: 480px;
     background: #0f1522;
