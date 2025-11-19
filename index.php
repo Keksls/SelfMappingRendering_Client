@@ -58,6 +58,7 @@ if ($tokens <= 0) {
         <div id="sheet-header">
             <div class="handle"></div>
             <h3>Render Settings</h3>
+<p>We highly recommend playing with 'Rotation' slider to ensure the best rendering quality</p>
         </div>
 
         <div id="sheet-content">
