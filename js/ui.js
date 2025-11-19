@@ -482,8 +482,8 @@
     //  WAIT FOR API READY
     // ============================================================
     const wait = setInterval(() => {
-        if (window.Api && global.Api && global.Api.API_BASE != "nourl") {
-            console.log("API ready at", global.Api.API_BASE);
+        if (window.Api && window.Api.API_BASE !== "nourl") {
+            console.log("API ready at", window.Api.API_BASE);
             clearInterval(wait);
             loadTypes();
             loadEnvironmentPreviews();
