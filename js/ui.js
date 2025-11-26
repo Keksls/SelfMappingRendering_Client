@@ -414,23 +414,21 @@
         const targetLiveryCode = "AIB";
         const targetAircraftId = 38;
 
-        // 1. Sélectionner Type
-        selects.type.value = targetTypeId;
-        selects.type.root.dispatchEvent(new Event("change"));
+        function selectOption(selectApi, value) {
+            const opt = selectApi.root.querySelector(`.opt[data-value="${value}"]`);
+            if (opt) opt.click();
+        }
 
-        // 2. Attendre que les liveries soient chargées
-        await new Promise(res => setTimeout(res, 150));
+        // Sélectionner le type
+        selectOption(selects.type, targetTypeId);
+        await new Promise(r => setTimeout(r, 150));
 
-        // 3. Sélectionner Airline / Livery
-        selects.livery.value = targetLiveryCode;
-        selects.livery.root.dispatchEvent(new Event("change"));
+        // Sélectionner la livery
+        selectOption(selects.livery, targetLiveryCode);
+        await new Promise(r => setTimeout(r, 150));
 
-        // 4. Attendre que les aircrafts soient chargés
-        await new Promise(res => setTimeout(res, 150));
-
-        // 5. Sélectionner Aircraft
-        selects.aircraft.value = targetAircraftId;
-        selects.aircraft.root.dispatchEvent(new Event("change"));
+        // Sélectionner l'avion
+        selectOption(selects.aircraft, targetAircraftId);
     };
 
     window.OnScreenshotProgress = (phase, prog) => {
