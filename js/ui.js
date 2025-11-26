@@ -198,12 +198,39 @@
 
             if (!typeId) return;
 
-            const rows = await Api.listLiveries(typeId);
+            let rows = await Api.listLiveries(typeId);
 
-            // sort alphabetically by name
+            // --- Normalisation des noms / codes ---
+            rows = rows.map(l => {
+                let name = l.name || "";
+                let code = l.code || "";
+
+                // Retirer "_" au début
+                if (name.startsWith("_")) name = name.substring(1);
+                if (code.startsWith("_")) code = code.substring(1);
+
+                return {
+                    ...l,
+                    name,
+                    code
+                };
+            });
+
+            // --- Tri alphabétique sur name propre ---
             rows.sort((a, b) => a.name.localeCompare(b.name));
 
-            rows.forEach(l => selects.livery.appendChild(option(l.code, l.name + " - " + l.code)));
+            // --- Construction du label final ---
+            rows.forEach(l => {
+
+                // Si name vide OU name == code → afficher juste code
+                let label;
+                if (!l.name || l.name === l.code)
+                    label = l.code;
+                else
+                    label = `${l.name} - ${l.code}`;
+
+                selects.livery.appendChild(option(l.code, label));
+            });
 
             enable(selects.livery, true);
 
@@ -211,7 +238,6 @@
             console.error("Liveries load failed:", e.message);
         }
     }
-
 
     // ============================================================
     //  AIRCRAFTS
@@ -380,6 +406,32 @@
         $bar.style.width = pct + "%";
         if (msg) $msg.textContent = msg;
     }
+
+    window.OnReadyToImport = async () => {
+        // Exemple : AIB (Airbus Industrie), A350-1000, etc.
+        // Adapte selon ce que tu veux sélectionner automatiquement.
+        const targetTypeId = 0;
+        const targetLiveryCode = "AIB";
+        const targetAircraftId = "A350-1000";
+
+        // 1. Sélectionner Type
+        selects.type.value = targetTypeId;
+        selects.type.root.dispatchEvent(new Event("change"));
+
+        // 2. Attendre que les liveries soient chargées
+        await new Promise(res => setTimeout(res, 150));
+
+        // 3. Sélectionner Airline / Livery
+        selects.livery.value = targetLiveryCode;
+        selects.livery.root.dispatchEvent(new Event("change"));
+
+        // 4. Attendre que les aircrafts soient chargés
+        await new Promise(res => setTimeout(res, 150));
+
+        // 5. Sélectionner Aircraft
+        selects.aircraft.value = targetAircraftId;
+        selects.aircraft.root.dispatchEvent(new Event("change"));
+    };
 
     window.OnScreenshotProgress = (phase, prog) => {
         const pct = Math.round(prog * 100);
