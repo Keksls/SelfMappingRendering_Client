@@ -495,6 +495,48 @@
         const display = root.querySelector(".aselect-display");
         const optionsBox = root.querySelector(".aselect-options");
 
+        // Inject search bar ONLY for liveries
+        let searchInput = null;
+        if (id === "liverySelect") {
+
+            searchInput = document.createElement("input");
+            searchInput.type = "text";
+            searchInput.className = "aselect-search";
+            searchInput.placeholder = "Search airline…";
+
+            // Style minimal (tu peux externaliser en CSS)
+            searchInput.style.display = "block";
+            searchInput.style.width = "100%";
+            searchInput.style.boxSizing = "border-box";
+            searchInput.style.margin = "4px 0";
+            searchInput.style.padding = "6px 8px";
+
+            optionsBox.prepend(searchInput);
+
+            // live filtering
+            searchInput.addEventListener("input", () => {
+                const q = searchInput.value.toLowerCase();
+
+                optionsBox.querySelectorAll(".opt").forEach(o => {
+                    const txt = o.textContent.toLowerCase();
+                    o.style.display = txt.includes(q) ? "block" : "none";
+
+                    // Autocomplete highlight
+                    if (q && txt.includes(q)) {
+                        const start = txt.indexOf(q);
+                        const end = start + q.length;
+                        const orig = o.textContent;
+                        o.innerHTML =
+                            orig.substring(0, start) +
+                            "<strong>" + orig.substring(start, end) + "</strong>" +
+                            orig.substring(end);
+                    } else {
+                        o.textContent = o.textContent; // reset
+                    }
+                });
+            });
+        }
+
         const api = {
             root,
             disabled: false,
@@ -521,8 +563,10 @@
             },
 
             appendChild(optEl) {
+                // don't duplicate options
                 if (optionsBox.querySelector(`.opt[data-value="${optEl.value}"]`))
                     return;
+
                 const o = document.createElement("div");
                 o.className = "opt";
                 o.dataset.value = optEl.value;
@@ -531,6 +575,16 @@
                 o.addEventListener("click", () => {
                     this.value = optEl.value;
                     optionsBox.style.display = "none";
+
+                    // reset highlight and search
+                    if (searchInput) {
+                        searchInput.value = "";
+                        optionsBox.querySelectorAll(".opt").forEach(x => {
+                            x.style.display = "block";
+                            x.textContent = x.textContent;
+                        });
+                    }
+
                     root.dispatchEvent(new Event("change"));
                 });
 
