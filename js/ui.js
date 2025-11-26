@@ -582,7 +582,6 @@
                     // protéger le changement interne
                     this.isInternalChange = true;
                     this.value = optEl.value;
-                    this.isInternalChange = false;
 
                     // fermer le popup
                     optionsBox.style.display = "none";
@@ -595,6 +594,7 @@
                             delete x.dataset.hl;
                         });
                     }
+                    this.isInternalChange = false;
 
                     // vrai changement utilisateur → on notifie
                     root.dispatchEvent(new Event("change"));
