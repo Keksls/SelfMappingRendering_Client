@@ -516,23 +516,23 @@
                 const q = searchInput.value.toLowerCase();
 
                 optionsBox.querySelectorAll(".opt").forEach(o => {
-                    const txt = o.textContent.toLowerCase();
-                    o.style.display = txt.includes(q) ? "block" : "none";
+                    const txt = o.dataset.fulltext || o.textContent;
+                    o.dataset.fulltext = txt; // store original
 
-                    // Autocomplete highlight
-                    if (q && txt.includes(q)) {
-                        const start = txt.indexOf(q);
-                        const end = start + q.length;
-                        const orig = o.textContent;
-                        o.innerHTML =
-                            orig.substring(0, start) +
-                            "<strong>" + orig.substring(start, end) + "</strong>" +
-                            orig.substring(end);
+                    const match = txt.toLowerCase().includes(q);
+
+                    // Show/hide
+                    o.style.display = match ? "block" : "none";
+
+                    // Highlight without modifying DOM
+                    if (q && match) {
+                        o.dataset.hl = q; // CSS will use this pseudo highlight
                     } else {
-                        o.textContent = o.textContent; // reset
+                        delete o.dataset.hl;
                     }
                 });
             });
+
         }
 
         const api = {
@@ -579,7 +579,8 @@
                         searchInput.value = "";
                         optionsBox.querySelectorAll(".opt").forEach(x => {
                             x.style.display = "block";
-                            x.textContent = x.textContent;
+                            delete x.dataset.hl;
+                            //x.textContent = x.textContent;
                         });
                     }
 
