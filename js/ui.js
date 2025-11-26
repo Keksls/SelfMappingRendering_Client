@@ -611,6 +611,18 @@
             optionsBox.style.display = shown ? "none" : "block";
         });
 
+        // close popup when clicking outside
+        document.addEventListener("click", (e) => {
+            // si on clique sur l'afficheur du select → ok
+            if (display.contains(e.target)) return;
+
+            // si on clique dans le dropdown → ok (ex : searchbox ou items)
+            if (optionsBox.contains(e.target)) return;
+
+            // sinon → clic extérieur → on referme
+            optionsBox.style.display = "none";
+        });
+
         return api;
     }
 
