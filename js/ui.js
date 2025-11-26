@@ -278,10 +278,12 @@
         if (type) loadLiveries(type);
     });
 
+    var selectedLivery = null;
     selects.livery.root.addEventListener("change", async () => {
         if (selects.livery.isInternalChange) return;
         const code = selects.livery.value || null;
-
+        if (code === selectedLivery) return;
+        selectedLivery = code;
         // ensure code is not already selected
         console.log("Livery selected:", code);
 
