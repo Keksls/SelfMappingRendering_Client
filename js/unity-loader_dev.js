@@ -19,10 +19,10 @@
     var loaderUrl = buildUrl + "/SMR.loader.js";
     var config = {
         arguments: [],
-        dataUrl: buildUrl + "/SMR.data.br",
-        frameworkUrl: buildUrl + "/SMR.framework.js.br",
-        workerUrl: buildUrl + "/SMR.worker.js.br",
-        codeUrl: buildUrl + "/SMR.wasm.br",
+        dataUrl: buildUrl + "/SMR.data",
+        frameworkUrl: buildUrl + "/SMR.framework.js",
+        workerUrl: buildUrl + "/SMR.worker.js",
+        codeUrl: buildUrl + "/SMR.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "VRDTMStudio",
         productName: "Self Mapping Rendering",
