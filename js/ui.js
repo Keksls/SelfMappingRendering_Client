@@ -574,6 +574,8 @@
                     event.stopPropagation();
                     event.preventDefault();
 
+                    console.log("ASelect option clicked:", optEl.value);
+
                     this.value = optEl.value;
 
                     optionsBox.style.display = "none";
