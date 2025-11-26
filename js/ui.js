@@ -282,6 +282,9 @@
         if (selects.livery.isInternalChange) return;
         const code = selects.livery.value || null;
 
+        // ensure code is not already selected
+        console.log("Livery selected:", code);
+
         selects.aircraft.reset("— Select an Aircraft —");
         enable(selects.aircraft, false);
 
