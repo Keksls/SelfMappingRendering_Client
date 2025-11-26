@@ -592,9 +592,14 @@
             },
 
             reset(placeholder) {
-                optionsBox.innerHTML = "";
+                // Clear only .opt, NOT the search input
+                optionsBox.querySelectorAll(".opt").forEach(o => o.remove());
                 display.textContent = placeholder;
                 this.value = "";
+                // Reset search text if search exists
+                if (searchInput) {
+                    searchInput.value = "";
+                }
             }
         };
 
