@@ -570,17 +570,20 @@
                 o.dataset.value = optEl.value;
                 o.textContent = optEl.textContent;
 
-                o.addEventListener("click", () => {
+                o.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+
                     this.value = optEl.value;
+
                     optionsBox.style.display = "none";
 
-                    // reset highlight and search
+                    // reset search
                     if (searchInput) {
                         searchInput.value = "";
                         optionsBox.querySelectorAll(".opt").forEach(x => {
                             x.style.display = "block";
                             delete x.dataset.hl;
-                            //x.textContent = x.textContent;
                         });
                     }
 
