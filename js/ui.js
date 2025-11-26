@@ -410,9 +410,9 @@
     window.OnReadyToImport = async () => {
         // Exemple : AIB (Airbus Industrie), A350-1000, etc.
         // Adapte selon ce que tu veux sélectionner automatiquement.
-        const targetTypeId = 0;
+        const targetTypeId = 1;
         const targetLiveryCode = "AIB";
-        const targetAircraftId = "A350-1000";
+        const targetAircraftId = 38;
 
         // 1. Sélectionner Type
         selects.type.value = targetTypeId;
