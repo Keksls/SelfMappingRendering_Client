@@ -282,8 +282,8 @@
     selects.livery.root.addEventListener("change", async () => {
         if (selects.livery.isInternalChange) return;
         const code = selects.livery.value || null;
-        if (code === selectedLivery) return;
-        selectedLivery = code;
+        //if (code === selectedLivery) return;
+        //selectedLivery = code;
         // ensure code is not already selected
         console.log("Livery selected:", code);
 
@@ -540,6 +540,10 @@
                 });
             });
 
+            searchInput.addEventListener("change", (e) => {
+                // ne laisse pas l'event remonter jusqu'au root
+                e.stopPropagation();
+            });
         }
 
         const api = {
