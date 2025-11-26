@@ -279,6 +279,7 @@
     });
 
     selects.livery.root.addEventListener("change", async () => {
+        if (selects.livery.isInternalChange) return;
         const code = selects.livery.value || null;
 
         selects.aircraft.reset("— Select an Aircraft —");
@@ -288,6 +289,7 @@
     });
 
     selects.aircraft.root.addEventListener("change", async () => {
+        if (selects.livery.isInternalChange) return;
         const id = selects.aircraft.value || null;
         if (!id) return;
 
