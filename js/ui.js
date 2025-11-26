@@ -539,6 +539,7 @@
             root,
             disabled: false,
             _value: "",
+            isInternalChange: false,
 
             set disabled(v) {
                 this._disabled = v;
@@ -576,11 +577,15 @@
 
                     console.log("ASelect option clicked:", optEl.value);
 
+                    // protéger le changement interne
+                    this.isInternalChange = true;
                     this.value = optEl.value;
+                    this.isInternalChange = false;
 
+                    // fermer le popup
                     optionsBox.style.display = "none";
 
-                    // reset search
+                    // reset search (si présent)
                     if (searchInput) {
                         searchInput.value = "";
                         optionsBox.querySelectorAll(".opt").forEach(x => {
@@ -589,6 +594,7 @@
                         });
                     }
 
+                    // vrai changement utilisateur → on notifie
                     root.dispatchEvent(new Event("change"));
                 });
 
@@ -596,11 +602,16 @@
             },
 
             reset(placeholder) {
-                // Clear only .opt, NOT the search input
+                // clear only .opt, NOT the search input
                 optionsBox.querySelectorAll(".opt").forEach(o => o.remove());
+
                 display.textContent = placeholder;
-                this.value = "";
-                // Reset search text if search exists
+
+                // changement interne contrôlé
+                this.isInternalChange = true;
+                this._value = "";
+                this.isInternalChange = false;
+
                 if (searchInput) {
                     searchInput.value = "";
                 }
