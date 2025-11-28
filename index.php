@@ -50,58 +50,58 @@ if ($tokens <= 0) {
                 </div>
             </div>
 
-<!-- BOTTOM RENDER BUTTON -->
-    <button id="render-open-btn">
-        Rendering
-        <span id="token-inline">
-            <div id="token-ring"></div>
-            <div id="token-badge">--</div>
-        </span>
-    </button>
+            <!-- BOTTOM RENDER BUTTON -->
+            <button id="render-open-btn">
+                Rendering
+                <span id="token-inline">
+                    <div id="token-ring"></div>
+                    <div id="token-badge">--</div>
+                </span>
+            </button>
 
-    <!-- BOTTOM SHEET -->
-    <div id="bottom-sheet" class="sheet-hidden">
-        <div id="sheet-header">
-            <div class="handle"></div>
-            <h3>Render Settings</h3>
-            <p class="hint">
-                For best quality, try adjusting the <strong>Rotation</strong> slider before rendering.
-            </p>
-        </div>
-
-        <div id="sheet-content">
-            <div class="row">
-                <label>Resolution</label>
-                <select id="bs-resolution">
-                    <option value="1920x1080">1080p (1920×1080)</option>
-                    <option value="2560x1440">1440p (2560×1440)</option>
-                    <option value="3840x2160" selected>4K (3840×2160)</option>
-                    <option value="7680x4320">8K (7680×4320)</option>
-                    <option value="16000x9000">16K (16000x9000)</option>
-                    <option value="custom">Custom…</option>
-                </select>
-            </div>
-
-            <div id="bs-custom-res" style="display:none;margin-top:6px;">
-                <div class="form-row">
-                    <label for="bs-width">Width</label>
-                    <input type="number" id="bs-width" class="bs-input" min="64" max="32000" />
+            <!-- BOTTOM SHEET -->
+            <div id="bottom-sheet" class="sheet-hidden">
+                <div id="sheet-header">
+                    <div class="handle"></div>
+                    <h3>Render Settings</h3>
+                    <p class="hint">
+                        For best quality, try adjusting the <strong>Rotation</strong> slider before rendering.
+                    </p>
                 </div>
 
-                <div class="form-row">
-                    <label for="bs-height">Height</label>
-                    <input type="number" id="bs-height" class="bs-input" min="64" max="32000" />
+                <div id="sheet-content">
+                    <div class="row">
+                        <label>Resolution</label>
+                        <select id="bs-resolution">
+                            <option value="1920x1080">1080p (1920×1080)</option>
+                            <option value="2560x1440">1440p (2560×1440)</option>
+                            <option value="3840x2160" selected>4K (3840×2160)</option>
+                            <option value="7680x4320">8K (7680×4320)</option>
+                            <option value="16000x9000">16K (16000x9000)</option>
+                            <option value="custom">Custom…</option>
+                        </select>
+                    </div>
+
+                    <div id="bs-custom-res" style="display:none;margin-top:6px;">
+                        <div class="form-row">
+                            <label for="bs-width">Width</label>
+                            <input type="number" id="bs-width" class="bs-input" min="64" max="32000" />
+                        </div>
+
+                        <div class="form-row">
+                            <label for="bs-height">Height</label>
+                            <input type="number" id="bs-height" class="bs-input" min="64" max="32000" />
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <label for="bs-background">Background (sky)</label>
+                        <input type="checkbox" id="bs-background" class="bs-check" checked />
+                    </div>
+
+                    <button id="bs-render-btn" class="btn" style="margin-top:20px;">Render</button>
                 </div>
             </div>
-
-            <div class="form-row">
-                <label for="bs-background">Background (sky)</label>
-                <input type="checkbox" id="bs-background" class="bs-check" checked />
-            </div>
-
-            <button id="bs-render-btn" class="btn" style="margin-top:20px;">Render</button>
-        </div>
-    </div>
 
             <canvas id="unity-canvas" tabindex="-1"></canvas>
             <div id="unity-loading-bar">
@@ -189,5 +189,14 @@ if ($tokens <= 0) {
     <!-- API wrapper must load before UI -->
     <script src="js/api.js"></script>
     <script src="js/ui.js"></script>
+
+    <script type="text/javascript">
+        (function (window, document, dataLayerName, id) {
+            window[dataLayerName] = window[dataLayerName] || [], window[dataLayerName].push({ start: (new Date).getTime(), event: "stg.start" }); var scripts = document.getElementsByTagName('script')[0], tags = document.createElement('script');
+            var qP = []; dataLayerName !== "dataLayer" && qP.push("data_layer_name=" + dataLayerName); var qPString = qP.length > 0 ? ("?" + qP.join("&")) : "";
+            tags.async = !0, tags.src = "https://mms2.containers.piwik.pro/" + id + ".js" + qPString, scripts.parentNode.insertBefore(tags, scripts);
+            !function (a, n, i) { a[n] = a[n] || {}; for (var c = 0; c < i.length; c++)!function (i) { a[n][i] = a[n][i] || {}, a[n][i].api = a[n][i].api || function () { var a = [].slice.call(arguments, 0); "string" == typeof a[0] && window[dataLayerName].push({ event: n + "." + i + ":" + a[0], parameters: [].slice.call(arguments, 1) }) } }(i[c]) }(window, "ppms", ["tm", "cm"]);
+        })(window, document, 'dataLayer', 'cd6c1320-4ef8-4358-b9bf-ba30b647a73e');
+    </script>
 </body>
 </html>
