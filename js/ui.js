@@ -455,7 +455,12 @@
 
             const a = document.createElement("a");
             a.href = url;
-            a.download = `screenshot_${w}x${h}.png`;
+
+            // get current selected aircraft and livery for filename
+            var aircraftPart = selectedAircraft ? selectedAircraft.name.replace(/\s+/g, '_') : 'aircraft';
+            var liveryPart = selects.livery.value ? selects.livery.value.replace(/\s+/g, '_') : 'livery';
+            var filename = `screenshot_${aircraftPart}_${liveryPart}_${w}x${h}.png`;
+            a.download = filename;
             document.body.appendChild(a);
             a.click();
             a.remove();
