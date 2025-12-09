@@ -5,18 +5,6 @@ error_reporting(E_ALL);
 require_once('/opt/bitnami/wordpress/wp-load.php');
 header('Content-Type: application/json');
 
-if (function_exists('aal_insert_log')) {
-    aal_insert_log([
-        'action'      => 'test_log',
-        'object_type' => 'Studio',
-        'object_name' => 'Test entry OK',
-        'user_id'     => 0
-    ]);
-    error_log("Test log inserted");
-} else {
-    error_log("aal_insert_log NOT FOUND");
-}
-
 if (!is_user_logged_in()) {
     wp_send_json(["success" => false, "redirect" => "/"]);
 }
@@ -57,33 +45,22 @@ $user       = get_userdata($user_id);
 $email      = $user->user_email;
 
 // ---- ACTIVITY LOG (Aryo Activity Log) ----
-error_log("CHECK: aal_insert_log exists? " . (function_exists('aal_insert_log') ? "YES" : "NO"));
-// On logue un événement custom dans le plugin "Activity Log"
-if (function_exists('aal_insert_log')) {
-
-    // Message humain lisible dans le tableau
-    $message = sprintf(
-        'Studio render by %s (%s) | Type: %s | Airline: %s | Aircraft: %s | View: %s | Env: %s | Resolution: %s | Mode: %s | Tokens left: %d',
+do_action('aal_insert_log', [
+    'action'         => 'studio_render',
+    'object_type'    => 'Studio',
+    'object_subtype' => $mapping ?: '',
+    'object_name'    => sprintf(
+        '%s (%s) rendered %s %s %s [%s] at %s',
         trim($first_name . ' ' . $last_name),
         $email,
-        $type ?: '-',
-        $airline ?: '-',
-        $aircraft ?: '-',
-        $view ?: '-',
-        $environment ?: '-',
-        $resolution ?: '-',
-        $mapping ?: '-',
-        $tokens - 1
-    );
-
-    aal_insert_log([
-        'action'         => 'studio_render', // notre “type” d’action
-        'object_type'    => 'Studio',        // pour filtrer facilement dans l’UI
-        'object_name'    => $message,        // affiché dans la colonne principale
-        'object_subtype' => $mapping ?: '',  // ex: "rendering" ou "mapping"
-        'user_id'        => $user_id,
-    ]);
-}
+        $airline,
+        $aircraft,
+        $view,
+        $resolution,
+        current_time('mysql')
+    ),
+    'user_id'        => $user_id,
+]);
 
 // ---- RESPONSE ----
 wp_send_json([
