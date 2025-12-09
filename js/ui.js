@@ -732,12 +732,17 @@
 
         // 1. Vérifier les tokens côté serveur et consommer un token + log
         const formData = new FormData();
-        formData.append("type", selects.type.value || "");
-        formData.append("airline", selects.livery.value || "");
-        formData.append("aircraft", selectedAircraft ? selectedAircraft.name : "");
+        const typeName = document.querySelector('.aselect[data-id="typeSelect"] .aselect-display')?.textContent.trim() || "none";
+        const airlineName =  document.querySelector('.aselect[data-id="liverySelect"] .aselect-display')?.textContent.trim() || "none";
+        const aircraftName =  document.querySelector('.aselect[data-id="aircraftSelect"] .aselect-display')?.textContent.trim() || "none";
+        const viewName = document.querySelector('#viewsGrid .card-item.selected .item-name')?.textContent.trim() || "default";
+        const environmentName = document.querySelector('#envGrid .card-item.selected .item-name')?.textContent.trim() || "default";
+        formData.append("type", typeName);
+        formData.append("airline", airlineName);
+        formData.append("aircraft", aircraftName);
+        formData.append("view", viewName);
+        formData.append("environment", environmentName);
         formData.append("aircraft_id", selectedAircraft ? selectedAircraft.id : "");
-        formData.append("view", currentViewId || "custom");
-        formData.append("environment", currentEnvId || "default");
         let resolution;
         if (bsRes.value === "custom") {
             const w = document.getElementById("bs-width").value;
