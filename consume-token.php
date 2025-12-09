@@ -16,7 +16,7 @@ $airline     = $_POST['airline'] ?? null;
 $aircraft    = $_POST['aircraft'] ?? null;
 $view        = $_POST['view'] ?? null;
 $environment = $_POST['environment'] ?? null;
-$resolution  = $_POST['resolution'] ?? null; // ex: "4096x2160"
+$resolution  = $_POST['quality'] ?? null; // ex: "4096x2160"
 $mapping     = $_POST['mapping'] ?? null;    // "mapping" or "rendering"
 
 // ---- TOKENS ----
