@@ -13,6 +13,10 @@ require_once("/opt/bitnami/wordpress/wp-load.php");
 echo "function_exists('stream_record') = ";
 var_dump(function_exists('stream_record'));
 
+echo "Active plugins:\n";
+print_r(get_option('active_plugins'));
+
+
 // Si Stream n'est pas chargé → stop
 if (!function_exists('stream_record')) {
     echo "\n❌ stream_record() n'existe pas.\n";
