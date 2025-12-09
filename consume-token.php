@@ -56,7 +56,7 @@
             'aircraft'            => $aircraft,
             'view'                => $view,
             'environment'         => $environment,
-            'resolution'             => $quality,
+            'quality'             => $quality,
             'mapping_or_rendering'=> $mapping,
             'created_at'          => current_time('mysql'),
             'first_name'          => $first_name,
