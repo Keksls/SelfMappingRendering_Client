@@ -5,6 +5,18 @@ error_reporting(E_ALL);
 require_once('/opt/bitnami/wordpress/wp-load.php');
 header('Content-Type: application/json');
 
+if (function_exists('aal_insert_log')) {
+    aal_insert_log([
+        'action'      => 'test_log',
+        'object_type' => 'Studio',
+        'object_name' => 'Test entry OK',
+        'user_id'     => 0
+    ]);
+    error_log("Test log inserted");
+} else {
+    error_log("aal_insert_log NOT FOUND");
+}
+
 if (!is_user_logged_in()) {
     wp_send_json(["success" => false, "redirect" => "/"]);
 }
@@ -45,6 +57,7 @@ $user       = get_userdata($user_id);
 $email      = $user->user_email;
 
 // ---- ACTIVITY LOG (Aryo Activity Log) ----
+error_log("CHECK: aal_insert_log exists? " . (function_exists('aal_insert_log') ? "YES" : "NO"));
 // On logue un événement custom dans le plugin "Activity Log"
 if (function_exists('aal_insert_log')) {
 
