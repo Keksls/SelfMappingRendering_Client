@@ -43,24 +43,26 @@ $last_name  = get_user_meta($user_id, 'last_name', true);
 $user       = get_userdata($user_id);
 $email      = $user->user_email;
 
-// ---- ACTIVITY LOG (Stream) ----
-if (function_exists('stream_record')) {
-    stream_record(
-        'studio',         // context
-        'render',         // action
-        [
-            'email'       => $email,
-            'user'        => trim($first_name . ' ' . $last_name),
-            'type'        => $type,
-            'airline'     => $airline,
-            'aircraft'    => $aircraft,
-            'view'        => $view,
-            'environment' => $environment,
-            'resolution'  => $resolution,
-            'mode'        => $mapping,
-            'tokens_left' => $tokens - 1
-        ]
-    );
+// ---- INSERT LOG IN OUR PLUGIN TABLE ----
+global $wpdb;
+$table = $wpdb->prefix . "studio_logs";
+
+$wpdb->insert($table, [
+    'created_at'  => current_time('mysql'),
+    'first_name'  => $first_name,
+    'last_name'   => $last_name,
+    'email'       => $email,
+    'type'        => $type,
+    'airline'     => $airline,
+    'aircraft'    => $aircraft,
+    'view'        => $view,
+    'environment' => $environment,
+    'resolution'  => $resolution,
+    'mode'        => $mapping
+]);
+
+if ($wpdb->last_error) {
+    error_log("Studio Logs SQL Error: " . $wpdb->last_error);
 }
 
 // ---- RESPONSE ----
