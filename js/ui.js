@@ -730,9 +730,28 @@
 
     renderBtn.addEventListener("click", async (e) => {
 
-        // 1. Vérifier les tokens côté serveur
+        // 1. Vérifier les tokens côté serveur et consommer un token + log
+        const formData = new FormData();
+        formData.append("type", selects.type.value || "");
+        formData.append("airline", selects.livery.value || "");
+        formData.append("aircraft", selectedAircraft ? selectedAircraft.name : "");
+        formData.append("aircraft_id", selectedAircraft ? selectedAircraft.id : "");
+        formData.append("view", currentViewId || "");
+        formData.append("environment", currentEnvId || "");
+        let resolution;
+        if (bsRes.value === "custom") {
+            const w = document.getElementById("bs-width").value;
+            const h = document.getElementById("bs-height").value;
+            resolution = `${w}x${h}`;
+        } else {
+            resolution = bsRes.value; // ex : "1920x1080"
+        }
+        formData.append("resolution", resolution);
+        formData.append("mapping", "rendering");
+
         const r = await fetch("/studio/consume-token.php", {
-            method: "POST"
+            method: "POST",
+            body: formData
         });
 
         const j = await r.json();
