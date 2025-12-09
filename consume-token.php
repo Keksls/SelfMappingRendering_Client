@@ -1,11 +1,6 @@
 <?php
 ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-define('WP_DEBUG', true);
-define('WP_DEBUG_DISPLAY', true);
-define('WP_DEBUG_LOG', true);
-
 require_once('/opt/bitnami/wordpress/wp-load.php');
 header('Content-Type: application/json');
 
