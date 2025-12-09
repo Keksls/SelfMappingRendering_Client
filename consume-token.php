@@ -5,29 +5,22 @@ error_reporting(E_ALL);
 require_once('/opt/bitnami/wordpress/wp-load.php');
 header('Content-Type: application/json');
 
-// ---------------------------------------------------------
-// 1. Auth check
-// ---------------------------------------------------------
 if (!is_user_logged_in()) {
     wp_send_json(["success" => false, "redirect" => "/"]);
 }
 
 $user_id = get_current_user_id();
 
-// ---------------------------------------------------------
-// 2. Retrieve POST parameters from frontend
-// ---------------------------------------------------------
+// ---- Retrieve POST parameters from the Studio frontend ----
 $type        = $_POST['type'] ?? null;
 $airline     = $_POST['airline'] ?? null;
 $aircraft    = $_POST['aircraft'] ?? null;
 $view        = $_POST['view'] ?? null;
 $environment = $_POST['environment'] ?? null;
-$resolution  = $_POST['resolution'] ?? null;
-$mapping     = $_POST['mapping'] ?? null; // "mapping" or "rendering"
+$resolution  = $_POST['resolution'] ?? null; // ex: "4096x2160"
+$mapping     = $_POST['mapping'] ?? null;    // "mapping" or "rendering"
 
-// ---------------------------------------------------------
-// 3. Token check
-// ---------------------------------------------------------
+// ---- TOKENS ----
 $tokens = intval(get_field('tokens', "user_$user_id"));
 
 if ($tokens <= 0) {
@@ -38,45 +31,49 @@ $field = acf_get_field('tokens');
 if (!$field || !isset($field['key'])) {
     wp_send_json([
         "success" => false,
-        "error" => "ACF field key not found for 'tokens'."
+        "error"   => "ACF field key not found for 'tokens'."
     ]);
 }
 
 $field_key = $field['key'];
 update_field($field_key, $tokens - 1, "user_$user_id");
 
-// ---------------------------------------------------------
-// 4. User info
-// ---------------------------------------------------------
+// ---- USER INFO ----
 $first_name = get_user_meta($user_id, 'first_name', true);
 $last_name  = get_user_meta($user_id, 'last_name', true);
 $user       = get_userdata($user_id);
 $email      = $user->user_email;
 
-// ---------------------------------------------------------
-// 5. SIMPLE HISTORY LOG
-// ---------------------------------------------------------
-if (function_exists('SimpleLogger')) {
+// ---- ACTIVITY LOG (Aryo Activity Log) ----
+// On logue un événement custom dans le plugin "Activity Log"
+if (function_exists('aal_insert_log')) {
 
-    SimpleLogger()->info('Studio Render performed', [
-        'User ID'     => $user_id,
-        'User'        => trim($first_name . ' ' . $last_name),
-        'Email'       => $email,
-        'Type'        => $type,
-        'Airline'     => $airline,
-        'Aircraft'    => $aircraft,
-        'View'        => $view,
-        'Environment' => $environment,
-        'Resolution'  => $resolution,
-        'Mode'        => $mapping,
-        'Tokens left' => $tokens - 1,
+    // Message humain lisible dans le tableau
+    $message = sprintf(
+        'Studio render by %s (%s) | Type: %s | Airline: %s | Aircraft: %s | View: %s | Env: %s | Resolution: %s | Mode: %s | Tokens left: %d',
+        trim($first_name . ' ' . $last_name),
+        $email,
+        $type ?: '-',
+        $airline ?: '-',
+        $aircraft ?: '-',
+        $view ?: '-',
+        $environment ?: '-',
+        $resolution ?: '-',
+        $mapping ?: '-',
+        $tokens - 1
+    );
+
+    aal_insert_log([
+        'action'         => 'studio_render', // notre “type” d’action
+        'object_type'    => 'Studio',        // pour filtrer facilement dans l’UI
+        'object_name'    => $message,        // affiché dans la colonne principale
+        'object_subtype' => $mapping ?: '',  // ex: "rendering" ou "mapping"
+        'user_id'        => $user_id,
     ]);
 }
 
-// ---------------------------------------------------------
-// 6. Response
-// ---------------------------------------------------------
+// ---- RESPONSE ----
 wp_send_json([
-    "success" => true,
+    "success"     => true,
     "tokens_left" => $tokens - 1
 ]);
