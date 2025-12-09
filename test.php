@@ -1,32 +1,49 @@
 <?php
-// Afficher toutes les erreurs en sortie HTML
+// FORCER AFFICHAGE ERREURS
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+echo "<pre>=== TEST STREAM ===\n";
+
 // Charger WordPress
-require_once('/opt/bitnami/wordpress/wp-load.php');
+require_once("/opt/bitnami/wordpress/wp-load.php");
 
-echo "<pre>";
+// Vérifier si Stream est chargé
+echo "function_exists('stream_record') = ";
+var_dump(function_exists('stream_record'));
 
-// 1. Vérifier que la fonction existe
-echo "function_exists('aal_insert_log') = ";
-var_dump(function_exists('aal_insert_log'));
-
-// 2. Si elle existe, tenter un log simple
-if (function_exists('aal_insert_log')) {
-    $res = aal_insert_log([
-        'action'         => 'studio_test',
-        'object_type'    => 'Studio',
-        'object_name'    => 'Test log depuis test-aal.php',
-        'object_subtype' => 'test',
-        'user_id'        => get_current_user_id(), // 0 si pas connecté
-    ]);
-
-    echo "\nRésultat de aal_insert_log(): ";
-    var_dump($res);
-} else {
-    echo "\n⚠️ aal_insert_log n'existe pas, donc le plugin n'est pas chargé.\n";
+// Si Stream n'est pas chargé → stop
+if (!function_exists('stream_record')) {
+    echo "\n❌ stream_record() n'existe pas.\n";
+    echo "➡ Cela veut dire que le plugin Stream n'est PAS activé.\n";
+    echo "</pre>";
+    exit;
 }
 
-echo "\nTerminé.\n</pre>";
+// Tenter d'insérer un log
+try {
+
+    stream_record(
+        'studio',         // context
+        'test_render',    // action
+        [
+            'message' => 'Test log depuis test-stream.php',
+            'random'  => rand(1, 999)
+        ]
+    );
+
+    echo "\nTentative de log envoyée via stream_record().\n";
+
+} catch (Throwable $e) {
+    echo "\n❌ Exception attrapée :\n";
+    echo $e->getMessage() . "\n";
+    echo $e->getTraceAsString() . "\n";
+    echo "</pre>";
+    exit;
+}
+
+// Confirmation
+echo "\nSi tout va bien, un log doit apparaître dans :";
+echo "\n  WP Admin → Stream\n";
+echo "\n=== FIN ===</pre>";
