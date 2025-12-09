@@ -43,23 +43,25 @@ $last_name  = get_user_meta($user_id, 'last_name', true);
 $user       = get_userdata($user_id);
 $email      = $user->user_email;
 
-// ---- ACTIVITY LOG (Aryo Activity Log) ----
-do_action('aal_insert_log', [
-    'action'         => 'studio_render',
-    'object_type'    => 'Studio',
-    'object_subtype' => $mapping ?: '',
-    'object_name'    => sprintf(
-        '%s (%s) rendered %s %s %s [%s] at %s',
-        trim($first_name . ' ' . $last_name),
-        $email,
-        $airline,
-        $aircraft,
-        $view,
-        $resolution,
-        current_time('mysql')
-    ),
-    'user_id'        => $user_id,
-]);
+// ---- ACTIVITY LOG (Stream) ----
+if (function_exists('stream_record')) {
+    stream_record(
+        'studio',         // context
+        'render',         // action
+        [
+            'email'       => $email,
+            'user'        => trim($first_name . ' ' . $last_name),
+            'type'        => $type,
+            'airline'     => $airline,
+            'aircraft'    => $aircraft,
+            'view'        => $view,
+            'environment' => $environment,
+            'resolution'  => $resolution,
+            'mode'        => $mapping,
+            'tokens_left' => $tokens - 1
+        ]
+    );
+}
 
 // ---- RESPONSE ----
 wp_send_json([
