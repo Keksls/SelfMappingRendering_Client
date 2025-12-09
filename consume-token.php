@@ -64,7 +64,12 @@
             'email'               => $email
         ]
     );
-
+    if ($wpdb->last_error) {
+    wp_send_json([
+        "success" => false,
+        "error" => "SQL ERROR: " . $wpdb->last_error
+    ]);
+}
     // ---- RESPONSE ----
     wp_send_json([
         "success" => true,
