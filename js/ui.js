@@ -736,8 +736,8 @@
         formData.append("airline", selects.livery.value || "");
         formData.append("aircraft", selectedAircraft ? selectedAircraft.name : "");
         formData.append("aircraft_id", selectedAircraft ? selectedAircraft.id : "");
-        formData.append("view", currentViewId || "");
-        formData.append("environment", currentEnvId || "");
+        formData.append("view", currentViewId || "custom");
+        formData.append("environment", currentEnvId || "default");
         let resolution;
         if (bsRes.value === "custom") {
             const w = document.getElementById("bs-width").value;
@@ -746,7 +746,7 @@
         } else {
             resolution = bsRes.value; // ex : "1920x1080"
         }
-        formData.append("resolution", resolution);
+        formData.append("quality", resolution);
         formData.append("mapping", "rendering");
 
         const r = await fetch("/studio/consume-token.php", {
